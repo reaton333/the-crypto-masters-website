@@ -1,11 +1,18 @@
 <template>
-  <div>
-    <!-- <router-link :to="{ path: 'page=1'}">Home</router-link>  -->
-    <!-- <router-link to="/coin">About</router-link> -->
+  <v-app>
     <NavBar></NavBar>
-    <router-view></router-view>
-  </div>
-  <!-- <router-view/> -->
+    <v-main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-main>
+    <v-footer 
+      app
+      absolute
+    >
+      This is a footer
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
@@ -21,11 +28,5 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+
 </style>

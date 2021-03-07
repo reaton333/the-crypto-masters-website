@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <v-container>
         <CoinDetails/>
         <hr>
         <CoinChart/>
-    </div>
+    </v-container>
 </template>
 
 <script>

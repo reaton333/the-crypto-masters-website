@@ -6,63 +6,67 @@
       <button v-if="currentPage > 1" @click="prevPage">Previous</button>&nbsp; 
       <button @click="nextPage">Next</button>
     </p>
-    <table>
+    <v-simple-table
+      fixed-header
+    >
+      <template v-slot:default>
         <thead>   
-            <tr class="tableHeader">
-                <th>#</th>
-                <th>Coin</th>
-                <th>Price</th>
-                <th class='filter' @click="sortCoins('price_change_percentage_7d_in_currency')">
-                  7d
-                  <span v-if="currentSort !== 'price_change_percentage_7d_in_currency'">
-                    <i class="fas fa-sort"></i>
-                  </span>
-                  <span v-else-if="currentSort === 'price_change_percentage_7d_in_currency' && !sortDesc">
-                    <i class="fas fa-sort-up"></i>
-                  </span>
-                  <span v-else-if="currentSort === 'price_change_percentage_7d_in_currency' && sortDesc">
-                    <i class="fas fa-sort-down"></i>
-                  </span>
-                </th>
-                <th class='filter' @click="sortCoins('price_change_percentage_30d_in_currency')">
-                  30d
-                  <span v-if="currentSort !== 'price_change_percentage_30d_in_currency'">
-                    <i class="fas fa-sort"></i>
-                  </span>
-                  <span v-else-if="currentSort === 'price_change_percentage_30d_in_currency' && !sortDesc">
-                    <i class="fas fa-sort-up"></i>
-                  </span>
-                  <span v-else-if="currentSort === 'price_change_percentage_30d_in_currency' && sortDesc">
-                    <i class="fas fa-sort-down"></i>
-                  </span>
-                </th>
-                <th class='filter' @click="sortCoins('price_change_percentage_1y_in_currency')">
-                  1y
-                  <span v-if="currentSort !== 'price_change_percentage_1y_in_currency'">
-                    <i class="fas fa-sort"></i>
-                  </span>
-                  <span v-else-if="currentSort === 'price_change_percentage_1y_in_currency' && !sortDesc">
-                    <i class="fas fa-sort-up"></i>
-                  </span>
-                  <span v-else-if="currentSort === 'price_change_percentage_1y_in_currency' && sortDesc">
-                    <i class="fas fa-sort-down"></i>
-                  </span>
-                </th>
-                <th class='filter' @click="sortCoins('market_cap')">
-                  Market Cap
-                  <span v-if="currentSort !== 'market_cap'">
-                    <i class="fas fa-sort"></i>
-                  </span>
-                  <span v-else-if="currentSort === 'market_cap' && !sortDesc">
-                    <i class="fas fa-sort-up"></i>
-                  </span>
-                  <span v-else-if="currentSort === 'market_cap' && sortDesc">
-                    <i class="fas fa-sort-down"></i>
-                  </span>
-                </th>  
-            </tr>
+          <tr class="tableHeader">
+              <th class="text-left">#</th>
+              <th class="text-left">Coin</th>
+              <th class="text-left">Price</th>
+              <th class='text-left filter' @click="sortCoins('price_change_percentage_7d_in_currency')">
+                7d
+                <span v-if="currentSort !== 'price_change_percentage_7d_in_currency'">
+                  <i class="fas fa-sort"></i>
+                </span>
+                <span v-else-if="currentSort === 'price_change_percentage_7d_in_currency' && !sortDesc">
+                  <i class="fas fa-sort-up"></i>
+                </span>
+                <span v-else-if="currentSort === 'price_change_percentage_7d_in_currency' && sortDesc">
+                  <i class="fas fa-sort-down"></i>
+                </span>
+              </th>
+              <th class='filter' @click="sortCoins('price_change_percentage_30d_in_currency')">
+                30d
+                <span v-if="currentSort !== 'price_change_percentage_30d_in_currency'">
+                  <i class="fas fa-sort"></i>
+                </span>
+                <span v-else-if="currentSort === 'price_change_percentage_30d_in_currency' && !sortDesc">
+                  <i class="fas fa-sort-up"></i>
+                </span>
+                <span v-else-if="currentSort === 'price_change_percentage_30d_in_currency' && sortDesc">
+                  <i class="fas fa-sort-down"></i>
+                </span>
+              </th>
+              <th class='filter' @click="sortCoins('price_change_percentage_1y_in_currency')">
+                1y
+                <span v-if="currentSort !== 'price_change_percentage_1y_in_currency'">
+                  <i class="fas fa-sort"></i>
+                </span>
+                <span v-else-if="currentSort === 'price_change_percentage_1y_in_currency' && !sortDesc">
+                  <i class="fas fa-sort-up"></i>
+                </span>
+                <span v-else-if="currentSort === 'price_change_percentage_1y_in_currency' && sortDesc">
+                  <i class="fas fa-sort-down"></i>
+                </span>
+              </th>
+              <th class='filter' @click="sortCoins('market_cap')">
+                Market Cap
+                <span v-if="currentSort !== 'market_cap'">
+                  <i class="fas fa-sort"></i>
+                </span>
+                <span v-else-if="currentSort === 'market_cap' && !sortDesc">
+                  <i class="fas fa-sort-up"></i>
+                </span>
+                <span v-else-if="currentSort === 'market_cap' && sortDesc">
+                  <i class="fas fa-sort-down"></i>
+                </span>
+              </th>  
+          </tr>
         </thead>
-        <tr v-for="coin in coins" :key="coin">
+        <tbody>
+          <tr v-for="coin in coins" :key="coin">
             <td>{{ coin.market_cap_rank }}</td>
             <td>
               <img class="coinLogo" v-bind:src="coin.image" v-bind:alt="coin.name"> 
@@ -73,8 +77,10 @@
             <td :class="coin.price_change_percentage_30d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_30d_in_currency) }}</td>
             <td :class="coin.price_change_percentage_1y_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_1y_in_currency) }}</td>
             <td>{{ formatMarketCap(coin.market_cap) }}</td>
-        </tr>
-    </table>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
   </div>
 </template>
 
@@ -305,8 +311,8 @@ export default {
 
 .coinLogo {
     padding: 6px 6px 0 0;
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
     transition: all 0.3s ease-in-out 0s;
 }
 
@@ -320,7 +326,7 @@ export default {
   transition: all 0.3s ease-in-out 0s;
 }
 
-.filter{
+/* .filter{
   cursor: pointer;
 }
 
@@ -329,7 +335,6 @@ table {
   border-collapse: collapse;
   background: white;
   border-radius: 6px;
-  /* border: solid thin; */
   overflow: hidden;
   max-width: 1000px;
   width: 100%;
@@ -450,15 +455,15 @@ table th {
   table tbody tr td:nth-child(5):before {
     content: "Box Type";
   }
-}
-body {
+} */
+/* body {
   background: #92C83E;
   font: 400 14px "Calibri", "Arial";
   padding: 20px;
-}
+} */
 
-blockquote {
+/* blockquote {
   color: white;
   text-align: center;
-}
+} */
 </style>

@@ -2,17 +2,29 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Coin from '../views/Coin.vue'
+import CoinList from '../views/CoinList.vue'
 import PodcastEpisode from '../components/PodcastEpisode.vue'
 import EpisodeList from '../components/EpisodeList.vue'
 import NotFound from '../views/NotFound.vue'
+import About from '../views/About.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/page=:pageNumber?',
+    path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
+  },
+  {
+    path: '/crypto/page=:pageNumber?',
+    name: 'CoinList',
+    component: CoinList
   },
   {
     path: '/coin/:coinId',
@@ -49,7 +61,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
 
 export default router

@@ -1,26 +1,39 @@
 <template>
-  <div>
-    <h1 class="header">Episode List</h1>
-    <v-chip
-  color="yellow"
-></v-chip>
+  <v-container>
+    <v-row
+      align="center"
+      justify="center"
+    >
+      <h1 class="header">Episode List</h1>
+    </v-row>
     <div class="wrap">
-        <div class="search">
-            <input type="text" class="searchTerm" v-model="searchVal" placeholder="Search Our Episodes">
-            <v-btn elevation="2" type="submit" class="searchButton">
-                <i class="fa fa-search"></i>
-            </v-btn>
-        </div>
+      <v-text-field
+        label="Search Episodes"
+        outlined
+        v-model="searchVal"
+        append-outer-icon="mdi-magnify"
+      ></v-text-field>
     </div>
     <div v-if="filteredEpisodes.length" class="episode-cards">
         <div class="card" v-for="episode in filteredEpisodes" v-bind:key="episode">
-            <EpisodeCard :episodeData="episode" />
+          <EpisodeCard :episodeData="episode" />
         </div>
     </div>
     <div v-else>
+      <v-row
+        align="center"
+        justify="center"
+      >
+        <v-skeleton-loader
+            v-if="loading"
+            class="mx-auto"
+              max-width="300"
+              type="card"
+        ></v-skeleton-loader>
         <h2>No Episodes match your inquiry</h2>
+      </v-row>
     </div>    
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -34,7 +47,8 @@ export default {
     data () {
         return {
             episodes: [],
-            searchVal: ''
+            searchVal: '',
+            loading: true
         };
     },
     async created () {
@@ -56,6 +70,7 @@ export default {
 
                 this.episodes = res.data.results;
                 this.filteredEpisodes = this.episodes
+                this.loading = false;
                 // console.log(this.results)
             } catch (e) {
                 if(e.response.status === 404) {
@@ -79,52 +94,19 @@ export default {
 
 <style>
 
-.search {
-  width: 100%;
-  display: flex;
-}
-
-.searchTerm {
-  width: 100%;
-  border: 3px solid black;
-  border-right: none;
-  padding: 5px;
-  height: 20px;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  color: grey;
-}
-
-.searchTerm:focus{
-  color: black;
-}
-
-.searchButton {
-  width: 40px;
-  height: 36px;
-  border: 1px solid black;
-  background: black;
-  text-align: center;
-  color: #fed502;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  font-size: 20px;
-}
-
 .wrap {
     width: 50%;
     margin: 0 auto;
-    padding-bottom: 5%;
+    /* padding-bottom: 5%; */
 }
 
 .header {
-    padding-bottom: 20px;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 .card {
   width: 25%;
-  background: #fff;
-  border: 1px solid #ccc;
   margin-bottom: 50px;
   transition: 0.2s;
 }

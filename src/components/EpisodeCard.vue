@@ -1,12 +1,27 @@
 <template>
-  <div>
-    <img :src="episodeData.data['episode-image'].url" alt="">
-    <div class="card-body">
-        <h2>{{ episodeData.data['episode_title'][0].text }}</h2>
-        <p>{{ episodeData.data['episode-summary'][0].text }}</p>
-        <a class="episode-btn-link" @click="goToEpisode(episodeData.uid)">Go to Episode</a>
-    </div>    
-  </div>
+  <v-card
+    max-width="344"
+  >
+    <v-img
+      :src="episodeData.data['episode-image'].url"
+      height="200px"
+    ></v-img>
+    <v-card-title>
+      {{ episodeData.data['episode_title'][0].text }}
+    </v-card-title>
+    <v-card-subtitle>
+      {{ episodeData.data['episode-summary'][0].text }}
+    </v-card-subtitle>
+    <v-card-actions>
+      <v-btn
+        @click="goToEpisode(episodeData.uid)"
+        color="orange lighten-2"
+        text
+      >
+        Go to Episode
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -37,57 +52,7 @@ export default {
 </script>
 
 <style>
-
-.card-header {
-  padding: 50px 10px;
-  object-fit: contain;
-}
-img {
-    max-width: 100%;
-    max-height: 100%;
-}
-
-.card-body {
-  padding: 30px 20px;
-  text-align: center;
-  font-size: 18px;
-  overflow: auto;
-}
-
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.25);
-}
-
-.card-body .episode-btn-link {
-  display: block;
-  color: #fff;
-  text-align: center;
-  background: linear-gradient(to right, #ff416c, #ff4b2b);
-  margin-top: 30px;
-  text-decoration: none;
-  padding: 10px 5px;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 1000px) {
-  .card {
-    width: 40%;
-  }
-}
-
-@media screen and (max-width: 620px) {
-  .container {
-    width: 100%;
-  }
-
-  .heading {
-    padding: 20px;
-    font-size: 20px;
-  }
-
-  .card {
-    width: 80%;
-  }
-}
+/* .card {
+  border: none !important;
+}z */
 </style>
