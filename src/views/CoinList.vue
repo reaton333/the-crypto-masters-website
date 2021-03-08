@@ -91,7 +91,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="coin in coins" :key="coin">
+          <tr v-for="coin in coins" :key="coin.market_cap_rank">
             <td>{{ coin.market_cap_rank }}</td>
             <td>
               <v-row>
@@ -145,7 +145,6 @@ export default {
           pageSize: 100,
           totalCoins: 0,
           currency: 'usd',
-          page: 1,
       }
   },
   props: [
@@ -185,7 +184,7 @@ export default {
           const baseURL = `https://api.coingecko.com/api/v3/coins/list`
           const params = ``
           const fullPath = baseURL + params
-          console.log(fullPath)
+          // console.log(fullPath)
           const res = await axios.get(fullPath)
 
           this.allCoins = res.data;
@@ -411,145 +410,4 @@ export default {
   transform: rotate(360deg);
   transition: all 0.3s ease-in-out 0s;
 }
-
-/* .filter{
-  cursor: pointer;
-}
-
-table {
-  border-spacing: 1;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 6px;
-  overflow: hidden;
-  max-width: 1000px;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-}
-table * {
-  position: relative;
-}
-table td {
-  padding: 6px;
-}
-
-tr { 
-  border: solid;
-  border-width: 1px 0;
-}
-
-tr:first-child {
-  border-top: none;
-}
-tr:last-child {
-  border-bottom: none;
-}
-
-table td .coinName:hover {
-  text-decoration: underline;
-  cursor: pointer;
-  font: bolder;
-}
-
-table td,
-table th {
-  padding-left: 8px;
-  vertical-align: middle;
-}
-
-table thead tr {
-  height: 60px;
-  background: var(--cmMain);
-  font-size: 16px;
-}
-table tbody tr {
-  height: 48px;
-}
-
-tr:hover {
-  background: lightgray;
-}
-
-.tableHeader:hover {
-  background: var(--cmMain);
-}
-
-table tbody tr:last-child {
-  border: 0;
-}
-table td,
-table th {
-  text-align: left;
-}
-table td.l,
-table th.l {
-  text-align: right;
-}
-table td.c,
-table th.c {
-  text-align: center;
-}
-table td.r,
-table th.r {
-  text-align: center;
-}
-
-@media screen and (max-width: 35.5em) {
-  table {
-    display: block;
-  }
-  table > *,
-table tr,
-table td,
-table th {
-    display: block;
-  }
-  table thead {
-    display: none;
-  }
-  table tbody tr {
-    height: auto;
-    padding: 8px 0;
-  }
-  table tbody tr td {
-    padding-left: 45%;
-    margin-bottom: 12px;
-  }
-  table tbody tr td:last-child {
-    margin-bottom: 0;
-  }
-  table tbody tr td:before {
-    position: absolute;
-    font-weight: 700;
-    width: 40%;
-    left: 10px;
-    top: 0;
-  }
-  table tbody tr td:nth-child(1):before {
-    content: "Code";
-  }
-  table tbody tr td:nth-child(2):before {
-    content: "Stock";
-  }
-  table tbody tr td:nth-child(3):before {
-    content: "Cap";
-  }
-  table tbody tr td:nth-child(4):before {
-    content: "Inch";
-  }
-  table tbody tr td:nth-child(5):before {
-    content: "Box Type";
-  }
-} */
-/* body {
-  background: #92C83E;
-  font: 400 14px "Calibri", "Arial";
-  padding: 20px;
-} */
-
-/* blockquote {
-  color: white;
-  text-align: center;
-} */
 </style>
