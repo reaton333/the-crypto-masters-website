@@ -16,8 +16,8 @@
           <tr class="tableHeader">
               <th class="text-left">#</th>
               <th class="text-left">Coin</th>
-              <th class="text-left">Price</th>
-              <th class='text-left filter' @click="sortCoins('price_change_percentage_7d_in_currency')">
+              <th class="text-right">Price</th>
+              <th class='text-right filter' @click="sortCoins('price_change_percentage_7d_in_currency')">
                 7d
                 <span v-if="currentSort !== 'price_change_percentage_7d_in_currency'">
                   <i class="fas fa-sort"></i>
@@ -29,7 +29,7 @@
                   <i class="fas fa-sort-down"></i>
                 </span>
               </th>
-              <th class='filter' @click="sortCoins('price_change_percentage_30d_in_currency')">
+              <th class='text-right filter' @click="sortCoins('price_change_percentage_30d_in_currency')">
                 30d
                 <span v-if="currentSort !== 'price_change_percentage_30d_in_currency'">
                   <i class="fas fa-sort"></i>
@@ -41,7 +41,7 @@
                   <i class="fas fa-sort-down"></i>
                 </span>
               </th>
-              <th class='filter' @click="sortCoins('price_change_percentage_1y_in_currency')">
+              <th class='text-right filter' @click="sortCoins('price_change_percentage_1y_in_currency')">
                 1y
                 <span v-if="currentSort !== 'price_change_percentage_1y_in_currency'">
                   <i class="fas fa-sort"></i>
@@ -53,7 +53,7 @@
                   <i class="fas fa-sort-down"></i>
                 </span>
               </th>
-              <th class='filter' @click="sortCoins('market_cap')">
+              <th class='text-right filter' @click="sortCoins('market_cap')">
                 Market Cap
                 <span v-if="currentSort !== 'market_cap'">
                   <i class="fas fa-sort"></i>
@@ -88,11 +88,11 @@
                 >{{ coin.name }}</v-btn>
               </v-row>
             </td>
-            <td>{{ formatPrice(coin.current_price) }}</td>
-            <td :class="coin.price_change_percentage_7d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_7d_in_currency) }}</td>
-            <td :class="coin.price_change_percentage_30d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_30d_in_currency) }}</td>
-            <td :class="coin.price_change_percentage_1y_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_1y_in_currency) }}</td>
-            <td>{{ formatMarketCap(coin.market_cap) }}</td>
+            <td class="text-right">{{ formatPrice(coin.current_price) }}</td>
+            <td class="text-right" :class="coin.price_change_percentage_7d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_7d_in_currency) }}</td>
+            <td class="text-right" :class="coin.price_change_percentage_30d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_30d_in_currency) }}</td>
+            <td class="text-right" :class="coin.price_change_percentage_1y_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_1y_in_currency) }}</td>
+            <td class="text-right">{{ formatMarketCap(coin.market_cap) }}</td>
           </tr>
         </tbody>
       </template>
