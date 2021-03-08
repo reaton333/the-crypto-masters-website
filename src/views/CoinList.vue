@@ -8,7 +8,30 @@
           @input="getCoinsList"
       ></v-pagination>
     </div>
+    <v-container v-if="loading" style="height: 300px;">
+      <v-row
+        class="fill-height"
+        align-content="center"
+        justify="center"
+      >
+        <v-col
+          class="subtitle-1 text-center"
+          cols="12"
+        >
+          Loading Coins
+        </v-col>
+        <v-col cols="6">
+          <v-progress-linear
+            color="yellow darken-2"
+            indeterminate
+            rounded
+            height="6"
+          ></v-progress-linear>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-simple-table
+      v-else
       fixed-header
     >
       <template v-slot:default>
@@ -85,7 +108,8 @@
                   plain
                   text
                   @click="goToCoinDescription(coin.id)"
-                >{{ coin.name }}</v-btn>
+                >{{ coin.name }} - {{ coin.symbol.toUpperCase() }}
+                </v-btn>
               </v-row>
             </td>
             <td class="text-right">{{ formatPrice(coin.current_price) }}</td>
@@ -114,6 +138,7 @@ export default {
       return {
           coins: [],
           allCoins: [],
+          loading: true,
           positiveGain: false,
           currentSort: 'market_cap',
           sortDesc: true,
@@ -138,6 +163,8 @@ export default {
   methods: {
     async getCoinsList(myPage) {
 
+      this.loading = true;
+
       try {
           const baseURL = `https://api.coingecko.com/api/v3/coins/markets`
           const params = `?vs_currency=${this.currency}&order=market_cap_desc&per_page=${this.pageSize}&page=${myPage}&sparkline=false&price_change_percentage=7d%2C30d%2C1y`
@@ -146,6 +173,7 @@ export default {
           const res = await axios.get(fullPath)
 
           this.coins = res.data;
+          this.loading = false;
           // this.sortedCoinList = this.sortedCoins();
       } catch (e) {
           console.log(e);
