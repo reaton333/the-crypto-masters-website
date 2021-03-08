@@ -4,7 +4,6 @@
         v-model="drawer"
         absolute
         temporary
-        disable-resize-watcher
         app
       >
         <v-list dense>
@@ -37,7 +36,6 @@
         <span 
           v-for="navItem in navItems" 
           :key="navItem.id"
-          hidden-sm-and-down
           class="d-none d-md-flex"
           >
           <v-btn 

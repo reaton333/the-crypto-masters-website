@@ -22,7 +22,7 @@ const routes = [
     component: About
   },
   {
-    path: '/crypto/page=:pageNumber?',
+    path: '/crypto',
     name: 'CoinList',
     component: CoinList
   },

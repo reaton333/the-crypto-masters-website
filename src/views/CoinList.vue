@@ -1,11 +1,13 @@
 <template>
-  <!-- debug: sort={{currentSort}}, sortDesc={{sortDesc}}, page={{ pageSize }}, currPage={{ currentPage }} -->
-  <!-- debug: sortedCoins={{ sortedCoins }} -->
   <div>
-    <p>
-      <button v-if="currentPage > 1" @click="prevPage">Previous</button>&nbsp; 
-      <button @click="nextPage">Next</button>
-    </p>
+    <div class="text-center">      
+      <v-pagination
+          v-model="page"
+          total-visible="8"
+          :length="Math.floor(totalCoins/pageSize)+1"
+          @input="getCoinsList"
+      ></v-pagination>
+    </div>
     <v-simple-table
       fixed-header
     >
@@ -69,8 +71,22 @@
           <tr v-for="coin in coins" :key="coin">
             <td>{{ coin.market_cap_rank }}</td>
             <td>
-              <img class="coinLogo" v-bind:src="coin.image" v-bind:alt="coin.name"> 
-              <a class="coinName" @click="goToCoinDescription(coin.id)">{{ coin.name }}</a>
+              <v-row>
+                <v-img 
+                  class="coinLogo" 
+                  v-bind:src="coin.image" 
+                  v-bind:alt="coin.name"
+                  contain
+                  max-width="30"
+                  max-height="30"
+                >
+                </v-img>
+                <v-btn 
+                  plain
+                  text
+                  @click="goToCoinDescription(coin.id)"
+                >{{ coin.name }}</v-btn>
+              </v-row>
             </td>
             <td>{{ formatPrice(coin.current_price) }}</td>
             <td :class="coin.price_change_percentage_7d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_7d_in_currency) }}</td>
@@ -81,6 +97,12 @@
         </tbody>
       </template>
     </v-simple-table>
+    <v-pagination
+      v-model="page"
+      total-visible="8"
+      :length="Math.floor(totalCoins/pageSize)+1"
+      @input="getCoinsList"
+    ></v-pagination>
   </div>
 </template>
 
@@ -91,32 +113,55 @@ export default {
   data () {
       return {
           coins: [],
+          allCoins: [],
           positiveGain: false,
           currentSort: 'market_cap',
           sortDesc: true,
           pageSize: 100,
+          totalCoins: 0,
           currency: 'usd',
-          currentPage: this.$route.params.pageNumber,
+          page: 1,
       }
   },
+  props: [
+
+  ],
   created() {
 
-    this.currentPage = this.$route.params.pageNumber;
-    // console.log(this.currentPage);
-    this.getCoinsList(this.pageSize, this.currentPage);
+    // this.page = parseInt(this.$route.params.pageNumber);
+    this.page = 1;
+    // console.log(this.page);
+    this.getAllCoins();
+    this.getCoinsList(this.page);
     // console.log(this.sortedCoins);
   },
   methods: {
-    async getCoinsList(myPageSize, myCurrentPage) {
+    async getCoinsList(myPage) {
 
       try {
           const baseURL = `https://api.coingecko.com/api/v3/coins/markets`
-          const params = `?vs_currency=${this.currency}&order=market_cap_desc&per_page=${myPageSize}&page=${myCurrentPage}&sparkline=false&price_change_percentage=7d%2C30d%2C1y`
+          const params = `?vs_currency=${this.currency}&order=market_cap_desc&per_page=${this.pageSize}&page=${myPage}&sparkline=false&price_change_percentage=7d%2C30d%2C1y`
           const fullPath = baseURL + params
           // console.log(fullPath)
           const res = await axios.get(fullPath)
 
           this.coins = res.data;
+          // this.sortedCoinList = this.sortedCoins();
+      } catch (e) {
+          console.log(e);
+      }
+    },
+    async getAllCoins() {
+
+      try {
+          const baseURL = `https://api.coingecko.com/api/v3/coins/list`
+          const params = ``
+          const fullPath = baseURL + params
+          console.log(fullPath)
+          const res = await axios.get(fullPath)
+
+          this.allCoins = res.data;
+          this.totalCoins = this.allCoins.length;
           // this.sortedCoinList = this.sortedCoins();
       } catch (e) {
           console.log(e);
@@ -213,26 +258,32 @@ export default {
         }
       }
     },
-    nextPage() {
+    page() {
 
-      this.currentPage++;
-      this.$route.params.pageNumber = this.currentPage;
-      // console.log('Curr page: ' + this.currentPage)
+    },
+    next() {
+
+      console.log('ENTER next page....');
+
+      this.page++;
+      this.$route.params.pageNumber = this.page;
+      console.log('Curr page: ' + this.page)
+      console.log('Curr route param page: ' + this.$route.params.pageNumber)
       this.$router.push({ 
 
-        path: `/page=${this.currentPage}`
+        path: `/page=${this.page}`
       })
     },
-    prevPage() {
+    previous() {
 
-      if (this.currentPage > 1) {
-        this.currentPage--;
-        this.$route.params.pageNumber = this.currentPage;
+      if (this.page > 1) {
+        this.page--;
+        this.$route.params.pageNumber = this.page;
         
-        // console.log('Curr page: ' + this.currentPage)
+        // console.log('Curr page: ' + this.page)
         this.$router.push({ 
 
-          path: `/page=${this.currentPage}`
+          path: `/page=${this.page}`
         })
       }
     },
@@ -277,9 +328,9 @@ export default {
   },
   watch: {
 	  async $route (to, from) {
-      this.currentPage = this.$route.params.pageNumber
-      // console.log('Watch: ' + this.currentPage)
-		 	this.getCoinsList(this.pageSize, this.currentPage)
+      this.page = this.$route.params.pageNumber
+      // console.log('Watch: ' + this.page)
+		 	this.getCoinsList(this.pageSize, this.page)
     },
   }, 
   computed: {
@@ -310,9 +361,6 @@ export default {
 }
 
 .coinLogo {
-    padding: 6px 6px 0 0;
-    width: 24px;
-    height: 24px;
     transition: all 0.3s ease-in-out 0s;
 }
 
