@@ -317,10 +317,20 @@ export default {
     },
     formatPrice(value) {
       // Create our number formatter.
-      var formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: this.currency,
-      });
+    
+      if (value < 10) {
+        var formatter = new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 3,
+          style: 'currency',
+          currency: this.currency,
+        });
+      } else {
+        var formatter = new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2,
+          style: 'currency',
+          currency: this.currency,
+        });
+      }
 
       return formatter.format(value)
     },
