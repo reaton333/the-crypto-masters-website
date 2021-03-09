@@ -30,97 +30,49 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-simple-table
+    <v-data-table
       v-else
-      fixed-header
+      :headers="headers"
+      :items="coins"
+      :items-per-page="pageSize"
+      hide-default-footer
+      class="elevation-1"
     >
-      <template v-slot:default>
-        <thead>   
-          <tr class="tableHeader">
-              <th class="text-left">#</th>
-              <th class="text-left">Coin</th>
-              <th class="text-right">Price</th>
-              <th class='text-right filter' @click="sortCoins('price_change_percentage_7d_in_currency')">
-                7d
-                <span v-if="currentSort !== 'price_change_percentage_7d_in_currency'">
-                  <i class="fas fa-sort"></i>
-                </span>
-                <span v-else-if="currentSort === 'price_change_percentage_7d_in_currency' && !sortDesc">
-                  <i class="fas fa-sort-up"></i>
-                </span>
-                <span v-else-if="currentSort === 'price_change_percentage_7d_in_currency' && sortDesc">
-                  <i class="fas fa-sort-down"></i>
-                </span>
-              </th>
-              <th class='text-right filter' @click="sortCoins('price_change_percentage_30d_in_currency')">
-                30d
-                <span v-if="currentSort !== 'price_change_percentage_30d_in_currency'">
-                  <i class="fas fa-sort"></i>
-                </span>
-                <span v-else-if="currentSort === 'price_change_percentage_30d_in_currency' && !sortDesc">
-                  <i class="fas fa-sort-up"></i>
-                </span>
-                <span v-else-if="currentSort === 'price_change_percentage_30d_in_currency' && sortDesc">
-                  <i class="fas fa-sort-down"></i>
-                </span>
-              </th>
-              <th class='text-right filter' @click="sortCoins('price_change_percentage_1y_in_currency')">
-                1y
-                <span v-if="currentSort !== 'price_change_percentage_1y_in_currency'">
-                  <i class="fas fa-sort"></i>
-                </span>
-                <span v-else-if="currentSort === 'price_change_percentage_1y_in_currency' && !sortDesc">
-                  <i class="fas fa-sort-up"></i>
-                </span>
-                <span v-else-if="currentSort === 'price_change_percentage_1y_in_currency' && sortDesc">
-                  <i class="fas fa-sort-down"></i>
-                </span>
-              </th>
-              <th class='text-right filter' @click="sortCoins('market_cap')">
-                Market Cap
-                <span v-if="currentSort !== 'market_cap'">
-                  <i class="fas fa-sort"></i>
-                </span>
-                <span v-else-if="currentSort === 'market_cap' && !sortDesc">
-                  <i class="fas fa-sort-up"></i>
-                </span>
-                <span v-else-if="currentSort === 'market_cap' && sortDesc">
-                  <i class="fas fa-sort-down"></i>
-                </span>
-              </th>  
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="coin in coins" :key="coin.market_cap_rank">
-            <td>{{ coin.market_cap_rank }}</td>
-            <td>
-              <v-row>
-                <v-img 
-                  class="coinLogo" 
-                  v-bind:src="coin.image" 
-                  v-bind:alt="coin.name"
-                  contain
-                  max-width="30"
-                  max-height="30"
-                >
-                </v-img>
-                <v-btn 
-                  plain
-                  text
-                  @click="goToCoinDescription(coin.id)"
-                >{{ coin.name }} - {{ coin.symbol.toUpperCase() }}
-                </v-btn>
-              </v-row>
-            </td>
-            <td class="text-right">{{ formatPrice(coin.current_price) }}</td>
-            <td class="text-right" :class="coin.price_change_percentage_7d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_7d_in_currency) }}</td>
-            <td class="text-right" :class="coin.price_change_percentage_30d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_30d_in_currency) }}</td>
-            <td class="text-right" :class="coin.price_change_percentage_1y_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(coin.price_change_percentage_1y_in_currency) }}</td>
-            <td class="text-right">{{ formatMarketCap(coin.market_cap) }}</td>
-          </tr>
-        </tbody>
+      <template v-slot:item.name="{ item }">
+        <v-row>
+          <v-img 
+            class="coinLogo" 
+            v-bind:src="item.image" 
+            v-bind:alt="item.name"
+            contain
+            max-width="30"
+            max-height="30"
+          >
+          </v-img>
+          <v-btn 
+            plain
+            text
+            @click="goToCoinDescription(item.id)"
+          >{{ item.name }} - {{ item.symbol.toUpperCase() }}
+          </v-btn>
+        </v-row>
       </template>
-    </v-simple-table>
+      <template v-slot:item.current_price="{ item }">
+        <span>{{ formatPrice(item.current_price) }}</span>
+      </template>
+      <template v-slot:item.price_change_percentage_7d_in_currency="{ item }">
+        <span :class="item.price_change_percentage_7d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPrice(item.price_change_percentage_7d_in_currency) }}</span>
+      </template>
+      <template v-slot:item.price_change_percentage_30d_in_currency="{ item }">
+        <span :class="item.price_change_percentage_30d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPrice(item.price_change_percentage_30d_in_currency) }}</span>
+      </template>
+      <template v-slot:item.price_change_percentage_1y_in_currency="{ item }">
+        <span :class="item.price_change_percentage_1y_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPrice(item.price_change_percentage_1y_in_currency) }}</span>
+      </template>
+      <template v-slot:item.market_cap="{ item }">
+        <span>{{ formatPrice(item.market_cap) }}</span>
+      </template>
+    </v-data-table>
     <v-pagination
       v-model="page"
       total-visible="8"
@@ -135,29 +87,32 @@ import axios from 'axios';
 
 export default {
   data () {
-      return {
-          coins: [],
-          allCoins: [],
-          loading: true,
-          positiveGain: false,
-          currentSort: 'market_cap',
-          sortDesc: true,
-          pageSize: 100,
-          totalCoins: 0,
-          currency: 'usd',
-      }
+    return {
+        headers: 
+        [
+          { text: '#', align: 'start', sortable: false, value: 'market_cap_rank' },
+          { text: 'Coin', align: 'start', value: 'name' },
+          { text: 'Price', align: 'end', value: 'current_price' },
+          { text: '7d', align: 'end', value: 'price_change_percentage_7d_in_currency' },
+          { text: '30d', align: 'end', value: 'price_change_percentage_30d_in_currency' },
+          { text: '1y', align: 'end', value: 'price_change_percentage_1y_in_currency' },
+          { text: 'Market Cap', align: 'end', value: 'market_cap' },
+        ],
+        coins: [],
+        allCoins: [],
+        loading: true,
+        currentSort: 'market_cap',
+        sortDesc: true,
+        pageSize: 100,
+        totalCoins: 0,
+        currency: 'usd'
+    }
   },
-  props: [
-
-  ],
   created() {
 
-    // this.page = parseInt(this.$route.params.pageNumber);
     this.page = 1;
-    // console.log(this.page);
     this.getAllCoins();
     this.getCoinsList(this.page);
-    // console.log(this.sortedCoins);
   },
   methods: {
     async getCoinsList(myPage) {
@@ -202,117 +157,6 @@ export default {
           coinId: coinId
         }
       })
-    },
-    sortCoins(sortOrder) {
-      
-      if (this.currentSort === sortOrder) {
-        // toggle
-        // console.log('Same sort, tobble')
-        this.sortDesc = !this.sortDesc;
-        this.sortByColName(this.currentSort);
-
-      } else {
-        // new sort make sure it's desc
-        // console.log('New sort, desc')
-        this.currentSort = sortOrder;
-        this.sortDesc = true;
-        this.sortByColName(this.currentSort);
-      }
-    },
-    sortByColName(colName) {
-      ///////////////////////////////////////
-      //////////////// DESC /////////////////
-      ///////////////////////////////////////
-
-      if (this.sortDesc) {
-        if (colName == 'price_change_percentage_7d_in_currency') {
-
-          this.coins.sort(
-            (a, b) => (a.price_change_percentage_7d_in_currency > b.price_change_percentage_7d_in_currency) 
-                ? -1 : 1
-          )
-        } else if (colName === 'price_change_percentage_30d_in_currency') {
-          // desc sort
-          this.coins.sort(
-            (a, b) => (a.price_change_percentage_30d_in_currency > b.price_change_percentage_30d_in_currency) 
-                ? -1 : 1
-          )
-        } else if (colName === 'price_change_percentage_1y_in_currency') {
-          // desc sort
-          this.coins.sort(
-            (a, b) => (a.price_change_percentage_1y_in_currency > b.price_change_percentage_1y_in_currency) 
-                ? -1 : 1
-          )
-        } else if (colName === 'market_cap') {
-          // desc sort
-          this.coins.sort(
-            (a, b) => (a.market_cap > b.market_cap) 
-                ? -1 : 1
-          )
-        } else {
-          console.warn('DESC SORT ERROR!')
-        }
-      } else {
-        ///////////////////////////////////////
-        ///////////////// ASC /////////////////
-        ///////////////////////////////////////
-        if (colName == 'price_change_percentage_7d_in_currency') {
-
-          this.coins.sort(
-            (a, b) => (a.price_change_percentage_7d_in_currency > b.price_change_percentage_7d_in_currency) 
-                ? 1 : -1
-          )
-        } else if (colName === 'price_change_percentage_30d_in_currency') {
-          // desc sort
-          this.coins.sort(
-            (a, b) => (a.price_change_percentage_30d_in_currency > b.price_change_percentage_30d_in_currency) 
-                ? 1 : -1
-          )
-        } else if (colName === 'price_change_percentage_1y_in_currency') {
-          // desc sort
-          this.coins.sort(
-            (a, b) => (a.price_change_percentage_1y_in_currency > b.price_change_percentage_1y_in_currency) 
-                ? 1 : -1
-          )
-        } else if (colName === 'market_cap') {
-          // desc sort
-          this.coins.sort(
-            (a, b) => (a.market_cap > b.market_cap) 
-                ? 1 : -1
-          )
-        } else {
-          console.warn('ASC SORT ERROR!')
-        }
-      }
-    },
-    page() {
-
-    },
-    next() {
-
-      console.log('ENTER next page....');
-
-      this.page++;
-      this.$route.params.pageNumber = this.page;
-      console.log('Curr page: ' + this.page)
-      console.log('Curr route param page: ' + this.$route.params.pageNumber)
-      this.$router.push({ 
-
-        path: `/page=${this.page}`
-      })
-    },
-    previous() {
-
-      if (this.page > 1) {
-        this.page--;
-        this.$route.params.pageNumber = this.page;
-        
-        // console.log('Curr page: ' + this.page)
-        this.$router.push({ 
-
-          path: `/page=${this.page}`
-        })
-      }
     },
     formatPrice(value) {
       // Create our number formatter.
@@ -364,14 +208,8 @@ export default {
     }
   },
   watch: {
-	  async $route (to, from) {
-      this.page = this.$route.params.pageNumber
-      // console.log('Watch: ' + this.page)
-		 	this.getCoinsList(this.pageSize, this.page)
-    },
   }, 
   computed: {
-
   }
 }
 </script>
@@ -390,11 +228,6 @@ export default {
 
 .lose {
   color: var(--cmRed);
-}
-
-.link {
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 .coinLogo {
