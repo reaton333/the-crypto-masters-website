@@ -61,16 +61,16 @@
         <span>{{ formatPrice(item.current_price) }}</span>
       </template>
       <template v-slot:item.price_change_percentage_7d_in_currency="{ item }">
-        <span :class="item.price_change_percentage_7d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPrice(item.price_change_percentage_7d_in_currency) }}</span>
+        <span :class="item.price_change_percentage_7d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(item.price_change_percentage_7d_in_currency) }}</span>
       </template>
       <template v-slot:item.price_change_percentage_30d_in_currency="{ item }">
-        <span :class="item.price_change_percentage_30d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPrice(item.price_change_percentage_30d_in_currency) }}</span>
+        <span :class="item.price_change_percentage_30d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(item.price_change_percentage_30d_in_currency) }}</span>
       </template>
       <template v-slot:item.price_change_percentage_1y_in_currency="{ item }">
-        <span :class="item.price_change_percentage_1y_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPrice(item.price_change_percentage_1y_in_currency) }}</span>
+        <span :class="item.price_change_percentage_1y_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(item.price_change_percentage_1y_in_currency) }}</span>
       </template>
       <template v-slot:item.market_cap="{ item }">
-        <span>{{ formatPrice(item.market_cap) }}</span>
+        <span>{{ formatMarketCap(item.market_cap) }}</span>
       </template>
     </v-data-table>
     <v-pagination

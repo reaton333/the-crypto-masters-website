@@ -30,8 +30,10 @@
           @click.stop="drawer = !drawer"
         >
         </v-app-bar-nav-icon>
-      <!-- .d-none .d-sm-flex .d-md-none -->
-        <v-toolbar-title>{{ navTitle }}</v-toolbar-title>
+        <v-toolbar-title
+          style="cursor: pointer" 
+          @click="$router.push('/')"
+        >{{ navTitle }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <span 
           v-for="navItem in navItems" 

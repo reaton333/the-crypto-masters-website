@@ -22,14 +22,10 @@ export default {
     Footer
   },
   data () {
-    return {
-      
-    }
+    return {}
   }
-  
 }
 </script>
 
 <style>
-
 </style>
