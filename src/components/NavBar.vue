@@ -13,6 +13,9 @@
             :to="navItem.route"
             link
           >
+            <v-list-item-icon>
+              <v-icon>{{ navItem.icon }}</v-icon>
+            </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>{{ navItem.name }}</v-list-item-title>
             </v-list-item-content>
@@ -57,10 +60,10 @@ export default {
     return {
       drawer: null,
       navItems: [
-        { id: 1, icon: '', name: 'Home', route: '/'},
-        { id: 2, name: 'About', route: '/about'},
-        { id: 3, name: 'Podcast', route: '/podcast/'},
-        { id: 4, name: 'Crypto', route: '/crypto'},
+        { id: 1, name: 'Home', icon: 'mdi-home', route: '/'},
+        { id: 2, name: 'About', icon: 'mdi-information', route: '/about'},
+        { id: 3, name: 'Podcast', icon: 'mdi-microphone', route: '/podcast/'},
+        { id: 4, name: 'Crypto', icon: 'mdi-bitcoin', route: '/crypto'},
       ],
       navTitle: 'The Crypto Masters'
     }
