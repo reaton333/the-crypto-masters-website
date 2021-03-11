@@ -51,18 +51,16 @@
     </div>
 </template>
 
-
 <script>
 export default {
   data () {
     return {
       drawer: null,
       navItems: [
-        { id: 1, name: 'Home', route: '/'},
+        { id: 1, icon: '', name: 'Home', route: '/'},
         { id: 2, name: 'About', route: '/about'},
         { id: 3, name: 'Podcast', route: '/podcast/'},
         { id: 4, name: 'Crypto', route: '/crypto'},
-
       ],
       navTitle: 'The Crypto Masters'
     }

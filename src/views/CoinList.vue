@@ -61,13 +61,19 @@
         <span>{{ formatPrice(item.current_price) }}</span>
       </template>
       <template v-slot:item.price_change_percentage_7d_in_currency="{ item }">
-        <span :class="item.price_change_percentage_7d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(item.price_change_percentage_7d_in_currency) }}</span>
+        <span :class="item.price_change_percentage_7d_in_currency >= 0 ? 'success--text' : 'error--text'">
+          {{ formatPercentGain(item.price_change_percentage_7d_in_currency) }}
+        </span>
       </template>
       <template v-slot:item.price_change_percentage_30d_in_currency="{ item }">
-        <span :class="item.price_change_percentage_30d_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(item.price_change_percentage_30d_in_currency) }}</span>
+        <span :class="item.price_change_percentage_30d_in_currency >= 0 ? 'success--text' : 'error--text'">
+          {{ formatPercentGain(item.price_change_percentage_30d_in_currency) }}
+        </span>
       </template>
       <template v-slot:item.price_change_percentage_1y_in_currency="{ item }">
-        <span :class="item.price_change_percentage_1y_in_currency >= 0 ? 'gain' : 'lose'">{{ formatPercentGain(item.price_change_percentage_1y_in_currency) }}</span>
+        <span :class="item.price_change_percentage_1y_in_currency >= 0 ? 'success--text' : 'error--text'">
+          {{ formatPercentGain(item.price_change_percentage_1y_in_currency) }}
+        </span>
       </template>
       <template v-slot:item.market_cap="{ item }">
         <span>{{ formatMarketCap(item.market_cap) }}</span>
@@ -215,20 +221,6 @@ export default {
 </script>
 
 <style>
-
-:root {
-  --cmMain: #fed404;
-  --cmRed: #BF5748;
-  --cmGreen: #00A436;
-}
-
-.gain {
-  color: var(--cmGreen);
-}
-
-.lose {
-  color: var(--cmRed);
-}
 
 .coinLogo {
     transition: all 0.3s ease-in-out 0s;
