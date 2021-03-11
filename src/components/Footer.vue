@@ -47,7 +47,7 @@ export default {
                 { id: 4, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
                 { id: 5, icon: 'mdi-rss', url: 'https://feed.podbean.com/thecryptomasters/feed.xml' },
             ],
-            legalText: 'Nothing in our podcasts or on our web sites or social media outlets should be considered to be investment advice. We are not financial advisors. Brian McCoy is an attorney and equities hedge fund manager, and Ross Eaton works in Information Technology (IT) and develops apps. Please do not consider any of our information or personal opinions to be investment advice. Also, as a disclosure, each of us currently owns some Bitcoin and some other altcoins.'
+            legalText: 'Nothing in our podcasts or on our web sites or social media outlets should be considered to be investment advice. We are not financial advisors. Please do not consider any of our information or personal opinions to be investment advice.'
         }
     }
 
