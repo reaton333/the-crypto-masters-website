@@ -22,7 +22,7 @@
         </v-col>
         <v-col cols="6">
           <v-progress-linear
-            color="yellow darken-2"
+            color="secondary"
             indeterminate
             rounded
             height="6"
