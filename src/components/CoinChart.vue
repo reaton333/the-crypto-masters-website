@@ -4,11 +4,11 @@
     </div> -->
     <div>
         <div class="amcharts-range-selector-period-wrapper">
-                <button @click="createChart('oneM')">1M</button>
-                <button @click="createChart('threeM')">3M</button>
-                <button @click="createChart('sixM')">6M</button>
-                <button @click="createChart('ytd')">YTD</button>
-                <button>MAX</button>
+                <v-btn @click="createChart('oneM')">1M</v-btn>
+                <v-btn @click="createChart('threeM')">3M</v-btn>
+                <v-btn @click="createChart('sixM')">6M</v-btn>
+                <v-btn @click="createChart('ytd')">YTD</v-btn>
+                <v-btn>MAX</v-btn>
         </div>
         <div class="coinChart" ref="chartdiv">
         </div>
