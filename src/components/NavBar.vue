@@ -2,8 +2,9 @@
     <div>
       <v-navigation-drawer
         v-model="drawer"
-        absolute
         temporary
+        bottom
+        dark
         app
       >
         <v-list dense>

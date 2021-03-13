@@ -6,6 +6,7 @@
       <v-card
         flat
         tile
+        width="100%"
         class="primary text-center"
       >
         <v-card-text>
