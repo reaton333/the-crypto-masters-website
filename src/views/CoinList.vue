@@ -36,6 +36,7 @@
       :items="coins"
       :items-per-page="pageSize"
       :mobile-breakpoint="0"
+      style="min-width:450px"
       :dense="isMobile"
       hide-default-footer
       class="elevation-1"
@@ -59,23 +60,22 @@
             {{ item.name }} - {{ item.symbol.toUpperCase() }}
           </v-btn>
         </v-row>
-        <v-row 
-          v-else
-          align="center"
-          justify="center"
+        <v-row v-else
+          no-gutters
         >
           <v-img 
             class="coinLogo" 
             v-bind:src="item.image" 
             v-bind:alt="item.name"
             contain
-            max-width="20"
-            max-height="20"
+            max-width="18"
+            max-height="18"
           >
           </v-img>
           <v-btn 
             plain
             text
+            x-small
             @click="goToCoinDescription(item.id)"
           >
             {{ item.symbol.toUpperCase() }}
@@ -144,7 +144,8 @@ export default {
         sortDesc: true,
         pageSize: 100,
         totalCoins: 0,
-        currency: 'usd'
+        currency: 'usd',
+        tableResize: 777
     }
   },
   created() {
@@ -164,10 +165,10 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
 
-      if (this.window.width < 777 && !this.isMobile) {
+      if (this.window.width < this.tableResize && !this.isMobile) {
         this.isMobile = true;
         this.reformatCoinTable();
-      } else if (this.window.width >= 777 && this.isMobile) {
+      } else if (this.window.width >= this.tableResize && this.isMobile) {
         this.isMobile = false;
         this.reformatCoinTable();
       }
