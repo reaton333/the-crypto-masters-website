@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="text-center">      
+  <div style="padding = 0;">
+    <div class="text-center" v-if="!isMobile">      
       <v-pagination
           v-model="page"
           total-visible="8"
@@ -35,11 +35,13 @@
       :headers="headers"
       :items="coins"
       :items-per-page="pageSize"
+      :mobile-breakpoint="0"
+      :dense="isMobile"
       hide-default-footer
       class="elevation-1"
     >
       <template v-slot:item.name="{ item }">
-        <v-row>
+        <v-row v-if="!isMobile">
           <v-img 
             class="coinLogo" 
             v-bind:src="item.image" 
@@ -53,7 +55,30 @@
             plain
             text
             @click="goToCoinDescription(item.id)"
-          >{{ item.name }} - {{ item.symbol.toUpperCase() }}
+          >
+            {{ item.name }} - {{ item.symbol.toUpperCase() }}
+          </v-btn>
+        </v-row>
+        <v-row 
+          v-else
+          align="center"
+          justify="center"
+        >
+          <v-img 
+            class="coinLogo" 
+            v-bind:src="item.image" 
+            v-bind:alt="item.name"
+            contain
+            max-width="20"
+            max-height="20"
+          >
+          </v-img>
+          <v-btn 
+            plain
+            text
+            @click="goToCoinDescription(item.id)"
+          >
+            {{ item.symbol.toUpperCase() }}
           </v-btn>
         </v-row>
       </template>
@@ -94,16 +119,24 @@ import axios from 'axios';
 export default {
   data () {
     return {
+        isMobile: false,
+        window: {
+          width: 0,
+          height: 0
+        },
         headers: 
         [
-          { text: '#', align: 'start', sortable: false, value: 'market_cap_rank' },
-          { text: 'Coin', align: 'start', value: 'name' },
-          { text: 'Price', align: 'end', value: 'current_price' },
-          { text: '7d', align: 'end', value: 'price_change_percentage_7d_in_currency' },
-          { text: '30d', align: 'end', value: 'price_change_percentage_30d_in_currency' },
-          { text: '1y', align: 'end', value: 'price_change_percentage_1y_in_currency' },
-          { text: 'Market Cap', align: 'end', value: 'market_cap' },
+          { index: 1, type: 'detail', text: '#', align: 'start', sortable: false, value: 'market_cap_rank' },
+          { index: 2, type: 'detail', text: 'Coin', align: 'start', value: 'name' },
+          { index: 3, type: 'detail', text: 'Price', align: 'end', value: 'current_price' },
+          { index: 4, type: 'change', text: '7d', align: 'end', value: 'price_change_percentage_7d_in_currency' },
+          { index: 5, type: 'change', text: '30d', align: 'end', value: 'price_change_percentage_30d_in_currency' },
+          { index: 6, type: 'change', text: '1y', align: 'end', value: 'price_change_percentage_1y_in_currency' },
+          { index: 7, type: 'detail', text: 'Market Cap', align: 'end', value: 'market_cap' },
         ],
+        // Storing the headers I remove here so I can add them back later
+        // This is for mobile resizing
+        removedHeaders: [], 
         coins: [],
         allCoins: [],
         loading: true,
@@ -116,11 +149,29 @@ export default {
   },
   created() {
 
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+
     this.page = 1;
     this.getAllCoins();
     this.getCoinsList(this.page);
   },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize);
+  },
   methods: {
+    async handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+
+      if (this.window.width < 777 && !this.isMobile) {
+        this.isMobile = true;
+        this.reformatCoinTable();
+      } else if (this.window.width >= 777 && this.isMobile) {
+        this.isMobile = false;
+        this.reformatCoinTable();
+      }
+    },
     async getCoinsList(myPage) {
 
       this.loading = true;
@@ -153,6 +204,32 @@ export default {
           // this.sortedCoinList = this.sortedCoins();
       } catch (e) {
           console.log(e);
+      }
+    },
+    async reformatCoinTable() {
+
+      if (this.isMobile) {
+
+        // Store removed items in removedHeaders array
+        this.removedHeaders = this.headers.filter(function( obj ) {
+          return obj.type === 'change';
+        });
+        this.headers = this.headers.filter(function( obj ) {
+          return obj.type !== 'change';
+        });
+
+      } else { 
+
+        // add change items to headers list
+        var tempHeaders = this.headers;
+        tempHeaders = tempHeaders.concat(this.removedHeaders);
+        this.removedHeaders = [];
+
+        // reorder list by id
+        tempHeaders.sort((a, b) => (a.index > b.index) ? 1 : -1)
+
+        // overwrite headers list
+        this.headers = tempHeaders;
       }
     },
     goToCoinDescription(coinId){
