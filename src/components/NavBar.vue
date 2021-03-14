@@ -5,6 +5,7 @@
         temporary
         bottom
         dark
+        class="primary"
         app
       >
         <v-list dense>
@@ -26,6 +27,7 @@
       <v-app-bar
         app
         dark
+        class="primary"
         elevate-on-scroll
         fixed
       >
