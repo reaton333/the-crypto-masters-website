@@ -36,7 +36,7 @@
           @click.stop="drawer = !drawer"
         >
         </v-app-bar-nav-icon>
-        <img class="mr-3" :src="require('../assets/logo.png')" height="40" >
+        <img class="mr-3" :src="require('../assets/logo.svg')" height="40" >
         <v-toolbar-title
           style="cursor: pointer" 
           @click="$router.push('/')"
