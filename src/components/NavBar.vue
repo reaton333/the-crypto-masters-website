@@ -19,7 +19,11 @@
               <v-icon>{{ navItem.icon }}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>{{ navItem.name }}</v-list-item-title>
+              <v-list-item-title
+                class="font-weight-bold"
+              >
+                {{ navItem.name }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -27,7 +31,7 @@
       <v-app-bar
         app
         dark
-        class="primary"
+        class="primary font-weight-bold"
         elevate-on-scroll
         fixed
       >
@@ -69,7 +73,7 @@ export default {
         { id: 3, name: 'Podcast', icon: 'mdi-microphone', route: '/podcast/'},
         { id: 4, name: 'Crypto', icon: 'mdi-bitcoin', route: '/crypto'},
       ],
-      navTitle: 'The Crypto Masters'
+      navTitle: 'THE CRYPTO MASTERS'
     }
   }
 
