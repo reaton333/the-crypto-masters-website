@@ -50,6 +50,7 @@
             x-large
             color="success"
             dark
+            @click="$router.push('/podcast/')"
           >
             Listen Now
           </v-btn>
