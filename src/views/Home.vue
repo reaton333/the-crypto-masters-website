@@ -1,17 +1,104 @@
 <template>
-  <v-container class="home">
-    <h1>This is the home page</h1>
+    <v-container>
+      <v-row 
+        no-gutters
+        align="center"
+        justify="center"
+      >
+        <v-col
+          sm="3"
+        >
+          <v-card
+            class="pa-2 rounded-lg"
+            tile
+          >
+            <v-img 
+              contain
+              aspect-ratio="1"
+              eager
+              alt="The Crypto Masters"
+              :src="require('../assets/crypto_masters_logo_withText.png')" 
+            ></v-img>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row 
+        no-gutters
+        align="center"
+        justify="center"
+      >
+        <div class="text-center"
+          sm="10"
+        >
+          <v-card
+            class="pa-2 text-h4 text-justify font-weight-bold"
+            elevation="0"
+          >
+            {{ cryptoMastersCatchPhrase }}
+          </v-card>
+        </div>
+      </v-row>
+      <v-row 
+        no-gutters
+        align="center"
+        justify="center"
+      >
+        <div class="text-center"
+          sm="10"
+        >
+          <v-btn
+            x-large
+            color="success"
+            dark
+          >
+            Listen Now
+          </v-btn>
+        </div>
+      </v-row>
+      <v-card
+        flat
+        tile
+        width="100%"
+        class="text-center"
+      >
+        <v-card-text>
+          <v-btn
+            v-for="podcast in podcasts"
+            :key="podcast.id"
+            class="mx-4 white--text"
+            icon
+            :href="podcast.url"
+          >
+            <v-icon 
+              size="48px"
+              color="secondary"
+            >
+              {{ podcast.icon }}
+            </v-icon>
+          </v-btn>
+        </v-card-text>
+      </v-card>
   </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-// import CoinList from '@/components/CoinList.vue'
 
 export default {
   name: 'Home',
   components: {
-    // CoinList
+    
+  },
+  data () {
+    return {
+      cryptoMastersCatchPhrase: 'Helping You Master an Understanding of Crypto Assets',
+      podcasts: [
+                { id: 1, icon: 'mdi-spotify', url: 'https://open.spotify.com/show/38kIh4n39NvSbUTJew7rF4?si=p5LCiy0fTKuZipgXDNpFbg' },
+                { id: 2, icon: 'mdi-podcast', url: 'https://podcasts.apple.com/us/podcast/the-crypto-masters-podcast/id1507473032' },
+                { id: 3, icon: 'mdi-amazon', url: 'https://www.amazon.com/The-Crypto-Masters-Podcast/dp/B08K59B5WN' },
+                { id: 4, icon: 'mdi-google-podcast', url: 'https://www.instagram.com/the_crypto_masters/' },
+                { id: 5, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
+      ],
+    }
   }
 }
 </script>
