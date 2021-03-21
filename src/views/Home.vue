@@ -1,16 +1,41 @@
 <template>
     <v-container>
       <v-row 
-        no-gutters
+        justify="space-around"
         align="center"
-        justify="center"
       >
         <v-col
-          sm="3"
+          sm="7"
         >
           <v-card
-            class="pa-2 rounded-lg"
-            tile
+            class="pa-2 text-h3 text-justify font-weight-bold"
+            elevation="0"
+          >
+            {{ catchPhrase }}
+          </v-card>
+          <v-card
+            class="pa-2 text-h6 text-justify"
+            elevation="0"
+          >
+            {{ subPhrase }}
+          </v-card>
+          <v-btn
+            x-large
+            color="success"
+            dark
+            @click="$router.push('/podcast/')"
+          >
+            Listen Now
+          </v-btn>
+        <!-- </div> -->
+        </v-col>
+        <v-col
+          sm="4"
+        >
+          <v-card
+            class="pa-2 rounded-xl"
+            elevation="2"
+            color="primary"
           >
             <v-img 
               contain
@@ -21,40 +46,6 @@
             ></v-img>
           </v-card>
         </v-col>
-      </v-row>
-      <v-row 
-        no-gutters
-        align="center"
-        justify="center"
-      >
-        <div class="text-center"
-          sm="10"
-        >
-          <v-card
-            class="pa-2 text-h4 text-justify font-weight-bold"
-            elevation="0"
-          >
-            {{ cryptoMastersCatchPhrase }}
-          </v-card>
-        </div>
-      </v-row>
-      <v-row 
-        no-gutters
-        align="center"
-        justify="center"
-      >
-        <div class="text-center"
-          sm="10"
-        >
-          <v-btn
-            x-large
-            color="success"
-            dark
-            @click="$router.push('/podcast/')"
-          >
-            Listen Now
-          </v-btn>
-        </div>
       </v-row>
       <v-card
         flat
@@ -91,7 +82,8 @@ export default {
   },
   data () {
     return {
-      cryptoMastersCatchPhrase: 'Helping You Master an Understanding of Crypto Assets',
+      catchPhrase: 'Helping You Master an Understanding of Crypto Assets',
+      subPhrase: 'We provide information about crypto assets to allow the public to make their own decisions',
       podcasts: [
                 { id: 1, icon: 'mdi-spotify', url: 'https://open.spotify.com/show/38kIh4n39NvSbUTJew7rF4?si=p5LCiy0fTKuZipgXDNpFbg' },
                 { id: 2, icon: 'mdi-podcast', url: 'https://podcasts.apple.com/us/podcast/the-crypto-masters-podcast/id1507473032' },
