@@ -1,13 +1,5 @@
 <template>
   <div style="padding = 0;">
-    <div class="text-center" v-if="!isMobile">      
-      <v-pagination
-          v-model="page"
-          total-visible="8"
-          :length="Math.floor(totalCoins/pageSize)+1"
-          @input="getCoinsList"
-      ></v-pagination>
-    </div>
     <v-container v-if="loading" style="height: 300px;">
       <v-row
         class="fill-height"
