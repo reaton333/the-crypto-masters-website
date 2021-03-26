@@ -8,26 +8,32 @@
           sm="7"
         >
           <v-card
-            class="pa-2 text-h3 text-justify font-weight-bold"
+            class="pa-2"
             elevation="0"
           >
-            {{ catchPhrase }}
+            <v-card-title
+              class="text-left pb-12 text-h3 font-weight-medium"
+            >
+              {{ catchPhrase }}
+            </v-card-title>
+            <v-card-subtitle
+              class="text-h5 text-left"
+              elevation="0"
+            >
+              {{ subPhrase }}
+            </v-card-subtitle>
+            <v-card-actions
+            >
+              <v-btn
+                x-large
+                color="success"
+                dark
+                @click="$router.push('/podcast/')"
+              >
+                Listen Now
+              </v-btn>
+            </v-card-actions>
           </v-card>
-          <v-card
-            class="pa-2 text-h6 text-justify"
-            elevation="0"
-          >
-            {{ subPhrase }}
-          </v-card>
-          <v-btn
-            x-large
-            color="success"
-            dark
-            @click="$router.push('/podcast/')"
-          >
-            Listen Now
-          </v-btn>
-        <!-- </div> -->
         </v-col>
         <v-col
           sm="4"
@@ -57,12 +63,12 @@
           <v-btn
             v-for="podcast in podcasts"
             :key="podcast.id"
-            class="mx-4 white--text"
+            class="mx-4 white--text space-around"
             icon
             :href="podcast.url"
           >
             <v-icon 
-              size="48px"
+              size="72px"
               color="secondary"
             >
               {{ podcast.icon }}
@@ -91,11 +97,15 @@ export default {
                 { id: 4, icon: 'mdi-google-podcast', url: 'https://podcasts.google.com/feed/aHR0cHM6Ly90aGVjcnlwdG9tYXN0ZXJzLnBvZGJlYW4uY29tL2ZlZWQueG1s' },
                 { id: 5, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
       ],
+      socialMessage: 'TUNE IN TO OUR SHOW'
     }
   }
 }
 </script>
 
 <style>
+.v-card__text, .v-card__title {
+  word-break: normal !important;
+}
 
 </style>
