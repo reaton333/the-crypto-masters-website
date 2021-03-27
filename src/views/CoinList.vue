@@ -1,5 +1,14 @@
 <template>
   <div style="padding = 0;">
+    <v-autocomplete
+      v-model="allCoins"
+      :items="allCoins"
+      item-text="name"
+      dense
+      clearable
+      filled
+      label="Search"
+    ></v-autocomplete>
     <v-container v-if="loading" style="height: 300px;">
       <v-row
         class="fill-height"
@@ -77,6 +86,11 @@
       <template v-slot:item.current_price="{ item }">
         <span>{{ formatPrice(item.current_price) }}</span>
       </template>
+      <template v-slot:item.price_change_percentage_24h_in_currency="{ item }">
+        <span :class="item.price_change_percentage_24h_in_currency >= 0 ? 'success--text' : 'error--text'">
+          {{ formatPercentGain(item.price_change_percentage_24h_in_currency) }}
+        </span>
+      </template>
       <template v-slot:item.price_change_percentage_7d_in_currency="{ item }">
         <span :class="item.price_change_percentage_7d_in_currency >= 0 ? 'success--text' : 'error--text'">
           {{ formatPercentGain(item.price_change_percentage_7d_in_currency) }}
@@ -87,11 +101,11 @@
           {{ formatPercentGain(item.price_change_percentage_30d_in_currency) }}
         </span>
       </template>
-      <template v-slot:item.price_change_percentage_1y_in_currency="{ item }">
+      <!-- <template v-slot:item.price_change_percentage_1y_in_currency="{ item }">
         <span :class="item.price_change_percentage_1y_in_currency >= 0 ? 'success--text' : 'error--text'">
           {{ formatPercentGain(item.price_change_percentage_1y_in_currency) }}
         </span>
-      </template>
+      </template> -->
       <template v-slot:item.market_cap="{ item }">
         <span>{{ formatMarketCap(item.market_cap) }}</span>
       </template>
@@ -118,12 +132,13 @@ export default {
         },
         headers: 
         [
-          { index: 1, type: 'detail', text: '#', align: 'start', sortable: false, value: 'market_cap_rank' },
-          { index: 2, type: 'detail', text: 'Coin', align: 'start', value: 'name' },
-          { index: 3, type: 'detail', text: 'Price', align: 'end', value: 'current_price' },
+          { index: 0, type: 'detail', text: '#', align: 'start', sortable: false, value: 'market_cap_rank' },
+          { index: 1, type: 'detail', text: 'Coin', align: 'start', value: 'name' },
+          { index: 2, type: 'detail', text: 'Price', align: 'end', value: 'current_price' },
+          { index: 3, type: 'change', text: '24h', align: 'end', value: 'price_change_percentage_24h_in_currency' },
           { index: 4, type: 'change', text: '7d', align: 'end', value: 'price_change_percentage_7d_in_currency' },
           { index: 5, type: 'change', text: '30d', align: 'end', value: 'price_change_percentage_30d_in_currency' },
-          { index: 6, type: 'change', text: '1y', align: 'end', value: 'price_change_percentage_1y_in_currency' },
+          // { index: 6, type: 'change', text: '1y', align: 'end', value: 'price_change_percentage_1y_in_currency' },
           { index: 7, type: 'detail', text: 'Market Cap', align: 'end', value: 'market_cap' },
         ],
         // Storing the headers I remove here so I can add them back later
@@ -171,7 +186,7 @@ export default {
 
       try {
           const baseURL = `https://api.coingecko.com/api/v3/coins/markets`
-          const params = `?vs_currency=${this.currency}&order=market_cap_desc&per_page=${this.pageSize}&page=${myPage}&sparkline=false&price_change_percentage=7d%2C30d%2C1y`
+          const params = `?vs_currency=${this.currency}&order=market_cap_desc&per_page=${this.pageSize}&page=${myPage}&sparkline=false&price_change_percentage=24h%2C7d%2C30d`
           const fullPath = baseURL + params
           // console.log(fullPath)
           const res = await axios.get(fullPath)
