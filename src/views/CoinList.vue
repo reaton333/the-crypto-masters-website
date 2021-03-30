@@ -1,6 +1,6 @@
 <template>
   <div style="padding = 0;">
-    <!-- <v-autocomplete
+    <v-autocomplete
       v-model="allCoins"
       :items="allCoins"
       item-text="name"
@@ -9,7 +9,7 @@
       filled
       label="Search"
       @change="goToCoinPage()"
-    ></v-autocomplete> -->
+    ></v-autocomplete>
     <v-container v-if="loading" style="height: 300px;">
       <v-row
         class="fill-height"
@@ -203,13 +203,13 @@ export default {
     async getAllCoins() {
 
       try {
-          const baseURL = `https://api.coingecko.com/api/v3/coins/list`
-          const params = ``
+          const baseURL = `https://api.coingecko.com/api/v3/search`
+          const params = `?local=en`
           const fullPath = baseURL + params
           // console.log(fullPath)
           const res = await axios.get(fullPath)
 
-          this.allCoins = res.data;
+          this.allCoins = res.data.coins;
           this.totalCoins = this.allCoins.length;
           // this.sortedCoinList = this.sortedCoins();
       } catch (e) {

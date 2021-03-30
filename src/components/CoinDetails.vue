@@ -140,7 +140,7 @@ export default {
                 if (dateRange == 'max') {
 
                     var apiParams = `?vs_currency=usd&days=max&interval=monthly`
-                    // console.log(this.coinGenesisDate)
+                    console.log(this.coinGenesisDate)
                     this.fromDateRange = new Date(this.coinGenesisDate).getTime() / 1000
                     // this.fromDateRange = this.coinGenesisDate;
 
