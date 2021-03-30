@@ -9,7 +9,26 @@
       filled
       label="Search"
       @change="goToCoinPage()"
-    ></v-autocomplete>
+    >
+      <template v-slot:item="data">
+        <v-list-item-avatar>
+          <v-img 
+            :src="data.item.thumb"
+            max-height="20"
+            max-width="20"
+          >
+          </v-img>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ data.item.name }} - {{ data.item.symbol }}
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            #{{ data.item.market_cap_rank }}
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </template>
+    </v-autocomplete>
     <v-container v-if="loading" style="height: 300px;">
       <v-row
         class="fill-height"
