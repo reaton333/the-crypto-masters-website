@@ -1,8 +1,8 @@
 <template>
     <v-container>
         <CoinDetails/>
-        <hr>
-        <CoinChart/>
+        <!-- <hr> -->
+        <!-- <CoinChart/> -->
     </v-container>
 </template>
 

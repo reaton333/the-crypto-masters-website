@@ -1,6 +1,6 @@
 <template>
   <div style="padding = 0;">
-    <v-autocomplete
+    <!-- <v-autocomplete
       v-model="allCoins"
       :items="allCoins"
       item-text="name"
@@ -8,7 +8,8 @@
       clearable
       filled
       label="Search"
-    ></v-autocomplete>
+      @change="goToCoinPage()"
+    ></v-autocomplete> -->
     <v-container v-if="loading" style="height: 300px;">
       <v-row
         class="fill-height"
@@ -46,8 +47,8 @@
         <v-row v-if="!isMobile">
           <v-img 
             class="coinLogo" 
-            v-bind:src="item.image" 
-            v-bind:alt="item.name"
+            :src="item.image" 
+            :alt="item.name"
             contain
             max-width="30"
             max-height="30"
@@ -146,6 +147,7 @@ export default {
         removedHeaders: [], 
         coins: [],
         allCoins: [],
+        searchableCoinList: [],
         loading: true,
         currentSort: 'market_cap',
         sortDesc: true,
@@ -213,6 +215,11 @@ export default {
       } catch (e) {
           console.log(e);
       }
+
+      
+    },
+    goToCoinPage() {
+      console.log('ENTER goToCoinPage()...')
     },
     async reformatCoinTable() {
 
