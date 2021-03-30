@@ -133,32 +133,22 @@ export default {
     methods: {
         async createChart(dateRange) {
 
-            if (dateRange == 'max') {
-                const baseURL = `https://api.coingecko.com/api/v3/coins/${ this.coinId }/market_chart?vs_currency=usd&`
-                var apiParams = `days=max&interval=monthly`
+            if (this.currentDateRange !== dateRange) {
 
-                var fullURL = baseURL + apiParams
+                const baseURL = `https://api.coingecko.com/api/v3/coins/${ this.coinId }/market_chart/`
 
-                try {
-                    const res = await axios.get(fullURL)
+                if (dateRange == 'max') {
 
-                    this.prices = res.data.prices;
-                    this.marketCaps = res.data.market_caps;
-                    this.totalVolumes = res.data.total_volumes;
+                    var apiParams = `?vs_currency=usd&days=max&interval=monthly`
+                    // console.log(this.coinGenesisDate)
+                    this.fromDateRange = new Date(this.coinGenesisDate).getTime() / 1000
+                    // this.fromDateRange = this.coinGenesisDate;
 
-                } catch (e) {
-  
-                    console.log(e.response.status);
+                } else {
+
+                    this.setDateRangesUnix(dateRange)
+                    var apiParams = `range?vs_currency=usd&from=${ this.fromDateRange }&to=${ this.toDateRange }`
                 }
-
-                this.formatChart();
-
-            } else if (this.currentDateRange !== dateRange) {
-
-                this.setDateRangesUnix(dateRange)
-
-                const baseURL = `https://api.coingecko.com/api/v3/coins/${ this.coinId }/market_chart/range?vs_currency=usd&`
-                var apiParams = `from=${ this.fromDateRange }&to=${ this.toDateRange }`
 
                 var fullURL = baseURL + apiParams
                 // console.log(fullURL)
@@ -211,6 +201,17 @@ export default {
             title.text = this.coinDetails.name;
             title.fontSize = 25;
 
+            let topContainer = chart.chartContainer.createChild(am4core.Container);
+            topContainer.layout = "absolute";
+            topContainer.toBack();
+            topContainer.paddingBottom = 0;
+            topContainer.width = am4core.percent(100);
+
+            let dateTitle = topContainer.createChild(am4core.Label);
+            dateTitle.text = this.formatUnixDate(this.fromDateRange) + " to " + this.formatUnixDate(this.toDateRange);
+            dateTitle.fontWeight = 600;
+            dateTitle.align = "right";
+
             let watermark = new am4core.Image();
             watermark.href = this.coinImage;
             chart.plotContainer.children.push(watermark);
@@ -232,7 +233,7 @@ export default {
             series.dataFields.dateX = "date";
             series.dataFields.valueY = "value";
 
-            series.tooltipText = "[bold]Date:[/] {dateX.formatDate('MMM, dd yyyy')}\n[bold]Price:[/] ${valueY.formatNumber('#,###.00')}";
+            series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY.formatNumber('#,###.00')}";
             series.tooltip.getFillFromObject = false;
             series.tooltip.background.fill = am4core.color("#2A9D8F");
 
@@ -295,6 +296,29 @@ export default {
 
             return formatter.format(value)
         },
+        formatUnixDate(theUnixDate) {
+            // Unixtimestamp
+            var unixtimestamp = theUnixDate;
+
+            // Months array
+            var months_arr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+            // Convert timestamp to milliseconds
+            var date = new Date(unixtimestamp*1000);
+
+            // Year
+            var year = date.getFullYear();
+
+            // Month
+            var month = months_arr[date.getMonth()];
+
+            // Day
+            var day = date.getDate();
+            // Display date time in MM-dd-yyyy h:m:s format
+            var convdataTime = month+'-'+day+'-'+year;
+            
+            return convdataTime; 
+        }
     }
 }
 </script>
