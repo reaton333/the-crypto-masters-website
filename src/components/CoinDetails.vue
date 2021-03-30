@@ -183,7 +183,7 @@ export default {
         },
         formatChart() {
 
-            // Clear the chart if it exists before creating anthoer one!
+            // Clear the chart if it exists before creating another one!
             if (this.chart) {
                 // console.log('Disposing chart.....');
                 this.chart.dispose();
@@ -207,6 +207,19 @@ export default {
 
             chart.data = data;
 
+            let title = chart.titles.create();
+            title.text = this.coinDetails.name;
+            title.fontSize = 25;
+
+            let watermark = new am4core.Image();
+            watermark.href = this.coinImage;
+            chart.plotContainer.children.push(watermark);
+            watermark.align = "right";
+            watermark.valign = "bottom";
+            watermark.opacity = 0.4;
+            watermark.marginRight = 10;
+            watermark.marginBottom = 5;
+
             let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
             dateAxis.renderer.grid.template.location = 0;
             // dateAxis.tooltipDateFormat = "yyyy-MM-dd";
@@ -219,7 +232,9 @@ export default {
             series.dataFields.dateX = "date";
             series.dataFields.valueY = "value";
 
-            series.tooltipText = "Date: {dateX.formatDate('MMM, dd yyyy')}\nPrice: ${valueY.formatNumber('#,###.00')}";
+            series.tooltipText = "[bold]Date:[/] {dateX.formatDate('MMM, dd yyyy')}\n[bold]Price:[/] ${valueY.formatNumber('#,###.00')}";
+            series.tooltip.getFillFromObject = false;
+            series.tooltip.background.fill = am4core.color("#2A9D8F");
 
             chart.cursor = new am4charts.XYCursor();
 
