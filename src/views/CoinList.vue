@@ -4,30 +4,37 @@
       v-model="allCoins"
       :items="allCoins"
       item-text="name"
+      item-value="id"
+      no-data-text="No coins to display"
+      auto-select-first
       dense
-      clearable
+      solo
       filled
       label="Search"
-      @change="goToCoinPage()"
+      @input="goToCoinDescription"
     >
-      <template v-slot:item="data">
-        <v-list-item-avatar>
-          <v-img 
-            :src="data.item.thumb"
-            max-height="20"
-            max-width="20"
-          >
-          </v-img>
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title>
-            {{ data.item.name }} - {{ data.item.symbol }}
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            #{{ data.item.market_cap_rank }}
-          </v-list-item-subtitle>
-        </v-list-item-content>
+      <template 
+        v-slot:item="data"
+      >
+          <v-list-item-avatar>
+            <v-img 
+              :src="data.item.thumb"
+              max-height="20"
+              max-width="20"
+            >
+            </v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ data.item.name }} - {{ data.item.symbol }}
+            </v-list-item-title>
+            
+          </v-list-item-content>
       </template>
+
+      <!-- <v-list-item-subtitle>
+              #{{ data.item.market_cap_rank }}
+            </v-list-item-subtitle> -->
     </v-autocomplete>
     <v-container v-if="loading" style="height: 300px;">
       <v-row
@@ -230,15 +237,10 @@ export default {
 
           this.allCoins = res.data.coins;
           this.totalCoins = this.allCoins.length;
-          // this.sortedCoinList = this.sortedCoins();
       } catch (e) {
           console.log(e);
       }
 
-      
-    },
-    goToCoinPage() {
-      console.log('ENTER goToCoinPage()...')
     },
     async reformatCoinTable() {
 
@@ -266,8 +268,11 @@ export default {
         this.headers = tempHeaders;
       }
     },
+    itemSelectedMethod(coinIdSelected) {
+      console.log('You selected an item!')
+    },
     goToCoinDescription(coinId){
-      // console.log(coinId)
+      console.log('ENTER coinDescription for: ' + coinId)
       this.$router.push({ 
         name: 'Coin',
         params: {
