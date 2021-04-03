@@ -9,10 +9,11 @@
         >
           <v-card
             class="pa-2 mt-8"
+            color="rgb(255, 0, 0, 0)"
             elevation="0"
           >
             <v-card-title
-              class="text-left pb-12 text-h3 font-weight-medium"
+              class="text-left pb-12 text-h3 font-weight-bold"
             >
               {{ catchPhrase }}
             </v-card-title>
@@ -39,16 +40,16 @@
           sm="4"
         >
           <v-card
-            class="pa-2 rounded-xl"
-            elevation="2"
-            color="primary"
+            class=""
+            color="rgb(255, 0, 0, 0)"
+            elevation="0"
           >
             <v-img 
               contain
               aspect-ratio="1"
               eager
               alt="The Crypto Masters"
-              :src="require('../assets/crypto_masters_logo_withText.png')" 
+              :src="require('../assets/crypto_masters_logo_withText_rounded.svg')" 
             ></v-img>
           </v-card>
         </v-col>

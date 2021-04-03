@@ -28,5 +28,9 @@ export default {
 </script>
 
 <style>
-
+#app {
+  background: url('assets/crypto_shattered.png')
+    center center fixed !important;
+  background-size: cover;
+}
 </style>
