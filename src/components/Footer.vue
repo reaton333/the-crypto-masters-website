@@ -1,13 +1,13 @@
 <template>
     <v-footer
+      app
+      absolute
       padless
       primary
-      width="100%"
     >
       <v-card
         flat
         tile
-        width="100%"
         class="primary text-center"
       >
         <v-card-text>

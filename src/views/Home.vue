@@ -1,115 +1,120 @@
 <template>
-    <v-container>
-      <v-row 
-        justify="space-around"
-        align="center"
+  <v-container>
+    <v-row 
+      justify="space-around"
+      align="center"
+    >
+      <v-col
+        sm="7"
       >
-        <v-col
-          sm="7"
+        <v-card
+          class="pa-2 mt-8"
+          color="rgb(255, 0, 0, 0)"
+          elevation="0"
         >
-          <v-card
-            class="pa-2 mt-8"
-            color="rgb(255, 0, 0, 0)"
+          <v-card-title
+            class="text-left pb-12 
+              text-xl-h3 text-lg-h3 text-md-h3 text-sm-h4 text-xs-h5 
+              font-weight-bold"
+          >
+            {{ catchPhrase }}
+          </v-card-title>
+          <v-card-subtitle
+            class="text-left
+              text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-xs-body-1"
             elevation="0"
           >
-            <v-card-title
-              class="text-left pb-12 text-h3 font-weight-bold"
-            >
-              {{ catchPhrase }}
-            </v-card-title>
-            <v-card-subtitle
-              class="text-h5 text-left"
-              elevation="0"
-            >
-              {{ subPhrase }}
-            </v-card-subtitle>
-            <v-card-actions
-            >
-              <v-btn
-                x-large
-                color="success"
-                dark
-                @click="$router.push('/podcast/')"
-              >
-                Listen Now
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-        <v-col
-          sm="4"
-        >
-          <v-card
-            class=""
-            color="rgb(255, 0, 0, 0)"
-            elevation="0"
+            {{ subPhrase }}
+          </v-card-subtitle>
+          <v-card-actions
           >
-            <v-img 
-              contain
-              aspect-ratio="1"
-              eager
-              alt="The Crypto Masters"
-              :src="require('../assets/crypto_masters_logo_withText_rounded.svg')" 
-            ></v-img>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row
-        class="pa-16"
-      ></v-row>
-      <v-row
-        class="pa-8"
-      ></v-row>
-      <v-row
-        align="center"
-        justify="space-around"
-      >
-      <v-card
-        class="pa-2 text-center primary"
-        align="center"
-        tile
-        width="100%"
-      >
-        <v-card-title
-          class="justify-center white--text text-h4"
-        >
-          {{ socialMessage }}
-        </v-card-title>
-        <v-divider
-          dark
-        ></v-divider>
-          <v-row
-          align="center"
-          justify="space-around"
-          >
-            <v-col
-              class="pa-10"
-              v-for="podcast in podcasts"
-              :key="podcast.id"
+            <v-btn
+              x-large
+              color="success"
+              dark
+              class="text-left
+              text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body2"
+              @click="$router.push('/podcast/')"
             >
-              <v-btn
-                class="mx-4 white--text space-around"
-                icon
-                x-large
-                :href="podcast.url"
-              >
-                <v-icon 
-                  size="72px"
-                  color="secondary"
-                >
-                  {{ podcast.icon }}
-                </v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
+              Listen Now
+            </v-btn>
+          </v-card-actions>
         </v-card>
-      </v-row>
-      <v-row
-        class="pa-16"
-      ></v-row>
-      <v-row
-        class="pa-8"
-      ></v-row>
+      </v-col>
+      <v-col
+        sm="4"
+      >
+        <v-card
+          class=""
+          color="rgb(255, 0, 0, 0)"
+          elevation="0"
+        >
+          <v-img 
+            contain
+            aspect-ratio="1"
+            eager
+            alt="The Crypto Masters"
+            :src="require('../assets/crypto_masters_logo_withText_rounded.svg')" 
+          ></v-img>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row
+      class="pa-16"
+    ></v-row>
+    <v-row
+      class="pa-8"
+    ></v-row>
+    <v-row
+      align="center"
+      justify="space-around"
+    >
+    <v-card
+      class="pa-2 text-center primary"
+      align="center"
+      tile
+      width="100%"
+    >
+      <v-card-title
+        class="justify-center white--text text-h4"
+      >
+        {{ socialMessage }}
+      </v-card-title>
+      <v-divider
+        dark
+      ></v-divider>
+        <v-row
+        align="center"
+        justify="space-around"
+        >
+          <v-col
+            class="pa-10"
+            v-for="podcast in podcasts"
+            :key="podcast.id"
+          >
+            <v-btn
+              class="mx-4 white--text space-around"
+              icon
+              x-large
+              :href="podcast.url"
+            >
+              <v-icon 
+                size="72px"
+                color="secondary"
+              >
+                {{ podcast.icon }}
+              </v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-row>
+    <v-row
+      class="pa-16"
+    ></v-row>
+    <v-row
+      class="pa-8"
+    ></v-row>
   </v-container>
 </template>
 

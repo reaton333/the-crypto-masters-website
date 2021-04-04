@@ -1,65 +1,58 @@
 <template>
-  <v-container 
-    class="pa-0"
-  >
-      <v-row
-          no-gutters
-          class="pa-0"
+  <v-container>
+    <v-row
+      no-gutters
+      class="pa-0"
+    >
+      <v-col>
+      </v-col>
+      <v-col>
+      </v-col>
+      <v-col
+      >
+        <v-autocomplete
+          v-model="allCoins"
+          :items="allCoins"
+          item-text="name"
+          item-value="id"
+          no-data-text="No coins to display"
+          auto-select-first
+          dense
+          solo
+          filled
+          label="Search"
+          @input="goToCoinDescription"
         >
-          <v-col
-
+          <template 
+            v-slot:item="data"
           >
-          </v-col>
-          <v-col
+              <v-list-item-avatar>
+                <v-img 
+                  :src="data.item.thumb"
+                  max-height="22"
+                  max-width="22"
+                >
+                </v-img>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title
+                  class=""
+                >
+                  {{ data.item.name }} - {{ data.item.symbol }}
+                </v-list-item-title>
+                
+              </v-list-item-content>
+          </template>
 
-          >
-          </v-col>
-          <v-col
-
-          >
-            <v-autocomplete
-              v-model="allCoins"
-              :items="allCoins"
-              item-text="name"
-              item-value="id"
-              no-data-text="No coins to display"
-              auto-select-first
-              dense
-              solo
-              filled
-              label="Search"
-              @input="goToCoinDescription"
-            >
-              <template 
-                v-slot:item="data"
-              >
-                  <v-list-item-avatar>
-                    <v-img 
-                      :src="data.item.thumb"
-                      max-height="22"
-                      max-width="22"
-                    >
-                    </v-img>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title
-                      class=""
-                    >
-                      {{ data.item.name }} - {{ data.item.symbol }}
-                    </v-list-item-title>
-                    
-                  </v-list-item-content>
-              </template>
-
-              <!-- <v-list-item-subtitle>
-                      #{{ data.item.market_cap_rank }}
-                    </v-list-item-subtitle> -->
-            </v-autocomplete>
-          </v-col>
-      </v-row>
+          <!-- <v-list-item-subtitle>
+                  #{{ data.item.market_cap_rank }}
+                </v-list-item-subtitle> -->
+        </v-autocomplete>
+      </v-col>
+    </v-row>
     <!-- </v-container> -->
-    <v-container v-if="loading" style="height: 300px;">
-      <v-row
+    <v-row v-if="loading" style="height: 300px;"
+      
         class="fill-height"
         align-content="center"
         justify="center"
@@ -79,7 +72,7 @@
           ></v-progress-linear>
         </v-col>
       </v-row>
-    </v-container>
+    <!-- </v-container> -->
     <v-data-table
       v-else
       :headers="headers"
