@@ -14,14 +14,14 @@
         >
           <v-card-title
             class="text-left pb-12 
-              text-xl-h3 text-lg-h3 text-md-h3 text-sm-h4 text-xs-h5 
+              text-xl-h3 text-lg-h3 text-md-h3 text-sm-h4 text-xs-h4 
               font-weight-bold"
           >
             {{ catchPhrase }}
           </v-card-title>
           <v-card-subtitle
             class="text-left
-              text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-xs-body-1"
+              text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-xs-h6"
             elevation="0"
           >
             {{ subPhrase }}
