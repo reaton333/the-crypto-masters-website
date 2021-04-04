@@ -33,10 +33,32 @@
               color="success"
               dark
               class="text-left
-              text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body2"
+              text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
               @click="$router.push('/podcast/')"
             >
               Listen Now
+              <v-icon
+                right
+                dark
+              >
+                mdi-podcast
+              </v-icon>
+            </v-btn>
+            <v-btn
+              x-large
+              color="secondary"
+              dark
+              class="text-left black--text
+              text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
+              @click="$router.push('/crypto')"
+            >
+              Crypto Tracking
+              <v-icon
+                right
+                light
+              >
+                mdi-bitcoin
+              </v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
