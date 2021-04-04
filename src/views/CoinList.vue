@@ -68,6 +68,7 @@
             color="secondary"
             indeterminate
             rounded
+            class="color: white"
             height="6"
           ></v-progress-linear>
         </v-col>
