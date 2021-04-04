@@ -7,6 +7,7 @@
         ></v-breadcrumbs>
         <v-card
             elevation="0"
+            color="rgb(255, 0, 0, 0)"
         >
             <v-img 
                 class="" 
