@@ -1,6 +1,5 @@
 <template>
     <v-footer
-      
       padless
       primary
     >
@@ -8,6 +7,7 @@
         flat
         tile
         class="primary text-center"
+        width="inherit"
       >
         <v-card-text>
           <v-btn
