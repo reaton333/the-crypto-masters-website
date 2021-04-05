@@ -1,7 +1,6 @@
 <template>
     <v-footer
-      app
-      absolute
+      
       padless
       primary
     >
