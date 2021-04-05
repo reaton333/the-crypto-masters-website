@@ -2,6 +2,7 @@
     <v-footer
       padless
       primary
+      width="100%"
     >
       <v-card
         flat
