@@ -4,16 +4,29 @@
       align="center"
       justify="center"
     >
-      <h1 class="header">Episode List</h1>
+      <v-card
+        elevation="0"
+        color="rgb(255, 0, 0, 0)"
+      >
+        <v-card-title
+          class="text-h3 font-weight-bold"
+        >
+          Episodes
+        </v-card-title>
+      </v-card>
     </v-row>
-    <div class="wrap">
+    <v-row
+      style="width: 80%;"
+      align="center"
+      align-content="center"
+    >
       <v-text-field
         label="Search Episodes"
-        outlined
+        solo
         v-model="searchVal"
         append-outer-icon="mdi-magnify"
       ></v-text-field>
-    </div>
+    </v-row>
     <div v-if="filteredEpisodes.length" class="episode-cards">
         <div class="card" v-for="episode in filteredEpisodes" v-bind:key="episode">
           <EpisodeCard :episodeData="episode" />
@@ -100,10 +113,6 @@ export default {
     /* padding-bottom: 5%; */
 }
 
-.header {
-    padding-top: 5%;
-    padding-bottom: 5%;
-}
 
 .card {
   width: 25%;
