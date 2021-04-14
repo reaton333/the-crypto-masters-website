@@ -10,44 +10,7 @@
       </v-col>
       <v-col
       >
-        <v-autocomplete
-          v-model="allCoins"
-          :items="allCoins"
-          item-text="name"
-          item-value="id"
-          no-data-text="No coins to display"
-          auto-select-first
-          dense
-          solo
-          filled
-          label="Search"
-          @input="goToCoinDescription"
-        >
-          <template 
-            v-slot:item="data"
-          >
-              <v-list-item-avatar>
-                <v-img 
-                  :src="data.item.thumb"
-                  max-height="22"
-                  max-width="22"
-                >
-                </v-img>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title
-                  class=""
-                >
-                  {{ data.item.name }} - {{ data.item.symbol }}
-                </v-list-item-title>
-                
-              </v-list-item-content>
-          </template>
-
-          <!-- <v-list-item-subtitle>
-                  #{{ data.item.market_cap_rank }}
-                </v-list-item-subtitle> -->
-        </v-autocomplete>
+        <CoinSearch/>
       </v-col>
     </v-row>
     <!-- </v-container> -->
@@ -164,8 +127,13 @@
 
 <script>
 import axios from 'axios';
+import CoinSearch from '@/components/CoinSearch.vue'
 
 export default {
+  name: 'CoinList',
+  components: {
+    CoinSearch,
+  },
   data () {
     return {
         isMobile: false,
@@ -188,7 +156,6 @@ export default {
         // This is for mobile resizing
         removedHeaders: [], 
         coins: [],
-        allCoins: [],
         searchableCoinList: [],
         loading: true,
         currentSort: 'market_cap',
@@ -205,7 +172,7 @@ export default {
     this.handleResize();
 
     this.page = 1;
-    this.getAllCoins();
+    // this.getAllCoins();
     this.getCoinsList(this.page);
   },
   destroyed() {
@@ -242,22 +209,6 @@ export default {
           console.log(e);
       }
     },
-    async getAllCoins() {
-
-      try {
-          const baseURL = `https://api.coingecko.com/api/v3/search`
-          const params = `?local=en`
-          const fullPath = baseURL + params
-          // console.log(fullPath)
-          const res = await axios.get(fullPath)
-
-          this.allCoins = res.data.coins;
-          this.totalCoins = this.allCoins.length;
-      } catch (e) {
-          console.log(e);
-      }
-
-    },
     async reformatCoinTable() {
 
       if (this.isMobile) {
@@ -286,15 +237,6 @@ export default {
     },
     itemSelectedMethod(coinIdSelected) {
       console.log('You selected an item!')
-    },
-    goToCoinDescription(coinId){
-      console.log('ENTER coinDescription for: ' + coinId)
-      this.$router.push({ 
-        name: 'Coin',
-        params: {
-          coinId: coinId
-        }
-      })
     },
     formatPrice(value) {
       // Create our number formatter.

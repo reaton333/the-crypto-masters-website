@@ -8,13 +8,13 @@
 
 <script>
 import CoinDetails from '@/components/CoinDetails.vue'
-import CoinChart from '@/components/CoinChart.vue'
+// import CoinChart from '@/components/CoinChart.vue'
 
 export default {
     name: 'Coin',
     components: {
         CoinDetails,
-        CoinChart
+        // CoinChart
     },
 
 }
