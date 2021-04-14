@@ -198,6 +198,40 @@ export default {
 
             chart.data = data;
 
+            chart.responsive.enabled = true;
+
+            chart.responsive.enabled = true;
+            chart.responsive.useDefault = false
+
+            chart.responsive.rules.push({
+            relevant: function(target) {
+                if (target.pixelWidth <= 400) {
+                return true;
+                }
+                
+                return false;
+            },
+            state: function(target, stateId) {
+                
+                if (target instanceof am4charts.Chart) {
+                    var state = target.states.create(stateId);
+                    state.properties.paddingTop = 0;
+                    state.properties.paddingRight = 15;
+                    state.properties.paddingBottom = 5;
+                    state.properties.paddingLeft = 15;
+                    return state;
+                }
+                
+                if (target instanceof am4core.Scrollbar) {
+                    var state = target.states.create(stateId);
+                    state.properties.marginBottom = -10;
+                    return state;
+                }
+                               
+                return null;
+            }
+            });
+
             let title = chart.titles.create();
             title.text = this.coinDetails.name;
             title.fontSize = 25;
