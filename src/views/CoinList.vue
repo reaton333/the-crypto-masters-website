@@ -209,6 +209,15 @@ export default {
           console.log(e);
       }
     },
+    goToCoinDescription(coinId){
+      console.log('ENTER coinDescription for: ' + coinId)
+      this.$router.push({ 
+          name: 'Coin',
+          params: {
+          coinId: coinId
+          }
+      })
+    },
     async reformatCoinTable() {
 
       if (this.isMobile) {
