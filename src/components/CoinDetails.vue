@@ -44,8 +44,7 @@
         <v-form v-model="valid">
             <v-container>
             <v-row>
-
-
+                <CoinSearch/>
             </v-row>
             <v-row>
                 <v-col
@@ -122,9 +121,15 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
+import CoinSearch from '@/components/CoinSearch.vue'
+
 am4core.useTheme(am4themes_animated);
 
 export default {
+    name: 'CoinDetails',
+    components: {
+        CoinSearch,
+    },
     data() {
         return {
             coinId: '',
@@ -202,6 +207,11 @@ export default {
             vm.breadCrumbItems[0].href = from
             console.log(from)
         })
+    },
+    watch: {
+      menu (val) {
+        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+      },
     },
     methods: {
         async createChart(dateRange) {
