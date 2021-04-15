@@ -56,8 +56,8 @@
                     md="4"
                     >
                     <v-menu
-                        ref="menu"
-                        v-model="menu"
+                        ref="startDateMenu"
+                        v-model="startDateMenu"
                         :close-on-content-click="false"
                         transition="scale-transition"
                         offset-y
@@ -65,7 +65,7 @@
                     >
                         <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                            v-model="date"
+                            v-model="whatIfStartDate"
                             label="Start Date"
                             prepend-icon="mdi-calendar"
                             readonly
@@ -75,10 +75,10 @@
                         </template>
                         <v-date-picker
                         ref="picker"
-                        v-model="date"
+                        v-model="whatIfStartDate"
                         :max="new Date().toISOString().substr(0, 10)"
                         :min="coinGenesisDate"
-                        @change="save"
+                        @change="saveStartDate"
                         ></v-date-picker>
                     </v-menu>
                     </v-col>
@@ -87,8 +87,8 @@
                     md="4"
                     >
                         <v-menu
-                            ref="menu"
-                            v-model="menu"
+                            ref="endDateMenu"
+                            v-model="endDateMenu"
                             :close-on-content-click="false"
                             transition="scale-transition"
                             offset-y
@@ -96,7 +96,7 @@
                         >
                             <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                                v-model="date"
+                                v-model="whatIfEndDate"
                                 label="End Date"
                                 prepend-icon="mdi-calendar"
                                 readonly
@@ -106,10 +106,10 @@
                             </template>
                             <v-date-picker
                             ref="picker"
-                            v-model="date"
+                            v-model="whatIfEndDate"
                             :max="new Date().toISOString().substr(0, 10)"
-                            min="1950-01-01"
-                            @change="save"
+                            :min="coinGenesisDate"
+                            @change="saveEndDate"
                             ></v-date-picker>
                         </v-menu>
                     </v-col>
@@ -119,7 +119,7 @@
                     class="text-left black--text
                     text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
                     dark
-                    @click="resetValidation"
+                    @click="getWhatIfData"
                     >
                     <v-icon
                     left
@@ -131,6 +131,9 @@
                     </v-btn>
                 </v-container>
             </v-form>
+            <v-row>
+                <v-card-subtitle>{{ potentialProfit }}</v-card-subtitle>
+            </v-row>
         </v-card>
     </div>
 </template>
@@ -141,17 +144,32 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, email } from 'vuelidate/lib/validators'
+
 import CoinSearch from '@/components/CoinSearch.vue'
 
 am4core.useTheme(am4themes_animated);
 
 export default {
     name: 'CoinDetails',
+    mixins: [validationMixin],
+    validations: {
+      name: { required, maxLength: maxLength(10) },
+      email: { required, email },
+      select: { required },
+      checkbox: {
+        checked (val) {
+          return val
+        },
+      },
+    },
     components: {
         CoinSearch,
     },
     data() {
         return {
+            valid: true,
             coinId: '',
             coinDetails: {},
             coinImage: '',
@@ -165,6 +183,11 @@ export default {
             totalVolumes: [],
             firstLoad: false,
             currentDateRange: '',
+            startDateMenu: '',
+            endDateMenu: '',
+            whatIfStartDate: '',
+            whatIfEndDate: '',
+            potentialProfit: '',
             // prevRoute: null,
             breadCrumbItems: [
                 {
@@ -229,11 +252,50 @@ export default {
         })
     },
     watch: {
-      menu (val) {
+      startDateMenu (val) {
+        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+      },
+      endDateMenu (val) {
         val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
       },
     },
     methods: {
+
+        async getWhatIfData() {
+            console.log('ENTER getWhatIfData');
+            this.potentialProfit = 999999.55
+
+            var startDatePrice = this.getPriceAtDate(this.whatIfStartDate)
+
+            console.log(startDatePrice)
+
+            // var endDatePrice = getPriceAtDate(this.whatIfEndDate)
+        },
+        async getPriceAtDate(theDate){
+
+            const baseURL = `https://api.coingecko.com/api/v3/coins/`
+            var apiParams = `${this.coinId}/history?date=${theDate}`
+
+            var priceAtDate = ''
+
+            try {
+                const res = await axios.get(baseURL + apiParams)
+    
+                priceAtDate = res.data;
+                // this.coinImage = this.coinDetails.image.large
+
+                // console.log(priceAtDate)
+
+            } catch (e) {
+                if(e.response.status === 404) {
+                    console.log('ahhhhhhhhhhh')
+                    this.$router.push('/NotFound')
+                }
+                console.log(e.response.status);
+            }
+
+            return priceAtDate
+        },
         async createChart(dateRange) {
 
             if (this.currentDateRange !== dateRange) {
@@ -455,7 +517,13 @@ export default {
             var convdataTime = month+'-'+day+'-'+year;
             
             return convdataTime; 
-        }
+        },
+        saveStartDate (date) {
+            this.$refs.menu.save(date)
+        },
+        saveEndDate (date) {
+            this.$refs.menu.save(date)
+        },
     }
 }
 </script>
