@@ -74,7 +74,7 @@
                         ></v-text-field>
                         </template>
                         <v-date-picker
-                        ref="picker"
+                        ref="startDatePicker"
                         v-model="whatIfStartDate"
                         :max="new Date().toISOString().substr(0, 10)"
                         :min="coinGenesisDate"
@@ -105,7 +105,7 @@
                             ></v-text-field>
                             </template>
                             <v-date-picker
-                            ref="picker"
+                            ref="endDatePicker"
                             v-model="whatIfEndDate"
                             :max="new Date().toISOString().substr(0, 10)"
                             :min="coinGenesisDate"
@@ -170,6 +170,7 @@ export default {
     data() {
         return {
             valid: true,
+            // menu: false,
             coinId: '',
             coinDetails: {},
             coinImage: '',
@@ -186,7 +187,7 @@ export default {
             startDateMenu: '',
             endDateMenu: '',
             whatIfStartDate: '',
-            whatIfEndDate: '',
+            whatIfEndDate: new Date().toISOString().substr(0, 10),
             potentialProfit: '',
             // prevRoute: null,
             breadCrumbItems: [
@@ -217,6 +218,7 @@ export default {
             this.coinImage = this.coinDetails.image.large
             this.coinDescription = this.coinDetails.description.en
             this.coinGenesisDate = this.coinDetails.genesis_date
+            this.whatIfStartDate = this.coinGenesisDate
             this.coinSymbol = this.coinDetails.symbol.toUpperCase()
             console.log(this.coinGenesisDate)
 
@@ -252,12 +254,13 @@ export default {
         })
     },
     watch: {
-      startDateMenu (val) {
-        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
-      },
-      endDateMenu (val) {
-        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
-      },
+        // These functions make sure the date picker opens on year first
+        startDateMenu (val) {
+        val && setTimeout(() => (this.$refs.startDatePicker.activePicker = 'YEAR'))
+        },
+        endDateMenu (val) {
+            val && setTimeout(() => (this.$refs.endDatePicker.activePicker = 'YEAR'))
+        },
     },
     methods: {
 
@@ -274,14 +277,19 @@ export default {
         async getPriceAtDate(theDate){
 
             const baseURL = `https://api.coingecko.com/api/v3/coins/`
-            var apiParams = `${this.coinId}/history?date=${theDate}`
+
+            var formattedDateString = this.formatDateForApi(theDate);
+
+            var apiParams = `${this.coinId}/history?date=${formattedDateString}`
 
             var priceAtDate = ''
 
             try {
+                console.log(baseURL + apiParams)
                 const res = await axios.get(baseURL + apiParams)
     
                 priceAtDate = res.data;
+                console.log(priceAtDate)
                 // this.coinImage = this.coinDetails.image.large
 
                 // console.log(priceAtDate)
@@ -335,6 +343,19 @@ export default {
 
                 this.formatChart();
             }
+        },
+        formatDateForApi(theDate) {
+            var theDateAsDate = new Date(
+                theDate.substring(0,4),
+                theDate.substring(5,7)-1,
+                theDate.substring(8,10)
+            )
+            // console.log('Formatting Date: ' + theDateAsDate)
+
+            return ("0" + theDateAsDate.getDate()).slice(-2) + "-" + 
+                ("0"+(theDateAsDate.getMonth()+1)).slice(-2) + "-" +
+                theDateAsDate.getFullYear();
+            // console.log(formattedDateString)
         },
         formatChart() {
 
@@ -519,10 +540,10 @@ export default {
             return convdataTime; 
         },
         saveStartDate (date) {
-            this.$refs.menu.save(date)
+            this.$refs.startDateMenu.save(date)
         },
         saveEndDate (date) {
-            this.$refs.menu.save(date)
+            this.$refs.endDateMenu.save(date)
         },
     }
 }
