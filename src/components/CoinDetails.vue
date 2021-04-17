@@ -41,100 +41,7 @@
         </div>
             <div class="coinChart" ref="chartdiv">
         </div>
-        <v-card>
-            <v-form v-model="valid">
-                <v-container>
-                <!-- <v-row>
-                    <CoinSearch/>
-                </v-row> -->
-                <v-row>
-                    <v-card-title>{{ coinDetails.name }} What-If</v-card-title>
-                </v-row>
-                <v-row>
-                    <v-col
-                    cols="12"
-                    md="4"
-                    >
-                    <v-menu
-                        ref="startDateMenu"
-                        v-model="startDateMenu"
-                        :close-on-content-click="false"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                    >
-                        <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                            v-model="whatIfStartDate"
-                            label="Start Date"
-                            prepend-icon="mdi-calendar"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                        ></v-text-field>
-                        </template>
-                        <v-date-picker
-                        ref="startDatePicker"
-                        v-model="whatIfStartDate"
-                        :max="new Date().toISOString().substr(0, 10)"
-                        :min="coinGenesisDate"
-                        @change="saveStartDate"
-                        ></v-date-picker>
-                    </v-menu>
-                    </v-col>
-                    <v-col
-                    cols="12"
-                    md="4"
-                    >
-                        <v-menu
-                            ref="endDateMenu"
-                            v-model="endDateMenu"
-                            :close-on-content-click="false"
-                            transition="scale-transition"
-                            offset-y
-                            min-width="auto"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                v-model="whatIfEndDate"
-                                label="End Date"
-                                prepend-icon="mdi-calendar"
-                                readonly
-                                v-bind="attrs"
-                                v-on="on"
-                            ></v-text-field>
-                            </template>
-                            <v-date-picker
-                            ref="endDatePicker"
-                            v-model="whatIfEndDate"
-                            :max="new Date().toISOString().substr(0, 10)"
-                            :min="coinGenesisDate"
-                            @change="saveEndDate"
-                            ></v-date-picker>
-                        </v-menu>
-                    </v-col>
-                </v-row>
-                <v-btn
-                    color="secondary"
-                    class="text-left black--text
-                    text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
-                    dark
-                    @click="getWhatIfData"
-                    >
-                    <v-icon
-                    left
-                    light
-                    >
-                    mdi-calculator
-                    </v-icon>
-                        Calculate
-                    </v-btn>
-                </v-container>
-            </v-form>
-            <v-row>
-                <v-card-subtitle>{{ potentialProfit }}</v-card-subtitle>
-            </v-row>
-        </v-card>
+        <CryptoPredictor :coinName="coinDetails.name" :coinId="coinId"/>
     </div>
 </template>
 
@@ -144,33 +51,17 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-import { validationMixin } from 'vuelidate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
-
-import CoinSearch from '@/components/CoinSearch.vue'
+import CryptoPredictor from '@/components/CryptoPredictor.vue'
 
 am4core.useTheme(am4themes_animated);
 
 export default {
     name: 'CoinDetails',
-    mixins: [validationMixin],
-    validations: {
-      name: { required, maxLength: maxLength(10) },
-      email: { required, email },
-      select: { required },
-      checkbox: {
-        checked (val) {
-          return val
-        },
-      },
-    },
     components: {
-        CoinSearch,
+        CryptoPredictor,
     },
     data() {
         return {
-            valid: true,
-            // menu: false,
             coinId: '',
             coinDetails: {},
             coinImage: '',
@@ -183,12 +74,6 @@ export default {
             marketCaps: [],
             totalVolumes: [],
             firstLoad: false,
-            currentDateRange: '',
-            startDateMenu: '',
-            endDateMenu: '',
-            whatIfStartDate: '',
-            whatIfEndDate: new Date().toISOString().substr(0, 10),
-            potentialProfit: '',
             // prevRoute: null,
             breadCrumbItems: [
                 {
@@ -218,9 +103,8 @@ export default {
             this.coinImage = this.coinDetails.image.large
             this.coinDescription = this.coinDetails.description.en
             this.coinGenesisDate = this.coinDetails.genesis_date
-            this.whatIfStartDate = this.coinGenesisDate
             this.coinSymbol = this.coinDetails.symbol.toUpperCase()
-            console.log(this.coinGenesisDate)
+            // console.log(this.coinGenesisDate)
 
         } catch (e) {
             if(e.response.status === 404) {
@@ -263,47 +147,6 @@ export default {
         },
     },
     methods: {
-
-        async getWhatIfData() {
-            console.log('ENTER getWhatIfData');
-            this.potentialProfit = 999999.55
-
-            var startDatePrice = this.getPriceAtDate(this.whatIfStartDate)
-
-            console.log(startDatePrice)
-
-            // var endDatePrice = getPriceAtDate(this.whatIfEndDate)
-        },
-        async getPriceAtDate(theDate){
-
-            const baseURL = `https://api.coingecko.com/api/v3/coins/`
-
-            var formattedDateString = this.formatDateForApi(theDate);
-
-            var apiParams = `${this.coinId}/history?date=${formattedDateString}`
-
-            var priceAtDate = ''
-
-            try {
-                console.log(baseURL + apiParams)
-                const res = await axios.get(baseURL + apiParams)
-    
-                priceAtDate = res.data;
-                console.log(priceAtDate)
-                // this.coinImage = this.coinDetails.image.large
-
-                // console.log(priceAtDate)
-
-            } catch (e) {
-                if(e.response.status === 404) {
-                    console.log('ahhhhhhhhhhh')
-                    this.$router.push('/NotFound')
-                }
-                console.log(e.response.status);
-            }
-
-            return priceAtDate
-        },
         async createChart(dateRange) {
 
             if (this.currentDateRange !== dateRange) {
@@ -344,7 +187,7 @@ export default {
                 this.formatChart();
             }
         },
-        formatDateForApi(theDate) {
+        async formatDateForApi(theDate) {
             var theDateAsDate = new Date(
                 theDate.substring(0,4),
                 theDate.substring(5,7)-1,
@@ -538,12 +381,6 @@ export default {
             var convdataTime = month+'-'+day+'-'+year;
             
             return convdataTime; 
-        },
-        saveStartDate (date) {
-            this.$refs.startDateMenu.save(date)
-        },
-        saveEndDate (date) {
-            this.$refs.endDateMenu.save(date)
         },
     }
 }
