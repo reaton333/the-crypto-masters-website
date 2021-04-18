@@ -1,17 +1,28 @@
 <template>
   <div>
-    <v-card>
+    <v-card
+        class="mx-auto"
+        max-width="1000"
+    >
         <v-form v-model="valid">
             <v-container>    
             <v-row v-if="coinId === null">
                 <CoinSearch/>
             </v-row>
             <v-row>
-                <v-card-title>{{ coinName }} What-If</v-card-title>
+                <v-card-title>
+                    <v-icon
+                        x-large
+                        color="secondary"
+                    >
+                        mdi-robot-happy-outline
+                    </v-icon>
+                    <b>&nbsp;Professor Hindsight</b>: {{ coinName }}
+                </v-card-title>
             </v-row>
             <v-row>
                 <v-col
-                cols="12"
+                cols="10"
                 md="4"
                 >
                 <v-menu
@@ -42,7 +53,7 @@
                 </v-menu>
                 </v-col>
                 <v-col
-                cols="12"
+                cols="10"
                 md="4"
                 >
                     <v-menu
@@ -72,11 +83,9 @@
                         ></v-date-picker>
                     </v-menu>
                 </v-col>
-            </v-row>
-            <v-row>
                 <v-col
-                cols="12"
-                md="4"
+                    cols="10"
+                    md="4"
                 >
                     <v-text-field
                         ref="amountInvested"
@@ -87,6 +96,20 @@
                     ></v-text-field>
                 </v-col>
             </v-row>
+            <!-- <v-row>
+                <v-col
+                cols="10"
+                md="4"
+                >
+                    <v-text-field
+                        ref="amountInvested"
+                        v-model="amountInvested"
+                        label="Amount Invested"
+                        value="1000.00"
+                        prepend-icon="mdi-currency-usd"
+                    ></v-text-field>
+                </v-col>
+            </v-row> -->
             <v-btn
                 color="secondary"
                 class="text-left black--text
