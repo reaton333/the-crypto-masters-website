@@ -1,5 +1,7 @@
 <template>
-  <v-container>
+  <v-container
+    
+  >
     <v-row
       no-gutters
       class="pa-0"
@@ -43,10 +45,10 @@
       :items="coins"
       :items-per-page="pageSize"
       :mobile-breakpoint="0"
-      style="min-width:450px"
+      style="min-width:375px"
       :dense="isMobile"
       hide-default-footer
-      class="elevation-1"
+      class="elevation-1 text-sm-caption-2 text-xs-caption-2 font-xs-weight-light"
     >
       <template v-slot:item.name="{ item }">
         <v-row v-if="!isMobile">
@@ -75,8 +77,8 @@
             v-bind:src="item.image" 
             v-bind:alt="item.name"
             contain
-            max-width="18"
-            max-height="18"
+            max-width="16"
+            max-height="16"
           >
           </v-img>
           <v-btn 
@@ -307,6 +309,12 @@ export default {
 
 .coinLogo {
     transition: all 0.3s ease-in-out 0s;
+}
+
+@media screen and (max-width: 775px) {
+  .container {
+    padding: 0 !important;
+  }
 }
 
 .coinLogo:hover {
