@@ -96,20 +96,6 @@
                     ></v-text-field>
                 </v-col>
             </v-row>
-            <!-- <v-row>
-                <v-col
-                cols="10"
-                md="4"
-                >
-                    <v-text-field
-                        ref="amountInvested"
-                        v-model="amountInvested"
-                        label="Amount Invested"
-                        value="1000.00"
-                        prepend-icon="mdi-currency-usd"
-                    ></v-text-field>
-                </v-col>
-            </v-row> -->
             <v-btn
                 color="secondary"
                 class="text-left black--text

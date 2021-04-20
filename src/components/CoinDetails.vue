@@ -70,6 +70,9 @@ export default {
             coinGenesisDate: '',
             toDateRange: '',
             fromDateRange: '',
+            indicator: '',
+            indicatorInterval: '',
+            hourglass: '',
             prices: [],
             marketCaps: [],
             totalVolumes: [],
@@ -187,19 +190,6 @@ export default {
                 this.formatChart();
             }
         },
-        async formatDateForApi(theDate) {
-            var theDateAsDate = new Date(
-                theDate.substring(0,4),
-                theDate.substring(5,7)-1,
-                theDate.substring(8,10)
-            )
-            // console.log('Formatting Date: ' + theDateAsDate)
-
-            return ("0" + theDateAsDate.getDate()).slice(-2) + "-" + 
-                ("0"+(theDateAsDate.getMonth()+1)).slice(-2) + "-" +
-                theDateAsDate.getFullYear();
-            // console.log(formattedDateString)
-        },
         formatChart() {
 
             // Clear the chart if it exists before creating another one!
@@ -210,7 +200,10 @@ export default {
             
             let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
 
-            chart.paddingRight = 20;
+            chart.preloader.disabled = true;
+        
+            chart = this.showChartIndicator(chart);
+            // chart.paddingRight = 20;
 
             let data = [];
 
@@ -225,8 +218,6 @@ export default {
             }
 
             chart.data = data;
-
-            chart.responsive.enabled = true;
 
             chart.responsive.enabled = true;
             chart.responsive.useDefault = false
@@ -307,6 +298,78 @@ export default {
             chart.scrollbarX = scrollbarX;
 
             this.chart = chart;
+
+            // this.hideIndicator();
+        },
+        showChartIndicator(theChart) {
+
+            let indicator = ''
+            let indicatorInterval = ''
+            let hourglass = ''
+
+            theChart.events.on("ready", function(ev){
+                indicator.hide();
+                clearInterval(this.indicatorInterval);
+            });
+        
+            if (!indicator) {
+                indicator = theChart.tooltipContainer.createChild(am4core.Container);
+                indicator.background.fill = am4core.color("#fff");
+                indicator.background.fillOpacity = 0.6;
+                indicator.width = am4core.percent(100);
+                indicator.height = am4core.percent(100);
+
+                let indicatorLabel = indicator.createChild(am4core.Label);
+                if (this.coinDetails.name) {
+                    indicatorLabel.text = `Loading ${this.coinDetails.name} History...`;    
+                } else {
+                    indicatorLabel.text = `Loading History...`; 
+                }
+                
+                indicatorLabel.align = "center";
+                indicatorLabel.valign = "middle";
+                indicatorLabel.fontSize = 20;
+                indicatorLabel.dy = 50;
+                
+                hourglass = indicator.createChild(am4core.Image);
+                hourglass.href = this.coinImage;
+                hourglass.align = "center";
+                hourglass.valign = "middle";
+                hourglass.horizontalCenter = "middle";
+                hourglass.verticalCenter = "middle";
+                hourglass.scale = 0.7;
+            }
+
+            indicator.hide(0);
+            indicator.show();
+            
+            clearInterval(indicatorInterval);
+            indicatorInterval = setInterval(function() {
+                hourglass.animate([{
+                    from: 0,
+                    to: 360,
+                    property: "rotation"
+                }], 1000);
+            }, 2000);
+
+            return theChart;
+        },
+        // hideIndicator() {
+        //     this.indicator.hide();
+        //     clearInterval(this.indicatorInterval);
+        // },
+        async formatDateForApi(theDate) {
+            var theDateAsDate = new Date(
+                theDate.substring(0,4),
+                theDate.substring(5,7)-1,
+                theDate.substring(8,10)
+            )
+            // console.log('Formatting Date: ' + theDateAsDate)
+
+            return ("0" + theDateAsDate.getDate()).slice(-2) + "-" + 
+                ("0"+(theDateAsDate.getMonth()+1)).slice(-2) + "-" +
+                theDateAsDate.getFullYear();
+            // console.log(formattedDateString)
         },
         setDateRangesUnix(dateRange) {
 
