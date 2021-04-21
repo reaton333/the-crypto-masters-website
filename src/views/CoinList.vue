@@ -315,6 +315,15 @@ export default {
   .container {
     padding: 0 !important;
   }
+
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+    padding: 0 12px !important;
+  }
+
+  .td {
+    font-size: 12px !important;
+  }
+  
 }
 
 .coinLogo:hover {
