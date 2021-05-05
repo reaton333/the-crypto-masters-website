@@ -40,35 +40,18 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     name: 'CoinSearch',
+    props: ['allCoins'],
     data () {
         return {
-            allCoins: [],
+            
         }
     },
     created(){
-        this.getAllCoins();
+        // this.getAllCoins();
     },
     methods: {
-        async getAllCoins() {
-
-        try {
-            const baseURL = `https://api.coingecko.com/api/v3/search`
-            const params = `?local=en`
-            const fullPath = baseURL + params
-            // console.log(fullPath)
-            const res = await axios.get(fullPath)
-
-            this.allCoins = res.data.coins;
-            this.totalCoins = this.allCoins.length;
-        } catch (e) {
-            console.log(e);
-        }
-
-        },
         goToCoinDescription(coinId){
             console.log('ENTER coinDescription for: ' + coinId)
             this.$router.push({ 

@@ -1,6 +1,6 @@
 <template>
   <v-container
-    
+    id="coinListContainer"
   >
     <v-row
       no-gutters
@@ -12,7 +12,7 @@
       </v-col>
       <v-col
       >
-        <CoinSearch/>
+        <CoinSearch v-bind:allCoins="allCoins"/>
       </v-col>
     </v-row>
     <!-- </v-container> -->
@@ -174,13 +174,29 @@ export default {
     this.handleResize();
 
     this.page = 1;
-    // this.getAllCoins();
+    this.getAllCoins();
     this.getCoinsList(this.page);
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize);
   },
   methods: {
+    async getAllCoins() {
+
+      try {
+          const baseURL = `https://api.coingecko.com/api/v3/search`
+          const params = `?local=en`
+          const fullPath = baseURL + params
+          // console.log(fullPath)
+          const res = await axios.get(fullPath)
+
+          this.allCoins = res.data.coins;
+          this.totalCoins = this.allCoins.length;
+      } catch (e) {
+          console.log(e);
+      }
+
+    },
     async handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
@@ -312,15 +328,22 @@ export default {
 }
 
 @media screen and (max-width: 775px) {
-  .container {
+  
+  #coinListContainer {
     padding: 0 !important;
   }
 
-  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
-    padding: 0 12px !important;
+  .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+    padding: 0 !important;
+    font-size: 12px !important;
   }
 
-  .td {
+  .v-btn:not(.v-btn--round).v-size--x-small {
+    padding: 0 !important
+  }
+
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+    padding: 0 !important;
     font-size: 12px !important;
   }
   
