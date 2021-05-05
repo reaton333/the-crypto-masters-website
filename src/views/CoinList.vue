@@ -163,6 +163,7 @@ export default {
         currentSort: 'market_cap',
         sortDesc: true,
         pageSize: 100,
+        allCoins: [],
         totalCoins: 0,
         currency: 'usd',
         tableResize: 777
