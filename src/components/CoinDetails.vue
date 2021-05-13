@@ -30,15 +30,39 @@
 
         </v-card>
         <v-divider></v-divider>
-        <div 
+        <!-- <div 
             class="amcharts-range-selector-period-wrapper"
-        >
-            <v-btn @click="createChart('oneM')">1M</v-btn>
-            <v-btn @click="createChart('threeM')">3M</v-btn>
-            <v-btn @click="createChart('sixM')">6M</v-btn>
-            <v-btn @click="createChart('ytd')">YTD</v-btn>
-            <v-btn @click="createChart('max')">MAX</v-btn>
-        </div>
+        > -->
+            <v-btn-toggle
+        
+        mandatory
+        color="primary accent-1"
+        
+      >
+        <v-btn value="left">
+          Left
+        </v-btn>
+
+        <v-btn value="center">
+          Center
+        </v-btn>
+
+        <v-btn value="right">
+          Right
+        </v-btn>
+
+        <v-btn value="justify">
+          Justify
+        </v-btn>
+      </v-btn-toggle>
+            <v-btn tile outlined elevation="2" color="primary" @click="createChart('24H')">24Hr</v-btn>
+            <v-btn tile elevation="2" color="primary" @click="createChart('sevenD')">1W</v-btn>
+            <v-btn tile outlined elevation="2" color="primary" @click="createChart('oneM')">1M</v-btn>
+            <v-btn tile outlined elevation="2" color="primary" @click="createChart('threeM')">3M</v-btn>
+            <v-btn tile outlined elevation="2" color="primary" @click="createChart('sixM')">6M</v-btn>
+            <v-btn tile outlined elevation="2" color="primary" @click="createChart('ytd')">YTD</v-btn>
+            <v-btn tile outlined elevation="2" color="primary"@click="createChart('max')">MAX</v-btn>
+        <!-- </div> -->
             <div class="coinChart" ref="chartdiv">
         </div>
         <CryptoPredictor :coinName="coinDetails.name" :coinId="coinId"/>
@@ -70,6 +94,7 @@ export default {
             coinGenesisDate: '',
             toDateRange: '',
             fromDateRange: '',
+            currDateSelection: '',
             indicator: '',
             indicatorInterval: '',
             hourglass: '',
@@ -383,26 +408,41 @@ export default {
                 this.toDateRange = Math.round(myDate.getTime() / 1000)
                 this.fromDateRange = Math.round(myDate.setMonth(myDate.getMonth() - 1)/ 1000);
 
-            } else if (dateRange === 'oneM') {
+            } else if (dateRange === '24H') {
+
+                this.toDateRange = Math.round(myDate.getTime() / 1000)
+                this.fromDateRange = Math.round((myDate.getDate() - 1)/ 1000);
+                this.currDateSelection = '24H'
+
+            } else if (dateRange === 'sevenD') {
+
+                this.toDateRange = Math.round(myDate.getTime() / 1000)
+                this.fromDateRange = Math.round((myDate.getDate() - 7)/ 1000);
+                this.currDateSelection = 'sevenD'
+
+            }  else if (dateRange === 'oneM') {
 
                 this.toDateRange = Math.round(myDate.getTime() / 1000)
                 this.fromDateRange = Math.round(myDate.setMonth(myDate.getMonth() - 1)/ 1000);
+                this.currDateSelection = 'oneM'
 
             } else if (dateRange === 'threeM') {
                                 
                 this.toDateRange = Math.round(myDate.getTime() / 1000)
                 this.fromDateRange = Math.round(myDate.setMonth(myDate.getMonth() - 3)/ 1000);
+                this.currDateSelection = 'threeM'
 
             } else if (dateRange === 'sixM') {
 
                 this.toDateRange = Math.round(myDate.getTime() / 1000)
                 this.fromDateRange = Math.round(myDate.setMonth(myDate.getMonth() - 6)/ 1000);
+                this.currDateSelection = 'sixM'
 
             } else if (dateRange === 'ytd') {
 
                 this.toDateRange = Math.round(myDate.getTime() / 1000)
                 this.fromDateRange = Math.round(myDate.setMonth(myDate.getMonth() - 12)/ 1000);
-
+                this.currDateSelection = 'ytd'
             } 
             else {
                 alert('Date Range Error! Please try again.')

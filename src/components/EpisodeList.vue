@@ -71,7 +71,7 @@ export default {
     methods: {
         async getContent() {
 
-            const MASTER_REF = 'YDwCJBAAACAA0Sam'
+            const MASTER_REF = 'YJtEMhEAACMAOife'
             const baseURL = `https://the-crypto-masters-website.cdn.prismic.io/api/v2/documents/search?ref=${MASTER_REF}`
             var apiParams = `&format=json`
 
