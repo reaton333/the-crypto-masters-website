@@ -1,10 +1,12 @@
 <template>
-  <v-container>
-    <v-breadcrumbs
+  <v-container
+    style="max-width: 900px"
+  >
+    <!-- <v-breadcrumbs
         :items="breadCrumbItems"
         customDivider
         divider="/"
-    ></v-breadcrumbs>
+    ></v-breadcrumbs> -->
     <v-row 
         justify="space-around"
         align="center"
@@ -21,7 +23,8 @@
     >
         <v-img 
             v-if="logoURL" 
-            class="episodeImage" 
+            align="center"
+            justify="space-around"
             max-height="402"
             max-width="402"
             :src="logoURL" 
@@ -31,6 +34,9 @@
     <!-- depending on the type of object we get back from the CRM
     I want to display it according it in an element that cooresponds to 
     it's given type -->
+    <v-spacer
+    >
+    </v-spacer>
     <div 
         v-for="item in episodeSummary"
         :key="item"
@@ -40,12 +46,11 @@
             v-if="item.type == 'embed'"
             justify="space-around"
             align="center"
+            class="py-6 ma-2"
+            
         >
             <div
-                
                 v-html="item.oembed.html"
-                justify="space-around"
-                align="center"
             >
             </div>
         </v-row>
@@ -194,8 +199,28 @@ export default {
 </script>
 
 <style>
-iframe {
-    width: 900px !important; /*200*/
-    height: 408px !important; /*113*/
+/* iframe {
+    width: 900 !important; 
+    height: 508 !important;
+}   */
+@media screen and (max-width: 2000px) {
+    iframe {
+        width: 900px !important;
+        height: 508px !important;
+    }  
+} 
+
+@media screen and (max-width: 980px) {
+    iframe {
+        width: 600px !important;
+        height: 339px !important;
+    }  
+} 
+
+@media screen and (max-width: 650px) {
+  iframe {
+        width: 300px !important; 
+        height: 169px !important;
+    }
 }
 </style>
