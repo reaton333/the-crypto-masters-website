@@ -2,6 +2,7 @@
   <v-autocomplete
         v-model="allCoins"
         :items="allCoins"
+        :filter="filterCoinAndSymbol"
         item-text="name"
         item-value="id"
         no-data-text="No coins to display"
@@ -73,6 +74,13 @@ export default {
                 }
             })
         },
+        filterCoinAndSymbol(item, queryText, itemText) {
+            return (
+                item.id.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) >
+                    -1 ||
+                item.symbol.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1
+            );
+        }
     }
 }
 </script>
