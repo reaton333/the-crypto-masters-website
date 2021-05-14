@@ -2,17 +2,16 @@
   <v-container
     style="max-width: 900px"
   >
-    <!-- <v-breadcrumbs
-        :items="breadCrumbItems"
-        customDivider
-        divider="/"
-    ></v-breadcrumbs> -->
     <v-row 
         justify="space-around"
         align="center"
     >
         <h1
-            class="text-h3 font-weight-bold"
+            class="
+                text-h4 
+                text-md-h3
+                text-sm-h4
+                font-weight-bold"
         >
             {{ title }}
         </h1>
@@ -20,10 +19,13 @@
     <v-row 
         justify="space-around"
         align="center"
+        class="pa-8"
     >
         <v-img 
             v-if="logoURL" 
             align="center"
+            class="episodeImage"
+            contain
             justify="space-around"
             max-height="402"
             max-width="402"
@@ -40,6 +42,7 @@
     <div 
         v-for="item in episodeSummary"
         :key="item"
+        class="px-4 py-2"
     >
 
         <v-row 
@@ -70,7 +73,11 @@
             align="left"
         >
             <p 
-                class="text-justify text-h4 font-weight-bold"
+                class="
+                    text-justify 
+                    text-h5 
+                    text-md-h4 
+                    font-weight-bold"
             >
                 {{ item.text }}
             </p>
@@ -81,7 +88,11 @@
             align="left"
         >
             <p 
-                class="text-justify text-h5 font-weight-bold"
+                class="
+                    text-justify 
+                    text-h6 
+                    text-md-h5 
+                    font-weight-bold"
             >
                 {{ item.text }}
             </p>
@@ -92,7 +103,11 @@
             align="left"
         >
             <p 
-                class="text-justify text-h6 font-weight-bold"
+                class="
+                    text-justify 
+                    text-subtitle-1 
+                    text-md-h6  
+                    font-weight-bold"
             >
                 {{ item.text }}
             </p>
@@ -103,7 +118,11 @@
             align="left"
         >
             <p     
-                class="text-justify text-h6 font-weight-bold"
+                class="
+                    text-justify 
+                    text-subtitle-1 
+                    text-md-h6  
+                    font-weight-bold"
             >
                 {{ item.text }}
             </p>
@@ -114,7 +133,11 @@
             align="left"
         >
             <p 
-                class="text-justify text-h6 font-weight-medium"
+                class="
+                    text-justify 
+                    text-subtitle-1 
+                    text-md-h6  
+                    font-weight-medium"
             >
                 {{ item.text }}
             </p>
@@ -215,12 +238,27 @@ export default {
         width: 600px !important;
         height: 339px !important;
     }  
-} 
+}
 
 @media screen and (max-width: 650px) {
-  iframe {
+    iframe {
+        width: 450px  !important; 
+        height: 253px !important;
+    }
+    .episodeImage {
+        width: 301px !important; 
+        height: 301px !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    iframe {
         width: 300px !important; 
         height: 169px !important;
+    }
+    .episodeImage {
+        width: 201px !important; 
+        height: 201px !important;
     }
 }
 </style>
