@@ -57,14 +57,16 @@
                     <v-card-text 
                         class="text-right"
                     >
-                        <p
+                        <span
                             class="black--text text-h4 font-weight-bold"
                         >
                             {{ currentPrice }}
-                            <span :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
-                                {{ formatPercentGain(priceChangePercentage24h) }}
-                            </span>
-                        </p>
+                        </span>
+                        <span class= "text-h5 font-weight-bold" :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
+                            {{ formatPercentGain(priceChangePercentage24h) }}
+                        </span>
+                        <br />
+                        <br />
                         
                         Market Cap
                         <p
