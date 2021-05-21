@@ -1,34 +1,90 @@
 <template>
-    <div>
-        <v-breadcrumbs
-            :items="breadCrumbItems"
-            customDivider
-            divider="/"
-        ></v-breadcrumbs>
-        <v-card
-            elevation="0"
-            color="rgb(255, 0, 0, 0)"
-        >
-            <v-img 
-                class="" 
-                max-height="150"
-                max-width="150"
-                :src="coinImage" 
-                :alt="coinDetails.name"
+    <v-container>
+        <v-row>
+            <v-breadcrumbs
+                :items="breadCrumbItems"
+                customDivider
+                divider="/"
+            ></v-breadcrumbs>
+        </v-row>
+        <v-row>
+            <v-col
+                cols="4"
             >
-            </v-img> 
-            <v-card-title
-                class="text-h2"
-            >
-                {{ coinDetails.name }} - {{ coinSymbol }}
-            </v-card-title>
+                <v-card
+                    elevation="0"
+                    color="rgb(255, 0, 0, 0)"
+                >
+                    <v-card-title 
+                        class=""
+                    >
+                        <v-avatar size="56">
+                        <img
+                            :src="coinImage" 
+                            :alt="coinDetails.name"
+                        >
+                        </v-avatar>
+                        <span 
+                            class="ml-3 text-h4 font-weight-bold"
+                        >
+                            {{ coinDetails.name }}  ({{ coinSymbol }})
+                        </span>
+                    </v-card-title>
+                    <v-card-text>
+                        <span>
+                            {{ marketCapRank }}
+                        </span>
+                        <br />
+                        <span>
+                            <a :href="coinHomepage"> Website</a>
+                        </span>
+                        <br />
+                        <span>
+                            <a :href="sourceCode"> Source Code</a>
+                        </span>
+                    </v-card-text>
 
-            <v-card-text
-                v-html="coinDescription"
+                </v-card>
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col
+                cols="4"
             >
-            </v-card-text>
-
-        </v-card>
+                <v-card
+                    elevation="0"
+                    color="rgb(255, 0, 0, 0)"
+                >
+                    <v-card-text 
+                        class="text-right"
+                    >
+                        <p
+                            class="black--text text-h4 font-weight-bold"
+                        >
+                            {{ currentPrice }}
+                            <span :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
+                                {{ formatPercentGain(priceChangePercentage24h) }}
+                            </span>
+                        </p>
+                        
+                        Market Cap
+                        <p
+                            class="black--text subtitle-1 font-weight-medium"
+                        >
+                            {{ marketCap }}
+                        </p>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-card class="mb-12">
+                <v-card-title>{{ coinDetails.name }} Overview</v-card-title>
+                <v-card-text
+                    v-html="coinDescription"
+                >
+                </v-card-text>
+            </v-card>
+        </v-row>
         <v-divider></v-divider>
         <!-- <div 
             class="amcharts-range-selector-period-wrapper"
@@ -66,7 +122,7 @@
             <div class="coinChart" ref="chartdiv">
         </div>
         <CryptoPredictor :coinName="coinDetails.name" :coinId="coinId"/>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -92,6 +148,12 @@ export default {
             coinDescription: '',
             coinSymbol: '',
             coinGenesisDate: '',
+            currentPrice: '',
+            marketCapRank: '',
+            marketCap: '',
+            priceChangePercentage24h: '',
+            coinHomepage: '',
+            sourceCode: '',
             toDateRange: '',
             fromDateRange: '',
             currDateSelection: '',
@@ -122,7 +184,7 @@ export default {
         this.coinId = this.$route.params.coinId;
 
         const baseURL = `https://api.coingecko.com/api/v3/coins/`
-        var apiParams = `?tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`
+        var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
 
         try {
             const res = await axios.get(baseURL + this.coinId + apiParams)
@@ -132,7 +194,13 @@ export default {
             this.coinDescription = this.coinDetails.description.en
             this.coinGenesisDate = this.coinDetails.genesis_date
             this.coinSymbol = this.coinDetails.symbol.toUpperCase()
-            // console.log(this.coinGenesisDate)
+            this.currentPrice = this.formatPrice(this.coinDetails.market_data.current_price.usd)
+            this.marketCapRank = 'Market Cap #' + this.coinDetails.market_cap_rank
+            this.marketCap = this.formatPrice(this.coinDetails.market_data.market_cap.usd)
+            this.coinHomepage = this.coinDetails.links.homepage[0]
+            this.priceChangePercentage24h = this.coinDetails.market_data.price_change_percentage_24h
+            this.sourceCode = this.coinDetails.links.repos_url.github[0]
+            // console.log(this.coinDetails.market_data.current_price.usd)
 
         } catch (e) {
             if(e.response.status === 404) {
@@ -208,8 +276,8 @@ export default {
                     // console.log(this.totalVolumes)
 
                 } catch (e) {
-  
-                    console.log(e.response.status);
+                    console.log('ERROR')
+                    console.log(e.response);
                 }
 
                 this.formatChart();
@@ -462,6 +530,16 @@ export default {
 
             return formatter.format(value)
         },
+        formatPercentGain(value) {
+
+            let formattedNum = parseFloat(value).toFixed(2);
+
+            if(isNaN(formattedNum)) {
+            return this.formatPrice(0.0).replace('$', '')+'%'
+            } else {
+            return this.formatPrice(formattedNum).replace('$', '')+'%'
+            }
+        },
         formatUnixDate(theUnixDate) {
             // Unixtimestamp
             var unixtimestamp = theUnixDate;
@@ -490,10 +568,7 @@ export default {
 </script>
 
 <style scoped>
-.coinDescriptionLogo {
-    width: 150px;
-    height: 150px;
-}
+
 
 .coinChart {
   width: 100%;
