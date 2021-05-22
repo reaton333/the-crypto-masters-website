@@ -16,16 +16,20 @@
       </v-card>
     </v-row>
     <v-row
-      style="width: 80%;"
       align="center"
-      align-content="center"
+      justify="center"
     >
-      <v-text-field
-        label="Search Episodes"
-        solo
-        v-model="searchVal"
-        append-outer-icon="mdi-magnify"
-      ></v-text-field>
+      <v-col
+        cols="6"
+      >
+          <v-text-field
+            label="Search Episodes"
+            solo
+            v-model="searchVal"
+            append-outer-icon="mdi-magnify"
+          ></v-text-field>
+      </v-col>
+
     </v-row>
     <div v-if="filteredEpisodes.length" class="episode-cards">
         <div class="card" v-for="episode in filteredEpisodes" v-bind:key="episode">

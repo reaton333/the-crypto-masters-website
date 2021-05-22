@@ -69,32 +69,6 @@
           </v-col>
         </v-row>
       </v-container>
-      <!-- <v-row
-        class="pa-8"
-      >
-        <v-card
-          class="justify-center mx-auto text-center pa-2 mt-8"
-          color="rgb(255, 0, 0, 0)"
-          elevation="0"
-        >
-          <v-card-title
-            class="justify-center text-center pb-12 text-h3 font-weight-medium"
-            color="rgb(255, 0, 0, 0)"
-          >
-            {{ aboutText }}
-          </v-card-title>
-          <v-card-subtitle
-            class="text-left text-h5 font-weight-medium"
-          > 
-          <p
-            class="text-left text-h5 font-weight-medium"
-          >
-            {{ tCMApproach }}
-          </p>
-          </v-card-subtitle>
-          <v-card-actions></v-card-actions>
-        </v-card> 
-      </v-row> -->
   </v-container>
 </template>
 
@@ -115,7 +89,8 @@ export default {
         aboutObject: [
           { id: 0, icon: 'mdi-bullseye', text: "The goal of The Crypto Masters is to provide information to investors and potential investors of crypto assets to assist them in making their decisions." },
           { id: 1, icon: 'mdi-strategy', text: "Our approach is mainly in the long term. We seek to analyze, to some degree, different crypto assets and provide information that may prompt our listeners to do further investigation." },
-          { id: 2, icon: 'mdi-hand-heart', text: "We provide sufficient information and personal opinions so that our listeners and readers can form some preliminary opinions about different crypto assets. It is up to each investor to make their own investment decisions!" },
+          { id: 2, icon: 'mdi-hand-heart', text: "We provide sufficient information so that our listeners can form preliminary opinions about crypto assets. It is up to each investor to make their own investment decisions!" },
+          { id: 3, icon: 'mdi-clock-outline', text: "Focused on crypto assets for a long term investment. We see crypto as the future of currency and finance" },
         ],
     }
   }
