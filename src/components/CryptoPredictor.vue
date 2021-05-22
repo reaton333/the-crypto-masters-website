@@ -4,7 +4,10 @@
         class="mx-auto"
         max-width="1000"
     >
-        <v-form v-model="valid">
+        <v-form 
+            v-model="valid"
+            ref="form"
+        >
             <v-container>    
             <v-row v-if="coinId === null">
                 <CoinSearch/>
@@ -41,14 +44,15 @@
                         readonly
                         v-bind="attrs"
                         v-on="on"
+                        :rules="startDateRules"
                     ></v-text-field>
                     </template>
                     <v-date-picker
-                    ref="startDatePicker"
-                    v-model="whatIfStartDate"
-                    :max="new Date().toISOString().substr(0, 10)"
-                    min="2013-01-01"
-                    @change="saveStartDate"
+                        ref="startDatePicker"
+                        v-model="whatIfStartDate"
+                        :max="new Date().toISOString().substr(0, 10)"
+                        min="2013-01-01"
+                        @change="saveStartDate"
                     ></v-date-picker>
                 </v-menu>
                 </v-col>
@@ -71,6 +75,7 @@
                             prepend-icon="mdi-calendar"
                             readonly
                             v-bind="attrs"
+                            :rules="endDateRules"
                             v-on="on"
                         ></v-text-field>
                         </template>
@@ -91,7 +96,7 @@
                         ref="amountInvested"
                         v-model="amountInvested"
                         label="Amount Invested"
-                        value="1000.00"
+                        :rules="investedRules"
                         prepend-icon="mdi-currency-usd"
                     ></v-text-field>
                 </v-col>
@@ -101,13 +106,13 @@
                 class="text-left black--text
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
                 dark
-                @click="getWhatIfData"
+                @click="validate"
                 >
                 <v-icon
                 left
                 light
                 >
-                mdi-calculator
+                    mdi-calculator
                 </v-icon>
                     Calculate
                 </v-btn>
@@ -146,6 +151,7 @@ export default {
     props: {
         coinName: String,
         coinId: String,
+        // coinStartDate: Datex
     },
     data () {
         return {
@@ -161,7 +167,17 @@ export default {
             potentialProfit: '',
             priceAtStart: '',
             priceAtEnd: '',
-            potentialProfit: ''
+            potentialProfit: '',
+            startDateRules: [
+                v => !!v || 'Start Date is Required',
+            ],
+            endDateRules: [
+                v => !!v || 'End Date is Required',
+            ],
+            investedRules: [
+                v => !!v || 'Amount Invested is Required',
+            ],
+
         }
     },
     watch: {
@@ -175,6 +191,12 @@ export default {
     },
     methods: {
 
+        async validate () {
+            console.log('Validating....')
+            if (this.$refs.form.validate()) {
+                this.getWhatIfData() 
+            }
+        },
         // async getWhatIfData() {
         //     console.log('ENTER getWhatIfData with date: ' + this.whatIfStartDate);
         //     this.potentialProfit = 999999.55
