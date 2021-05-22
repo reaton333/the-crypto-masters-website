@@ -322,8 +322,8 @@ export default {
                 if (dateRange == 'max') {
 
                     var apiParams = `?vs_currency=usd&days=max&interval=monthly`
-                    console.log(this.coinGenesisDate)
-                    this.fromDateRange = new Date(this.coinGenesisDate).getTime() / 1000
+                    // console.log(this.coinGenesisDate)
+                    // this.fromDateRange = new Date(this.coinGenesisDate).getTime() / 1000
                     // this.fromDateRange = this.coinGenesisDate;
 
                 } else {
@@ -341,7 +341,8 @@ export default {
                     this.prices = res.data.prices;
                     this.marketCaps = res.data.market_caps;
                     this.totalVolumes = res.data.total_volumes;
-                    // console.log(this.prices)
+                    this.fromDateRange = res.data.prices[0][0]
+                    console.log('The from date: ' + this.formatUnixDate(this.fromDateRange))
                     // console.log(this.marketCaps)
                     // console.log(this.totalVolumes)
 
@@ -425,6 +426,8 @@ export default {
             topContainer.width = am4core.percent(100);
 
             let dateTitle = topContainer.createChild(am4core.Label);
+            // console.log(this.fromDateRange)
+            // console.log(this.toDateRange)
             dateTitle.text = this.formatUnixDate(this.fromDateRange) + " to " + this.formatUnixDate(this.toDateRange);
             dateTitle.fontWeight = 600;
             dateTitle.align = "right";
@@ -549,13 +552,14 @@ export default {
             } else if (dateRange === '24H') {
 
                 this.toDateRange = Math.round(myDate.getTime() / 1000)
-                this.fromDateRange = Math.round((myDate.getDate() - 1)/ 1000);
+                // this.fromDateRange = Math.round((myDate.getDate() - 1)/ 1000);
+                this.fromDateRange = Math.round(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) / 1000)
                 this.currDateSelection = '24H'
 
             } else if (dateRange === 'sevenD') {
 
                 this.toDateRange = Math.round(myDate.getTime() / 1000)
-                this.fromDateRange = Math.round((myDate.getDate() - 7)/ 1000);
+                this.fromDateRange = Math.round(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) / 1000)
                 this.currDateSelection = 'sevenD'
 
             }  else if (dateRange === 'oneM') {
@@ -615,7 +619,7 @@ export default {
         },
         formatUnixDate(theUnixDate) {
             // Unixtimestamp
-            var unixtimestamp = theUnixDate;
+            var unixtimestamp = theUnixDate.toString().substring(0, 10);;
 
             // Months array
             var months_arr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
