@@ -9,39 +9,68 @@
         </v-row>
         <v-row>
             <v-col
-                cols="4"
+                cols="6"
             >
                 <v-card
                     elevation="0"
                     color="rgb(255, 0, 0, 0)"
+                    class="font-weight-bold"
                 >
-                    <v-card-title 
-                        class=""
+                    <v-card-title
+                        v-if="coinDetails.name"
                     >
-                        <v-avatar size="56">
+                        <v-avatar size="50">
                         <img
                             :src="coinImage" 
                             :alt="coinDetails.name"
                         >
                         </v-avatar>
                         <span 
-                            class="ml-3 text-h4 font-weight-bold"
+                            class="ml-2 text-h4 font-weight-bold"
                         >
                             {{ coinDetails.name }}  ({{ coinSymbol }})
                         </span>
                     </v-card-title>
                     <v-card-text>
-                        <span>
-                            {{ marketCapRank }}
-                        </span>
+                        <v-chip
+                            v-if="marketCapRank"
+                            class="mb-2 font-weight-bold"
+                            color="primary"
+                        >
+                            Rank
+                            <v-avatar
+                                right
+                                class="secondary black--text"
+                            >
+                                {{ marketCapRank }}
+                            </v-avatar>
+                        </v-chip>
                         <br />
-                        <span>
-                            <a :href="coinHomepage"> Website</a>
-                        </span>
+                        <v-chip
+                            v-if="coinHomepage"
+                            class="mb-2 font-weight-bold"
+                            :href="coinHomepage"
+                            color="primary"
+                        >
+                            Website
+                            <v-icon right>
+                                mdi-link-variant
+                            </v-icon>
+                        </v-chip>
                         <br />
-                        <span>
-                            <a :href="sourceCode"> Source Code</a>
-                        </span>
+                        <v-chip
+                            v-if="sourceCode"
+                            class="mb-2 font-weight-bold"
+                            :href="sourceCode"
+                            color="primary"
+                        >
+                            Source Code
+                            <v-icon 
+                                right
+                            >
+                                mdi-code-braces
+                            </v-icon>
+                        </v-chip>
                     </v-card-text>
 
                 </v-card>
@@ -68,18 +97,53 @@
                         <br />
                         <br />
                         
-                        Market Cap
+                        <span class="font-weight-bold">
+                            Market Cap
+                        </span>
                         <p
                             class="black--text subtitle-1 font-weight-medium"
                         >
                             {{ marketCap }}
                         </p>
+                        <span class="font-weight-bold">
+                            Total Supply
+                        </span>
+                        <p 
+                            v-if="totalSupply"
+                            class="black--text subtitle-1 font-weight-medium"
+                        >
+                            {{ totalSupply }}
+                        </p>
+                        <p 
+                            v-else
+                            class="black--text subtitle-1 font-weight-medium"
+                        >
+                            --
+                        </p>
+                        <span class="font-weight-bold">
+                            Max Supply
+                        </span>
+                        <p 
+                            v-if="maxSupply"
+                            class="black--text subtitle-1 font-weight-medium"
+                        >
+                            {{ maxSupply }}
+                        </p>
+                        <p v-else
+                            class="black--text subtitle-1 font-weight-medium"
+                        >
+                            --
+                        </p>
                     </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
-        <v-row>
-            <v-card class="mb-12">
+        <v-row
+            v-if="coinDescription"
+        >
+            <v-card 
+                class="mb-12"
+            >
                 <v-card-title>{{ coinDetails.name }} Overview</v-card-title>
                 <v-card-text
                     v-html="coinDescription"
@@ -119,7 +183,7 @@
             <v-btn tile outlined elevation="2" color="primary" @click="createChart('threeM')">3M</v-btn>
             <v-btn tile outlined elevation="2" color="primary" @click="createChart('sixM')">6M</v-btn>
             <v-btn tile outlined elevation="2" color="primary" @click="createChart('ytd')">YTD</v-btn>
-            <v-btn tile outlined elevation="2" color="primary"@click="createChart('max')">MAX</v-btn>
+            <v-btn tile outlined elevation="2" color="primary" @click="createChart('max')">MAX</v-btn>
         <!-- </div> -->
             <div class="coinChart" ref="chartdiv">
         </div>
@@ -153,6 +217,8 @@ export default {
             currentPrice: '',
             marketCapRank: '',
             marketCap: '',
+            totalSupply: '',
+            maxSupply: '',
             priceChangePercentage24h: '',
             coinHomepage: '',
             sourceCode: '',
@@ -197,8 +263,10 @@ export default {
             this.coinGenesisDate = this.coinDetails.genesis_date
             this.coinSymbol = this.coinDetails.symbol.toUpperCase()
             this.currentPrice = this.formatPrice(this.coinDetails.market_data.current_price.usd)
-            this.marketCapRank = 'Market Cap #' + this.coinDetails.market_cap_rank
+            this.marketCapRank = this.coinDetails.market_cap_rank
             this.marketCap = this.formatPrice(this.coinDetails.market_data.market_cap.usd)
+            this.totalSupply = this.numberWithCommas(this.coinDetails.market_data.total_supply)
+            this.maxSupply = this.numberWithCommas(this.coinDetails.market_data.max_supply)
             this.coinHomepage = this.coinDetails.links.homepage[0]
             this.priceChangePercentage24h = this.coinDetails.market_data.price_change_percentage_24h
             this.sourceCode = this.coinDetails.links.repos_url.github[0]
@@ -531,6 +599,9 @@ export default {
             });
 
             return formatter.format(value)
+        },
+        numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         formatPercentGain(value) {
 
