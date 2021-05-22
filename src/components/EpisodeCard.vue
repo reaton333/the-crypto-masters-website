@@ -4,6 +4,7 @@
   >
     <v-img
       :src="episodeData.data['episode-image'].url"
+      lazy-src="url('assets/crypo_masters_logoIcon_withBg.png)"
       height="200px"
     ></v-img>
     <v-card-title>
@@ -15,8 +16,9 @@
     <v-card-actions>
       <v-btn
         @click="goToEpisode(episodeData.uid)"
-        color="orange lighten-2"
+        color="secondary"
         text
+        class="font-weight-bold"
       >
         Go to Episode
       </v-btn>
