@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card
-        class="mx-auto"
+        class="mx-auto mt-8 pa-3"
         max-width="1000"
     >
         <v-form 
@@ -107,7 +107,7 @@
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
                 dark
                 @click="validate"
-                >
+            >
                 <v-icon
                 left
                 light
@@ -118,14 +118,97 @@
                 </v-btn>
             </v-container>
         </v-form>
-        <v-row v-if="potentialProfit !== ''">
+        <v-row v-if="hindsightErrorMessage">
             <v-card-subtitle 
-                class="black--text
-                text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
+                class="red--text font-weight-bold
+                text-xl-subtitle-2 text-lg-subtitle-2 text-md-subtitle-2 text-sm-body-1 text-xs-body-1"
             >
-                Potential Profit of {{ potentialProfit }}
+                {{ hindsightErrorMessage }}
             </v-card-subtitle>
         </v-row>
+        <div 
+            class="text-center"
+            v-if="loadingCalculation"
+        >
+            <v-progress-circular
+            indeterminate
+            color="primary"
+            >
+            </v-progress-circular>
+        </div>
+        <div v-if="newAmount !== ''">
+
+            <v-card-subtitle 
+                class="black--text font-weight-bold
+                text-xl-h6 text-lg-h6 text-md-h6 text-sm-subtitle-1 text-xs-subtitle-1"
+            >
+                Investment Details
+            </v-card-subtitle>
+            <v-row>
+                <v-col
+                    cols="10"
+                    md="4"
+                >
+                    <v-card-subtitle 
+                        class="black--text
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            Starting Price
+                        </p> 
+                            {{ this.formatPrice(priceAtStart) }}
+                    </v-card-subtitle>
+                </v-col>
+                <v-col
+                    cols="10"
+                    md="4"
+                >
+                    <v-card-subtitle 
+                        class="black--text 
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            Ending Price
+                        </p>
+                        {{ this.formatPrice(priceAtEnd) }}
+                    </v-card-subtitle>
+                </v-col>
+                <v-col
+                    cols="10"
+                    md="4"
+                >
+                    <v-card-subtitle 
+                        class="black--text
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            New Amount
+                        </p>
+                        {{ this.formatPrice(newAmount) }}
+                    </v-card-subtitle>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col
+                    cols="10"
+                    md="4"
+                >
+                    <v-card-subtitle 
+                        class="black--text
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            Total Profit
+                        </p>
+                        <span 
+                            class="font-weight-bold" 
+                            :class="(newAmount - amountInvested) >= 0 ? 'success--text' : 'error--text'">
+                            {{ this.formatPrice(newAmount - amountInvested) }}
+                        </span>
+                    </v-card-subtitle>
+                </v-col>
+            </v-row>
+        </div>
     </v-card>
   </div>
 </template>
@@ -164,10 +247,12 @@ export default {
             endDateMenu: '',
             whatIfStartDate: '',
             whatIfEndDate: new Date().toISOString().substr(0, 10),
-            potentialProfit: '',
+            newAmount: '',
             priceAtStart: '',
             priceAtEnd: '',
-            potentialProfit: '',
+            newAmount: '',
+            hindsightErrorMessage: '',
+            loadingCalculation: false,
             startDateRules: [
                 v => !!v || 'Start Date is Required',
             ],
@@ -192,21 +277,17 @@ export default {
     methods: {
 
         async validate () {
-            console.log('Validating....')
+            // console.log('Validating....')
             if (this.$refs.form.validate()) {
                 this.getWhatIfData() 
             }
         },
-        // async getWhatIfData() {
-        //     console.log('ENTER getWhatIfData with date: ' + this.whatIfStartDate);
-        //     this.potentialProfit = 999999.55
-
-        //     var startDatePrice = this.getPriceAtDate(this.whatIfStartDate)
-
-        //     console.log(startDatePrice)
-        //     // var endDatePrice = getPriceAtDate(this.whatIfEndDate)
-        // },
         async getWhatIfData() {
+
+            this.loadingCalculation = true
+            // Reset error message and profit amounts!
+            this.hindsightErrorMessage = ''
+            this.newAmount = ''
 
             var formattedStartDate = this.convertDateToUnix(this.whatIfStartDate)
             var formattedEndDate = this.convertDateToUnix(this.whatIfEndDate)
@@ -216,7 +297,7 @@ export default {
             var apiParams = `${this.coinId}/market_chart/range?vs_currency=usd&from=${formattedStartDate}&to=${formattedEndDate}`
 
             try {
-                console.log(baseURL + apiParams)
+                // console.log(baseURL + apiParams)
                 const res = await axios.get(baseURL + apiParams)
     
                 var pricesArr = res.data.prices
@@ -230,10 +311,13 @@ export default {
 
                 var totalEarnings = tempStartingAmount * this.priceAtEnd
 
-                this.potentialProfit = this.formatPrice(totalEarnings)
-                console.log(this.potentialProfit)
+                this.newAmount = totalEarnings
+                // console.log(this.newAmount)
 
             } catch (e) {
+
+                this.hindsightErrorMessage = 'Calculation Error, please try again!'
+
                 // if(e.response.status === 404) {
                 //     console.log('ahhhhhhhhhhh')
                 //     this.$router.push('/NotFound')
@@ -242,11 +326,12 @@ export default {
                 console.log(e);
             }
 
+            this.loadingCalculation = false
+
         },
         convertDateToUnix(dateToConvert){
 
-            console.log(dateToConvert)
-
+            // console.log(dateToConvert)
             return new Date(dateToConvert).getTime() / 1000
         },
         formatPrice(value) {
