@@ -26,7 +26,9 @@
                         >
                         </v-avatar>
                         <span 
-                            class="ml-2 text-h4 font-weight-bold"
+                            class="ml-2 
+                            text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-xs-h4 
+                            font-weight-bold"
                         >
                             {{ coinDetails.name }}  ({{ coinSymbol }})
                         </span>
@@ -37,7 +39,9 @@
                             class="mb-2 font-weight-bold"
                             color="primary"
                         >
-                            Rank
+                            <span>
+                                Rank
+                            </span>
                             <v-avatar
                                 right
                                 class="secondary black--text"
@@ -75,9 +79,10 @@
 
                 </v-card>
             </v-col>
-            <v-spacer></v-spacer>
+            <v-spacer v-if="!$vuetify.breakpoint.mobile"></v-spacer>
+            <!-- <v-spacer></v-spacer> -->
             <v-col
-                cols="4"
+                cols="6"
             >
                 <v-card
                     elevation="0"
@@ -87,11 +92,11 @@
                         class="text-right"
                     >
                         <span
-                            class="black--text text-h4 font-weight-bold"
+                            class="black--text text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-xs-h4 font-weight-bold"
                         >
                             {{ currentPrice }}
                         </span>
-                        <span class= "text-h5 font-weight-bold" :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
+                        <span class= "text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-xs-h6 font-weight-bold" :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
                             {{ formatPercentGain(priceChangePercentage24h) }}
                         </span>
                         <br />
@@ -101,9 +106,11 @@
                             Market Cap
                         </span>
                         <p
-                            class="black--text subtitle-1 font-weight-medium"
+                            class="black--text 
+                            text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-body-1 text-xs-body-2
+                            font-weight-medium"
                         >
-                            {{ marketCap }}
+                            {{ formatMarketCap(marketCap) }}
                         </p>
                         <span class="font-weight-bold">
                             Total Supply
@@ -221,6 +228,7 @@ export default {
     },
     data() {
         return {
+            currency: 'usd',
             coinId: '',
             coinDetails: {},
             coinImage: '',
@@ -286,7 +294,7 @@ export default {
             this.coinSymbol = this.coinDetails.symbol.toUpperCase()
             this.currentPrice = this.formatPrice(this.coinDetails.market_data.current_price.usd)
             this.marketCapRank = this.coinDetails.market_cap_rank
-            this.marketCap = this.formatPrice(this.coinDetails.market_data.market_cap.usd)
+            this.marketCap = this.coinDetails.market_data.market_cap.usd
             this.totalSupply = this.numberWithCommas(this.coinDetails.market_data.total_supply)
             this.maxSupply = this.numberWithCommas(this.coinDetails.market_data.max_supply)
             this.coinHomepage = this.coinDetails.links.homepage[0]
@@ -624,6 +632,16 @@ export default {
                 // These options are needed to round to whole numbers if that's what you want.
                 //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
                 //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+            });
+
+            return formatter.format(value)
+        },
+        formatMarketCap(value) {
+            // Create our number formatter.
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: this.currency,
+                minimumFractionDigits: 0
             });
 
             return formatter.format(value)
