@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <div>
         <v-row>
             <v-breadcrumbs
                 :items="breadCrumbItems"
@@ -140,6 +140,7 @@
         </v-row>
         <v-row
             v-if="coinDescription"
+            class="pa-3"
         >
             <v-card 
                 class="mb-12"
@@ -152,26 +153,54 @@
             </v-card>
         </v-row>
         <v-divider></v-divider>
-        <!-- <div 
-            class="amcharts-range-selector-period-wrapper"
-        > -->
-        <v-btn-toggle
-            mandatory
-            color="primary"
-            
-        >
-            <v-btn @click="createChart('24H')"> 24HR </v-btn>
-            <v-btn @click="createChart('sevenD')"> 1W </v-btn>
-            <v-btn @click="createChart('oneM')"> 1M </v-btn>
-            <v-btn @click="createChart('threeM')"> 3M </v-btn>
-            <v-btn @click="createChart('sixM')"> 6M </v-btn>
-            <v-btn @click="createChart('ytd')"> YTD </v-btn>
-            <v-btn @click="createChart('max')"> MAX </v-btn>
-        </v-btn-toggle>
+        <div v-if="$vuetify.breakpoint.mobile">
+            <template>
+                <div class="text-right">
+                    <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                        color="primary"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                        >
+                            <v-icon
+                            left
+                            light
+                            >
+                                mdi-calendar
+                            </v-icon>
+                            Date Range
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item
+                        v-for="(theRange, index) in chartRanges"
+                        :key="index"
+                        >
+                        <v-list-item-title @click="createChart(theRange.id)">{{ theRange.text }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                    </v-menu>
+                </div>
+            </template>
+        </div>
+        <div v-else>
+            <v-btn-toggle
+                mandatory
+                color="primary"
+            >
+                <v-btn
+                    v-for="theRange in chartRanges"
+                    :key="theRange.id"
+                    @click="createChart(theRange.id)"
+                >{{ theRange.text }}</v-btn>
+            </v-btn-toggle>
+        </div>
             
         <div class="coinChart" ref="chartdiv"></div>
         <CryptoPredictor :coinName="coinDetails.name" :coinId="coinId"/>
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -216,6 +245,15 @@ export default {
             totalVolumes: [],
             firstLoad: false,
             // prevRoute: null,
+            chartRanges: [
+                { id: '24H', text: '24HR' },
+                { id: 'sevenD', text: '1W' },
+                { id: 'oneM', text: '1M' },
+                { id: 'threeM', text: '3M' },
+                { id: 'sixM', text: '6M' },
+                { id: 'ytd', text: 'YTD' },
+                { id: 'max', text: 'MAX' },
+            ],
             breadCrumbItems: [
                 {
                     text: 'Coin List',
