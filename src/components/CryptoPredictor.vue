@@ -97,6 +97,7 @@
                         v-model="amountInvested"
                         label="Amount Invested"
                         :rules="investedRules"
+                        pattern="\d*"
                         prepend-icon="mdi-currency-usd"
                     ></v-text-field>
                 </v-col>
