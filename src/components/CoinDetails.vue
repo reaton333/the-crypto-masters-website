@@ -142,15 +142,16 @@
             v-if="coinDescription"
             class="pa-3"
         >
-            <v-card 
-                class="mb-12"
-            >
-                <v-card-title>{{ coinDetails.name }} Overview</v-card-title>
-                <v-card-text
-                    v-html="coinDescription"
-                >
-                </v-card-text>
-            </v-card>
+            <v-expansion-panels accordion>
+                <v-expansion-panel class="mb-12">
+                    <v-expansion-panel-header class="font-weight-bold">
+                        {{ coinDetails.name }} Overview
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <span v-html="coinDescription"></span>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
         </v-row>
         <v-divider></v-divider>
         <div v-if="$vuetify.breakpoint.mobile">
