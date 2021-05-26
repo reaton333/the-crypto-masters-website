@@ -106,7 +106,7 @@
                 <v-btn icon :href="brianObject.instagram">
                   <v-icon color="secondary">mdi-instagram</v-icon>
                 </v-btn>
-                <v-btn icon :href="brianObject.email">
+                <v-btn icon :href="'mailto:' + brianObject.email">
                   <v-icon color="secondary">mdi-email</v-icon>
                 </v-btn>
               </v-card-actions>
@@ -142,7 +142,7 @@
                 <v-btn icon :href="rossObject.instagram">
                   <v-icon color="secondary">mdi-instagram</v-icon>
                 </v-btn>
-                <v-btn icon :href="rossObject.email">
+                <v-btn icon :href="'mailto:' + rossObject.email">
                   <v-icon color="secondary">mdi-email</v-icon>
                 </v-btn>
               </v-card-actions>
