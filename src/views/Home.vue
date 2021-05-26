@@ -13,15 +13,15 @@
           elevation="0"
         >
           <v-card-title
-            class="text-left pb-12 
-              text-xl-h3 text-lg-h3 text-md-h3 text-sm-h4 text-xs-h4 
-              font-weight-bold"
+            class="text-left pb-12 font-weight-bold
+              text-xl-h3 text-lg-h3 text-md-h3 text-sm-h4 text-h5 
+              "
           >
             {{ catchPhrase }}
           </v-card-title>
           <v-card-subtitle
-            class="text-left
-              text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-xs-h6"
+            class="text-left font-weight-medium
+              text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-subtitle-1"
             elevation="0"
           >
             {{ subPhrase }}
@@ -36,8 +36,8 @@
                 x-large
                 color="success"
                 dark
-                class="text-left
-                text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
+                class="text-left font-weight-medium
+                text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-body-2"
                 @click="$router.push('/podcast/')"
               >
                 Listen Now
@@ -52,8 +52,8 @@
                 x-large
                 color="secondary"
                 dark
-                class="text-left black--text
-                text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
+                class="text-left black--text font-weight-medium
+                text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-body-2"
                 @click="$router.push('/crypto')"
               >
                 Crypto
