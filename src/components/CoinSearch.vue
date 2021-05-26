@@ -25,9 +25,7 @@
             </v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-            <v-list-item-title
-                class=""
-            >
+            <v-list-item-title>
                 {{ data.item.name }} - {{ data.item.symbol }}
             </v-list-item-title>
             
