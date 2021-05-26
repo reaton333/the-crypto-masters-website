@@ -96,6 +96,20 @@
               <v-card-text class="headline text-h6 font-weight-medium">
                 {{ brianObject.aboutText }}
               </v-card-text>
+              <v-card-actions
+                class="primary"
+              >
+                <v-spacer></v-spacer>
+                <v-btn icon :href="brianObject.twitter">
+                  <v-icon color="secondary">mdi-twitter</v-icon>
+                </v-btn>
+                <v-btn icon :href="brianObject.instagram">
+                  <v-icon color="secondary">mdi-instagram</v-icon>
+                </v-btn>
+                <v-btn icon :href="brianObject.email">
+                  <v-icon color="secondary">mdi-email</v-icon>
+                </v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
           <v-col
@@ -118,6 +132,20 @@
               <v-card-text class="headline text-h6 font-weight-medium">
                 {{ rossObject.aboutText }}
               </v-card-text>
+              <v-card-actions
+                class="primary"
+              >
+                <v-spacer></v-spacer>
+                <v-btn icon :href="rossObject.twitter">
+                  <v-icon color="secondary">mdi-twitter</v-icon>
+                </v-btn>
+                <v-btn icon :href="rossObject.instagram">
+                  <v-icon color="secondary">mdi-instagram</v-icon>
+                </v-btn>
+                <v-btn icon :href="rossObject.email">
+                  <v-icon color="secondary">mdi-email</v-icon>
+                </v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -146,10 +174,10 @@ export default {
           // { id: 3, icon: 'mdi-clock-outline', text: "Focused on crypto assets for a long term investment. We see crypto as the future of currency and finance" },
         ],
         brianObject: { 
-          id: 0, image: '../assets/brian_headshot.jpeg', fullName: 'Brian McCoy', aboutText: 'Hey I\'m Brian. Hedge fund manager and full time lawyer.', email: 'brian@thecryptomasters.com', instagram: '@brianmccoy81', twitter: '@cryptolerable'
+          id: 0, image: '../assets/brian_headshot.jpeg', fullName: 'Brian McCoy', aboutText: 'Hey I\'m Brian. Hedge fund manager and full time lawyer.', email: 'brian@thecryptomasters.com', instagram: 'https://www.instagram.com/brianmccoy81', twitter: 'https://twitter.com/cryptolerable'
         },
         rossObject: { 
-          id: 1, image: '../assets/ross_headshot.png', fullName: 'Ross Eaton', aboutText: 'Hello I\'m Ross. Data analyst and computer nerd.', email: 'ross@thecryptomasters.com', instagram: '@rossbo3', twitter: '@RosstheCryptoB1'
+          id: 1, image: '../assets/ross_headshot.png', fullName: 'Ross Eaton', aboutText: 'Hello I\'m Ross. Data analyst and computer nerd.', email: 'ross@thecryptomasters.com', instagram: 'https://www.instagram.com/rossbo3', twitter: 'https://twitter.com/RosstheCryptoB1'
         },
     }
   }

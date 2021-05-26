@@ -7,7 +7,9 @@
                 divider="/"
             ></v-breadcrumbs>
         </v-row>
-        <v-row>
+        <v-row
+            no-gutters
+        >
             <v-col
                 cols="6"
             >
@@ -19,11 +21,11 @@
                     <v-card-title
                         v-if="coinDetails.name"
                     >
-                        <v-avatar size="50">
-                        <img
-                            :src="coinImage" 
-                            :alt="coinDetails.name"
-                        >
+                        <v-avatar left size="50">
+                            <img
+                                :src="coinImage" 
+                                :alt="coinDetails.name"
+                            >
                         </v-avatar>
                         <span 
                             class="ml-2 
@@ -64,7 +66,9 @@
                         <br />
                         <v-chip
                             v-if="sourceCode"
-                            class="mb-2 font-weight-bold"
+                            class="mb-2 
+                            text-subtitle-2
+                            font-weight-bold"
                             :href="sourceCode"
                             color="primary"
                         >
@@ -92,11 +96,11 @@
                         class="text-right"
                     >
                         <span
-                            class="black--text text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-xs-h4 font-weight-bold"
+                            class="black--text text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-h5 font-weight-bold"
                         >
                             {{ currentPrice }}
                         </span>
-                        <span class= "text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-xs-h6 font-weight-bold" :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
+                        <span class= "text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-h6 font-weight-bold" :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
                             {{ formatPercentGain(priceChangePercentage24h) }}
                         </span>
                         <br />
@@ -163,7 +167,7 @@
         <v-divider></v-divider>
         <div v-if="$vuetify.breakpoint.mobile">
             <template>
-                <div class="text-right">
+                <div class="text-left">
                     <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn

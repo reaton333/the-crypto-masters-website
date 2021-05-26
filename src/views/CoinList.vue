@@ -48,7 +48,7 @@
       style="min-width:375px"
       :dense="isMobile"
       hide-default-footer
-      class="elevation-1 text-sm-caption-2 text-xs-caption-2 font-xs-weight-light"
+      class="elevation-1 font-weight-medium text-sm-caption-2 text-xs-caption-2 font-xs-weight-light"
     >
       <template v-slot:item.name="{ item }">
         <v-row v-if="!isMobile">
