@@ -38,14 +38,16 @@ export default {
     },
     created() {
 
+      console.log('Episode Data Summary:' + this.episodeData.data['episode-summary'][0].text)
+
     },
     methods: {
-        goToEpisode(episodeName){
-            console.log(episodeName)
+        goToEpisode(episodeId){
+            console.log(episodeId)
             this.$router.push({ 
                 name: 'PodcastEpisode',
                 params: {
-                    episodeName: episodeName
+                    episodeId: episodeId
                 }
             })
         },

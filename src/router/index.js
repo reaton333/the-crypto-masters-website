@@ -32,7 +32,8 @@ const routes = [
     component: Coin
   },
   {
-    path: '/podcast/:episodeName',
+    // path: '/podcast/:episodeName',
+    path: '/podcast/:episodeId',
     name: 'PodcastEpisode',
     component: PodcastEpisode
   },

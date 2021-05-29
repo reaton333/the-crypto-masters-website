@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import EpisodeCard from '@/components/EpisodeCard.vue'
 
 export default {
@@ -65,38 +65,53 @@ export default {
         return {
             episodes: [],
             searchVal: '',
-            loading: true
+            loading: true,
+            response: null,
         };
     },
     async created () {
 
-        this.getContent();
+        // this.getContent();
+        this.getContentVue();
     },
     methods: {
-        async getContent() {
+      async getContentVue() {
 
-            const MASTER_REF = 'YJtEMhEAACMAOife'
-            const baseURL = `https://the-crypto-masters-website.cdn.prismic.io/api/v2/documents/search?ref=${MASTER_REF}`
-            var apiParams = `&format=json`
+        console.log('ENTER getContentVue()')
+        // Query the API and assign the response to "response"
+        const response = await this.$prismic.client.query('')
+        this.response = response  
+        console.log('Prismic response: ', this.response)  
+        
+        this.episodes = this.response.results;
+        this.filteredEpisodes = this.episodes
+        this.loading = false;
+        console.log(this.episodes)
+      },
+      // async getContent() {
 
-            var full_path = baseURL + apiParams;
-            console.log(full_path);
+      //     const MASTER_REF = 'YJtEMhEAACMAOife'
+      //     const baseURL = `https://the-crypto-masters-website.cdn.prismic.io/api/v2/documents/search?ref=${MASTER_REF}`
+      //     var apiParams = `&format=json`
 
-            try {
-                const res = await axios.get(full_path)
+      //     var full_path = baseURL + apiParams;
+      //     console.log(full_path);
 
-                this.episodes = res.data.results;
-                this.filteredEpisodes = this.episodes
-                this.loading = false;
-                // console.log(this.results)
-            } catch (e) {
-                if(e.response.status === 404) {
-                    console.log('ahhhhhhhhhhh')
-                    this.$router.push('/NotFound')
-                }
-                console.log(e.response.status);
-            }
-        },
+      //     try {
+      //         const res = await axios.get(full_path)
+
+      //         this.episodes = res.data.results;
+      //         this.filteredEpisodes = this.episodes
+      //         this.loading = false;
+      //         // console.log(this.results)
+      //     } catch (e) {
+      //         if(e.response.status === 404) {
+      //             console.log('ahhhhhhhhhhh')
+      //             this.$router.push('/NotFound')
+      //         }
+      //         console.log(e.response.status);
+      //     }
+      // },
     },
     computed: {
         filteredEpisodes() {
