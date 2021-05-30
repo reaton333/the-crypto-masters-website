@@ -14,13 +14,17 @@
           <v-btn
             v-for="social in socials"
             :key="social.id"
-            class="mx-4 white--text"
+            class="mx-4"
+            color="secondary"
             icon
             :href="social.url"
           >
             <v-icon size="24px">
               {{ social.icon }}
             </v-icon>
+          </v-btn>
+          <v-btn icon :href="'mailto:' + cryptoMastersEmail">
+            <v-icon color="secondary">mdi-email</v-icon>
           </v-btn>
         </v-card-text>
 
@@ -49,6 +53,7 @@ export default {
                 { id: 4, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
                 { id: 5, icon: 'mdi-rss', url: 'https://feed.podbean.com/thecryptomasters/feed.xml' },
             ],
+            cryptoMastersEmail: 'info@thecryptomasters.com',
             legalText: 'Nothing in our podcasts or on our web sites or social media outlets should be considered to be investment advice. We are not financial advisors. Please do not consider any of our information or personal opinions to be investment advice.'
         }
     }
