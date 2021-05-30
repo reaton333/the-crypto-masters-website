@@ -1,155 +1,174 @@
 <template>
-  <v-container
-    style="max-width: 900px"
-  >
-    <v-row>
-        <v-breadcrumbs
-            :items="breadCrumbItems"
-            customDivider
-            divider="/"
-        ></v-breadcrumbs>
-    </v-row>
-    <v-row 
-        justify="space-around"
-        align="center"
-    >
-        <h1
-            class="
-                text-h4 
-                text-md-h3
-                text-sm-h4
-                font-weight-bold"
-        >
-            {{ episodeData.data['episode_title'][0].text }}
-        </h1>
-    </v-row>
-    <v-row 
-        justify="space-around"
-        align="center"
-        class="pa-8"
-    >
-        <v-img 
-            v-if="episodeData.data['episode-image']['url']" 
+    <div>
+        <v-row>
+            <v-breadcrumbs
+                :items="breadCrumbItems"
+                customDivider
+                divider="/"
+            ></v-breadcrumbs>
+        </v-row>
+
+        <div 
+            v-if="loading"
+            class="pt-12"
+            max-width="900px" 
             align="center"
-            class="episodeImage"
-            contain
-            justify="space-around"
-            max-height="402"
-            max-width="402"
-            :src="episodeData.data['episode-image']['url']" 
-            :alt="episodeData.data['episode-image']['alt']"
-        ></v-img>
-    </v-row>
-    <!-- depending on the type of object we get back from the CRM
-    I want to display it according it in an element that cooresponds to 
-    it's given type -->
-    <v-spacer
-    >
-    </v-spacer>
-    <div 
-        v-for="(item, index) in episodeSummary"
-        :key="index"
-        class="px-4 py-2"
-    >
- 
-        <v-row 
-            v-if="item.type == 'embed'"
-            justify="space-around"
-            align="center"
-            class="py-6 ma-2"
+            justify="center"
         >
-            <div
-                v-html="item.oembed.html"
+            <v-skeleton-loader
+                v-if="loading"                    
+                max-width="950"
+                min-width="300"
+                type="article, image"
+            ></v-skeleton-loader>
+        </div>
+        <div v-else>
+            <v-container
+                style="max-width: 900px"
             >
-            </div>
-        </v-row>
-        <v-row
-            v-if="item.type == 'paragraph'"
-            justify="left"
-            align="left"
-            class="text-justify"
-        >
-            <p>
-                {{ item.text }}
-            </p>
-        </v-row>
-        <v-row
-            v-if="item.type == 'heading2'"
-            justify="left"
-            align="left"
-        >
-            <p 
-                class="
-                    text-justify 
-                    text-h5 
-                    text-md-h4 
-                    font-weight-bold"
-            >
-                {{ item.text }}
-            </p>
-        </v-row>
-        <v-row
-            v-if="item.type == 'heading3'"
-            justify="left"
-            align="left"
-        >
-            <p 
-                class="
-                    text-justify 
-                    text-h6 
-                    text-md-h5 
-                    font-weight-bold"
-            >
-                {{ item.text }}
-            </p>
-        </v-row>
-        <v-row
-            v-if="item.type == 'heading4'"
-            justify="left"
-            align="left"
-        >
-            <p 
-                class="
-                    text-justify 
-                    text-subtitle-1 
-                    text-md-h6  
-                    font-weight-bold"
-            >
-                {{ item.text }}
-            </p>
-        </v-row>
-        <v-row
-            v-if="item.type == 'heading5'"
-            justify="left"
-            align="left"
-        >
-            <p     
-                class="
-                    text-justify 
-                    text-subtitle-1 
-                    text-md-h6  
-                    font-weight-bold"
-            >
-                {{ item.text }}
-            </p>
-        </v-row>
-        <v-row
-            v-if="item.type == 'heading6'"
-            justify="left"
-            align="left"
-        >
-            <p 
-                class="
-                    text-justify 
-                    text-subtitle-1 
-                    text-md-h6  
-                    font-weight-medium"
-            >
-                {{ item.text }}
-            </p>
-        </v-row>
+                <v-row 
+                    justify="space-around"
+                    align="center"
+                >
+                    <h1
+                        class="
+                            text-h4 
+                            text-md-h3
+                            text-sm-h4
+                            font-weight-bold"
+                    >
+                        {{ episodeData.data['episode_title'][0].text }}
+                    </h1>
+                </v-row>
+                <v-row 
+                    justify="space-around"
+                    align="center"
+                    class="pa-8"
+                >
+                    <v-img 
+                        v-if="episodeData.data['episode-image']['url']" 
+                        align="center"
+                        class="episodeImage"
+                        contain
+                        justify="space-around"
+                        max-height="402"
+                        max-width="402"
+                        :src="episodeData.data['episode-image']['url']" 
+                        :alt="episodeData.data['episode-image']['alt']"
+                    ></v-img>
+                </v-row>
+                <!-- depending on the type of object we get back from the CRM
+                I want to display it according it in an element that cooresponds to 
+                it's given type -->
+                <v-spacer
+                >
+                </v-spacer>
+                <div 
+                    v-for="(item, index) in episodeSummary"
+                    :key="index"
+                    class="px-4 py-2"
+                >
+            
+                    <v-row 
+                        v-if="item.type == 'embed'"
+                        justify="space-around"
+                        align="center"
+                        class="py-6 ma-2"
+                    >
+                        <div
+                            v-html="item.oembed.html"
+                        >
+                        </div>
+                    </v-row>
+                    <v-row
+                        v-if="item.type == 'paragraph'"
+                        justify="left"
+                        align="left"
+                        class="text-justify"
+                    >
+                        <p>
+                            {{ item.text }}
+                        </p>
+                    </v-row>
+                    <v-row
+                        v-if="item.type == 'heading2'"
+                        justify="left"
+                        align="left"
+                    >
+                        <p 
+                            class="
+                                text-justify 
+                                text-h5 
+                                text-md-h4 
+                                font-weight-bold"
+                        >
+                            {{ item.text }}
+                        </p>
+                    </v-row>
+                    <v-row
+                        v-if="item.type == 'heading3'"
+                        justify="left"
+                        align="left"
+                    >
+                        <p 
+                            class="
+                                text-justify 
+                                text-h6 
+                                text-md-h5 
+                                font-weight-bold"
+                        >
+                            {{ item.text }}
+                        </p>
+                    </v-row>
+                    <v-row
+                        v-if="item.type == 'heading4'"
+                        justify="left"
+                        align="left"
+                    >
+                        <p 
+                            class="
+                                text-justify 
+                                text-subtitle-1 
+                                text-md-h6  
+                                font-weight-bold"
+                        >
+                            {{ item.text }}
+                        </p>
+                    </v-row>
+                    <v-row
+                        v-if="item.type == 'heading5'"
+                        justify="left"
+                        align="left"
+                    >
+                        <p     
+                            class="
+                                text-justify 
+                                text-subtitle-1 
+                                text-md-h6  
+                                font-weight-bold"
+                        >
+                            {{ item.text }}
+                        </p>
+                    </v-row>
+                    <v-row
+                        v-if="item.type == 'heading6'"
+                        justify="left"
+                        align="left"
+                    >
+                        <p 
+                            class="
+                                text-justify 
+                                text-subtitle-1 
+                                text-md-h6  
+                                font-weight-medium"
+                        >
+                            {{ item.text }}
+                        </p>
+                    </v-row>
+                </div>
+            </v-container>
+        </div>
     </div>
-  </v-container>
 </template>
 
 <script>
@@ -158,13 +177,10 @@ import axios from 'axios';
 export default {
   data () {
     return {
-    //     title: null,
-    //     logoURL: '',
-    //     logoAlt: '',
+        loading: false,
         episodeData: null,
         prismicPageType: 'episode-summary',
         episodeSummary: null,
-        // episodeName: null,
         episodeId: null,
         breadCrumbItems: [
             {
@@ -173,7 +189,6 @@ export default {
                 href: '/podcast',
             },
         ],
-        // results: []
     };
   },
     async created () {
@@ -198,7 +213,7 @@ export default {
             this.episodeData = this.response
             this.episodeSummary = this.episodeData.data['episode-summary']
 
-            this.loading = false;
+            this.loading = false
         },
         // async getContent(theEpisodeName) {
         // //   const Prismic = require('@prismicio/client')
@@ -246,10 +261,6 @@ export default {
 </script>
 
 <style>
-/* iframe {
-    width: 900 !important; 
-    height: 508 !important;
-}   */
 @media screen and (max-width: 2000px) {
     iframe {
         width: 900px !important;

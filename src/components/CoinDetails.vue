@@ -7,7 +7,13 @@
                 divider="/"
             ></v-breadcrumbs>
         </v-row>
+        <div v-if="loading">
+            <v-skeleton-loader
+                type="list-item-avatar-three-line, image, article"
+            ></v-skeleton-loader>
+        </div>
         <v-row
+            v-else
             no-gutters
         >
             <v-col
@@ -232,6 +238,7 @@ export default {
     },
     data() {
         return {
+            loading: false,
             currency: 'usd',
             coinId: '',
             coinDetails: {},
@@ -285,6 +292,8 @@ export default {
 
         this.coinId = this.$route.params.coinId;
 
+        this.loading = true
+
         const baseURL = `https://api.coingecko.com/api/v3/coins/`
         var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
 
@@ -296,6 +305,7 @@ export default {
             this.coinDescription = this.coinDetails.description.en
             this.coinGenesisDate = this.coinDetails.genesis_date
             this.coinSymbol = this.coinDetails.symbol.toUpperCase()
+            this.loading = false
             this.currentPrice = this.formatPrice(this.coinDetails.market_data.current_price.usd)
             this.marketCapRank = this.coinDetails.market_cap_rank
             this.marketCap = this.coinDetails.market_data.market_cap.usd
@@ -306,13 +316,18 @@ export default {
             this.sourceCode = this.coinDetails.links.repos_url.github[0]
             // console.log(this.coinDetails.market_data.current_price.usd)
 
+            this.loading = false
+
         } catch (e) {
             if(e.response.status === 404) {
                 console.log('ahhhhhhhhhhh')
                 this.$router.push('/NotFound')
             }
             console.log(e.response.status);
+
+            this.loading = false
         }
+        this.loading = false
     },
     async mounted() {
         
