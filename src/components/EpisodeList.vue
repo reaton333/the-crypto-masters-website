@@ -32,11 +32,11 @@
 
     </v-row>
     <div v-if="filteredEpisodes.length" class="episode-cards">
-        <div class="card" v-for="episode in filteredEpisodes" v-bind:key="episode">
-          <EpisodeCard :episodeData="episode" />
-        </div>
+      <div class="card" v-for="episode in filteredEpisodes" v-bind:key="episode">
+        <EpisodeCard :episodeData="episode" />
+      </div>
     </div>
-    <div v-else>
+    <div v-else-if="loading">
       <v-row
         align="center"
         justify="center"
@@ -44,9 +44,31 @@
         <v-skeleton-loader
             v-if="loading"
             class="mx-auto"
-              max-width="300"
-              type="card"
+            max-width="344"
+            min-width="300"
+            type="card"
         ></v-skeleton-loader>
+        <v-skeleton-loader
+            v-if="loading"
+            class="mx-auto"
+            max-width="344"
+            min-width="300"
+            type="card"
+        ></v-skeleton-loader>
+        <v-skeleton-loader
+            v-if="loading"
+            class="mx-auto"
+            max-width="344"
+            min-width="300"
+            type="card"
+        ></v-skeleton-loader>
+      </v-row>
+    </div>
+    <div v-else>
+      <v-row
+        align="center"
+        justify="center"
+      >
         <h2>No Episodes match your inquiry</h2>
       </v-row>
     </div>    
@@ -76,17 +98,17 @@ export default {
     },
     methods: {
       async getContentVue() {
-
-        console.log('ENTER getContentVue()')
+        this.loading = true;
+        // console.log('ENTER getContentVue()')
         // Query the API and assign the response to "response"
         const response = await this.$prismic.client.query('')
         this.response = response  
-        console.log('Prismic response: ', this.response)  
+        // console.log('Prismic response: ', this.response)  
         
         this.episodes = this.response.results;
         this.filteredEpisodes = this.episodes
         this.loading = false;
-        console.log(this.episodes)
+        // console.log(this.episodes)
       },
       // async getContent() {
 
