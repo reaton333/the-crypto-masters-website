@@ -102,11 +102,11 @@
                         class="text-right"
                     >
                         <span
-                            class="black--text text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-h5 font-weight-bold"
+                            class="black--text text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-h6 font-weight-bold"
                         >
                             {{ currentPrice }}
                         </span>
-                        <span class= "text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-h6 font-weight-bold" :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
+                        <span class= "text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-subtitle-1 font-weight-bold" :class="priceChangePercentage24h >= 0 ? 'success--text' : 'error--text'">
                             {{ formatPercentGain(priceChangePercentage24h) }}
                         </span>
                         <br />
@@ -350,7 +350,7 @@ export default {
         next(vm => {
             // vm.prevRoute = from
             vm.breadCrumbItems[0].href = from
-            console.log(from)
+            // console.log(from)
         })
     },
     watch: {
@@ -424,7 +424,7 @@ export default {
             let data = [];
 
             this.chartNumberSampling = this.prices[0][1]
-            console.log('Sampling: ' + this.chartNumberSampling)
+            // console.log('Sampling: ' + this.chartNumberSampling)
 
             for (let i = 1; i < this.prices.length; i++) {
                 
@@ -510,11 +510,8 @@ export default {
 
             let tooltipPriceFormatString = this.setTooltipPrice(this.chartNumberSampling)
 
-            console.log(tooltipPriceFormatString)
-
-            // series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY.formatNumber('#,###.00')}"
             series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY.formatNumber('" + tooltipPriceFormatString + "')}"
-            // series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY}";
+            
             series.tooltip.getFillFromObject = false;
             series.tooltip.background.fill = am4core.color("#2A9D8F");
 
