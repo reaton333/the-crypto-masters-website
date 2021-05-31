@@ -238,6 +238,7 @@ export default {
     },
     data() {
         return {
+            chartNumberSampling: 0.0,
             loading: false,
             currency: 'usd',
             coinId: '',
@@ -257,8 +258,8 @@ export default {
             toDateRange: '',
             fromDateRange: '',
             currDateSelection: '',
-            indicator: '',
-            indicatorInterval: '',
+            // indicator: '',
+            // indicatorInterval: '',
             hourglass: '',
             prices: [],
             marketCaps: [],
@@ -413,6 +414,8 @@ export default {
             
             let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
 
+            chart.numberFormatter.smallNumberThreshold = 0.000000000001
+
             chart.preloader.disabled = true;
         
             chart = this.showChartIndicator(chart);
@@ -420,8 +423,11 @@ export default {
 
             let data = [];
 
+            this.chartNumberSampling = this.prices[0][1]
+            console.log('Sampling: ' + this.chartNumberSampling)
+
             for (let i = 1; i < this.prices.length; i++) {
-                // console.log('ENTER loop')
+                
                 data.push({ 
                     // first el in prices is date, second is price!
                     date: this.prices[i][0], 
@@ -502,7 +508,13 @@ export default {
             series.dataFields.dateX = "date";
             series.dataFields.valueY = "value";
 
-            series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY.formatNumber('#,###.00')}";
+            let tooltipPriceFormatString = this.setTooltipPrice(this.chartNumberSampling)
+
+            console.log(tooltipPriceFormatString)
+
+            // series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY.formatNumber('#,###.00')}"
+            series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY.formatNumber('" + tooltipPriceFormatString + "')}"
+            // series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY}";
             series.tooltip.getFillFromObject = false;
             series.tooltip.background.fill = am4core.color("#2A9D8F");
 
@@ -516,6 +528,35 @@ export default {
 
             // this.hideIndicator();
         },
+        setTooltipPrice(samplingPrice) {
+
+            let tooltipText = ''
+
+            if (samplingPrice < 1 & samplingPrice >= .001) {
+                
+                tooltipText = '#,###.00000'
+            } else if (samplingPrice < .001 & samplingPrice >= .0001) {
+
+                tooltipText = '#,###.000000'
+            } else if (samplingPrice < .0001 & samplingPrice >= .00001) {
+
+                tooltipText = '#,###.0000000'
+            } else if (samplingPrice < .00001 & samplingPrice >= .000001) {
+
+                tooltipText = '#,###.00000000'
+            } else if (samplingPrice < .000001 & samplingPrice >= .0000001) {
+
+                tooltipText = '#,###.000000000'
+            } else if (samplingPrice < .0000001 & samplingPrice >= .00000001) {
+
+                tooltipText = '#,###.0000000000'
+            } else {
+
+                tooltipText = '#,###.00'
+            }
+
+            return tooltipText
+        },
         showChartIndicator(theChart) {
 
             let indicator = ''
@@ -523,8 +564,8 @@ export default {
             let hourglass = ''
 
             theChart.events.on("ready", function(ev){
+                
                 indicator.hide();
-                clearInterval(this.indicatorInterval);
             });
         
             if (!indicator) {
