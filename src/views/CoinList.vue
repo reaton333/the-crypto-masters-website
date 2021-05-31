@@ -268,20 +268,20 @@ export default {
     },
     formatPrice(value) {
       // Create our number formatter.
-    
-      if (value < 10) {
-        var formatter = new Intl.NumberFormat('en-US', {
-          minimumFractionDigits: 3,
-          style: 'currency',
-          currency: this.currency,
-        });
-      } else {
-        var formatter = new Intl.NumberFormat('en-US', {
-          minimumFractionDigits: 2,
-          style: 'currency',
-          currency: this.currency,
-        });
+      let formatOptions = {
+        minimumFractionDigits: 2,
+        style: 'currency',
+        currency: this.currency,
       }
+    
+      // Such small floats should have a minimum significant digits visible
+      if (value < 10) formatOptions.minimumFractionDigits = 3
+      if (value < 0.01) {
+        formatOptions.minimumSignificantDigits = 2
+        formatOptions.maximumSignificantDigits = 2
+      }
+
+      var formatter = new Intl.NumberFormat('en-US', formatOptions);
 
       return formatter.format(value)
     },
