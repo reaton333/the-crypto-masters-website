@@ -76,7 +76,6 @@
 </template>
 
 <script>
-// import axios from 'axios';
 import EpisodeCard from '@/components/EpisodeCard.vue'
 
 export default {

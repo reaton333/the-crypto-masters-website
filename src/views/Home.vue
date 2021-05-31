@@ -111,8 +111,8 @@
         dark
       ></v-divider>
         <v-row
-        align="center"
-        justify="space-around"
+          align="center"
+          justify="space-around"
         >
           <v-col
             class="pa-10"
@@ -137,20 +137,27 @@
       </v-card>
     </v-row>
     <v-row
-      class="pa-16"
-    ></v-row>
-    <v-row
       class="pa-8"
     ></v-row>
+    <!-- <v-row
+      class="pa-8"
+    ></v-row> -->
+    <v-row
+      align="center"
+      justify="center"
+    >
+        <YoutubeCarousel />
+    </v-row>
   </v-container>
 </template>
 
 <script>
+import YoutubeCarousel from '@/components/YoutubeCarousel.vue'
 
 export default {
   name: 'Home',
   components: {
-    
+    YoutubeCarousel
   },
   data () {
     return {
