@@ -20,11 +20,12 @@
       justify="center"
     >
       <v-col
-        cols="6"
+        cols="8"
       >
           <v-text-field
             label="Search Episodes"
             solo
+            dense
             v-model="searchVal"
             append-outer-icon="mdi-magnify"
           ></v-text-field>
