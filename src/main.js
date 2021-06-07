@@ -16,6 +16,14 @@ Vue.use(PrismicVue, {
   linkResolver
 })
 
+// Vue.mixin({
+//   methods: {
+//     linkToNewTab: function() {
+//       alert('This is a test!')
+//     }
+//   }
+// })
+
 
 Vue.config.productionTip = false
 

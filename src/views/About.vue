@@ -100,10 +100,10 @@
                 class="primary"
               >
                 <v-spacer></v-spacer>
-                <v-btn icon :href="brianObject.twitter">
+                <v-btn icon @click="linkToNewTab(brianObject.twitter)">
                   <v-icon color="secondary">mdi-twitter</v-icon>
                 </v-btn>
-                <v-btn icon :href="brianObject.instagram">
+                <v-btn icon @click="linkToNewTab(brianObject.instagram)">
                   <v-icon color="secondary">mdi-instagram</v-icon>
                 </v-btn>
                 <v-btn icon :href="'mailto:' + brianObject.email">
@@ -136,10 +136,10 @@
                 class="primary"
               >
                 <v-spacer></v-spacer>
-                <v-btn icon :href="rossObject.twitter">
+                <v-btn icon @click="linkToNewTab(rossObject.twitter)">
                   <v-icon color="secondary">mdi-twitter</v-icon>
                 </v-btn>
-                <v-btn icon :href="rossObject.instagram">
+                <v-btn icon @click="linkToNewTab(rossObject.instagram)">
                   <v-icon color="secondary">mdi-instagram</v-icon>
                 </v-btn>
                 <v-btn icon :href="'mailto:' + rossObject.email">
@@ -179,6 +179,11 @@ export default {
         rossObject: { 
           id: 1, image: '../assets/ross_headshot.png', fullName: 'Ross Eaton', aboutText: 'Hello I\'m Ross. I have a degree in Computer Science with 6 years of experience in software development and data analysis. I have been in the world of cryptocurrency since 2016. I see crypto as the tech of the future with potential of replacing traditional banking systems. I am in crypto for the long haul!', email: 'ross@thecryptomasters.com', instagram: 'https://www.instagram.com/rossbo3', twitter: 'https://twitter.com/RosstheCryptoB1'
         },
+    }
+  },
+  methods: {
+    linkToNewTab(theLink) {
+      window.open(theLink, "_blank")
     }
   }
 }

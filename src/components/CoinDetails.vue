@@ -61,7 +61,7 @@
                         <v-chip
                             v-if="coinHomepage"
                             class="mb-2 font-weight-bold"
-                            :href="coinHomepage"
+                            @click="linkToNewTab(coinHomepage)"
                             color="primary"
                         >
                             Website
@@ -75,7 +75,7 @@
                             class="mb-2 
                             text-subtitle-2
                             font-weight-bold"
-                            :href="sourceCode"
+                            @click="linkToNewTab(sourceCode)"
                             color="primary"
                         >
                             Source Code
@@ -746,6 +746,9 @@ export default {
             
             return convdataTime; 
         },
+        linkToNewTab(theLink) {
+            window.open(theLink, "_blank")
+        }
     }
 }
 </script>

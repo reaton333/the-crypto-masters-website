@@ -123,7 +123,7 @@
               class="mx-4 white--text space-around"
               icon
               x-large
-              :href="podcast.url"
+              @click="linkToNewTab(podcast.url)"
             >
               <v-icon 
                 size="72px"
@@ -172,6 +172,11 @@ export default {
                 
       ],
       socialMessage: 'TUNE IN TO OUR SHOW'
+    }
+  },
+  methods: {
+    linkToNewTab(theLink) {
+      window.open(theLink, "_blank")
     }
   }
 }
