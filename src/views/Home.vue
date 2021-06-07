@@ -21,7 +21,7 @@
           </v-card-title>
           <v-card-subtitle
             class="text-left font-weight-medium
-              text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-subtitle-1"
+              text-xl-h5 text-lg-h5 text-md-h5 text-sm-h6 text-subtitle-2"
             elevation="0"
           >
             {{ subPhrase }}

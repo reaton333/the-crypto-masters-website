@@ -1,5 +1,18 @@
 <template>
-    <v-carousel 
+    <v-carousel
+        cycle
+        class="pt-12"
+    >
+        <v-carousel-item
+            v-for="(episode, index) in episodes"
+            :key="index"
+            :src="episode.snippet.thumbnails.high.url"
+            reverse-transition="fade-transition"
+            transition="fade-transition"
+            @click="linkToVideo(episode.id.videoId)"
+        ></v-carousel-item>
+    </v-carousel>
+    <!-- <v-carousel 
         cycle
         show-arrows-on-hover
         style="width:480px;height:360px;"
@@ -18,7 +31,7 @@
                 {{ episode.snippet.title }}
             </div>    
         </v-carousel-item>
-    </v-carousel>
+    </v-carousel> -->
 </template>
 
 <script>
@@ -32,7 +45,7 @@ export default {
             youtubeVideoBase: 'https://www.youtube.com/watch?v=',
             apiKey: 'AIzaSyBykn2bRD5xV2nn3G8gvoU8Q2ezxwjuCu0',
             channelId: 'UCyrKtJ25wtlemNHk5MG-9tQ',
-            maxResults: '7',
+            maxResults: '5',
             orderBy: 'date',
             apiData: null,
             episodes: [],
@@ -50,7 +63,7 @@ export default {
 
             this.loading = true
 
-            // console.log(fullPath)
+            console.log(fullPath)
 
             try {
                 const res = await axios.get(fullPath)
@@ -63,6 +76,14 @@ export default {
 
             this.loading = false
         },
+        linkToVideo(theVideoId) {
+
+            console.log('ENTER linkToVideo for ' + theVideoId)
+
+            var baseUrl = 'https://www.youtube.com/watch?v='
+
+            window.open(baseUrl + theVideoId, "_blank")
+        }
     }
 
 
