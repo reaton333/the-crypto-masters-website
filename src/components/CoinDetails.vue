@@ -266,6 +266,7 @@ export default {
             totalVolumes: [],
             firstLoad: false,
             // prevRoute: null,
+            chartNumberFormatString: '',
             chartRanges: [
                 { id: '24H', text: '24HR' },
                 { id: 'sevenD', text: '1W' },
@@ -424,6 +425,7 @@ export default {
             let data = [];
 
             this.chartNumberSampling = this.prices[0][1]
+            this.setTooltipPrice(this.chartNumberSampling)
             // console.log('Sampling: ' + this.chartNumberSampling)
 
             for (let i = 1; i < this.prices.length; i++) {
@@ -472,7 +474,7 @@ export default {
 
             let title = chart.titles.create();
             title.text = this.coinDetails.name;
-            title.fontSize = 25;
+            title.fontSize = 30;
 
             let topContainer = chart.chartContainer.createChild(am4core.Container);
             topContainer.layout = "absolute";
@@ -502,13 +504,17 @@ export default {
 
             let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
             valueAxis.tooltip.disabled = true;
-            valueAxis.renderer.minWidth = 35;
+            valueAxis.renderer.minWidth = 5;
+            // valueAxis.adjustLabelPrecision = false;
+
+            valueAxis.numberFormatter = new am4core.NumberFormatter();
+            valueAxis.numberFormatter.numberFormat = this.chartNumberFormatString;
 
             let series = chart.series.push(new am4charts.LineSeries());
             series.dataFields.dateX = "date";
             series.dataFields.valueY = "value";
 
-            let tooltipPriceFormatString = this.setTooltipPrice(this.chartNumberSampling)
+            let tooltipPriceFormatString = this.chartNumberFormatString;
 
             series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY.formatNumber('" + tooltipPriceFormatString + "')}"
             
@@ -527,32 +533,30 @@ export default {
         },
         setTooltipPrice(samplingPrice) {
 
-            let tooltipText = ''
-
             if (samplingPrice < 1 & samplingPrice >= .001) {
                 
-                tooltipText = '#,###.00000'
+                this.chartNumberFormatString = '#,###.00000'
             } else if (samplingPrice < .001 & samplingPrice >= .0001) {
 
-                tooltipText = '#,###.000000'
+                this.chartNumberFormatString = '#,###.000000'
             } else if (samplingPrice < .0001 & samplingPrice >= .00001) {
 
-                tooltipText = '#,###.0000000'
+                this.chartNumberFormatString = '#,###.0000000'
             } else if (samplingPrice < .00001 & samplingPrice >= .000001) {
 
-                tooltipText = '#,###.00000000'
+                this.chartNumberFormatString = '#,###.00000000'
             } else if (samplingPrice < .000001 & samplingPrice >= .0000001) {
 
-                tooltipText = '#,###.000000000'
+                this.chartNumberFormatString = '#,###.000000000'
             } else if (samplingPrice < .0000001 & samplingPrice >= .00000001) {
 
-                tooltipText = '#,###.0000000000'
+                this.chartNumberFormatString = '#,###.0000000000'
             } else {
 
-                tooltipText = '#,###.00'
+                this.chartNumberFormatString = '#,###.00'
             }
 
-            return tooltipText
+            return this.chartNumberFormatString
         },
         showChartIndicator(theChart) {
 
