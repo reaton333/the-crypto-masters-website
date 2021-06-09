@@ -57,8 +57,8 @@
                 </v-menu>
                 </v-col>
                 <v-col
-                cols="10"
-                md="4"
+                    cols="10"
+                    md="4"
                 >
                     <v-menu
                         ref="endDateMenu"
@@ -138,7 +138,33 @@
             </v-progress-circular>
         </div>
         <div v-if="newAmount !== ''">
-
+        <!-- <div> -->
+            <v-card-title>
+                <v-row align="start">
+                    <div class="text-caption grey--text text-uppercase">
+                        Total Profit
+                    </div>
+                    <div>
+                    <span 
+                        class="font-weight-bold" 
+                        :class="(newAmount - amountInvested) >= 0 ? 'success--text' : 'error--text'">
+                        {{ this.formatPrice(newAmount - amountInvested) }}
+                    </span>
+                    </div>
+                </v-row>
+            </v-card-title>
+            <v-sparkline
+                :value="sparklineValue"
+                :smooth="sparklineRadius || false"
+                :padding="sparklinePadding"
+                :line-width="sparklineWidth"
+                :stroke-linecap="sparklineLineCap"
+                :gradient="sparklineGradient"
+                :gradient-direction="sparklineGradientDirection"
+                :type="sparklineType"
+                :auto-line-width="sparklineAutoLineWidth"
+                auto-draw
+            ></v-sparkline>
             <v-card-subtitle 
                 class="black--text font-weight-bold
                 text-xl-h6 text-lg-h6 text-md-h6 text-sm-subtitle-1 text-xs-subtitle-1"
@@ -189,26 +215,6 @@
                     </v-card-subtitle>
                 </v-col>
             </v-row>
-            <v-row>
-                <v-col
-                    cols="10"
-                    md="4"
-                >
-                    <v-card-subtitle 
-                        class="black--text
-                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
-                    >
-                        <p class="mb-0 font-weight-bold">
-                            Total Profit
-                        </p>
-                        <span 
-                            class="font-weight-bold" 
-                            :class="(newAmount - amountInvested) >= 0 ? 'success--text' : 'error--text'">
-                            {{ this.formatPrice(newAmount - amountInvested) }}
-                        </span>
-                    </v-card-subtitle>
-                </v-col>
-            </v-row>
         </div>
     </v-card>
   </div>
@@ -239,6 +245,22 @@ export default {
     },
     data () {
         return {
+            //////////////////////////////////
+            // Sparkline properties
+            //////////////////////////////////
+            sparklineWidth: 2,
+            sparklineRadius: 10,
+            sparklinePadding: 8,
+            sparklineLineCap: 'round',
+            // sparklineValue: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+            sparklineValue: [],
+            sparklineFill: false,
+            sparklineType: 'trend',
+            sparklineAutoLineWidth: false,
+            sparklineGradient: ['#f72047', '#ffd200', '#1feaea'],
+            sparklineGradientDirection: 'top',
+            //////////////////////////////////
+            //////////////////////////////////
             valid: true,
             // menu: false,
             minDate: '2013-01-01',
@@ -302,6 +324,7 @@ export default {
                 const res = await axios.get(baseURL + apiParams)
     
                 var pricesArr = res.data.prices
+                this.sparklineValue = pricesArr.map(function(value, index) { return value[1]; });
                 // console.log(pricesArr)
                 this.priceAtStart = pricesArr[0][1]
                 // console.log(this.priceAtStart)
