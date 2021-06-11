@@ -157,13 +157,30 @@ import YoutubeCarousel from '@/components/YoutubeCarousel.vue'
 export default {
   name: 'Home',
   metaInfo: {
-    title: 'Podcasts, Articles, Prices, and More!'
+    title: 'Podcasts, Articles, Prices, and More!',
+    meta: [
+      // Twitter
+      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:title', content: this.metaTitle },
+      { name: 'twitter:description', content: this.metaDesc },
+      // image must be an absolute path
+      {name: 'twitter:image', content: this.logo},
+      // Facebook OpenGraph
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: 'https://crypto-masters.web.app/' },
+      { property: 'og:title', content: this.metaTitle },
+      { property: 'og:description', content: this.metaDesc },
+      { property: 'og:image', content: this.metaLogo },
+    ]
   },
   components: {
     YoutubeCarousel
   },
   data () {
     return {
+      metaTitle: 'Podcasts, Articles, Prices, and More! | The Crypto Masters',
+      metaDesc: 'Helping You Master an Understanding of Crypto Assets. Your crypto one-stop shop!',
+      metaLogo: require('../assets/meta_tag_logo.png'),
       catchPhrase: 'Helping You Master an Understanding of Crypto Assets',
       subPhrase: 'We provide information about crypto assets to allow the public to make their own decisions',
       podcasts: [
