@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueMeta from 'vue-meta'
 import Home from '../views/Home.vue'
 import Coin from '../views/Coin.vue'
 import CoinList from '../views/CoinList.vue'
@@ -9,6 +10,7 @@ import NotFound from '../views/NotFound.vue'
 import About from '../views/About.vue'
 
 Vue.use(VueRouter)
+Vue.use(VueMeta)
 
 const routes = [
   {

@@ -16,6 +16,12 @@ import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
+  name: 'App',
+  metaInfo: {
+    title: 'Podcasts, Articles, Prices, and More!',
+    titleTemplate: '%s | The Crypto Masters',
+    content: 'Helping You Master an Understanding of Crypto Assets. Your crypto one-stop shop!'
+  },
   components: {
     Home,
     NavBar,

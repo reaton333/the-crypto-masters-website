@@ -156,6 +156,9 @@ import YoutubeCarousel from '@/components/YoutubeCarousel.vue'
 
 export default {
   name: 'Home',
+  metaInfo: {
+    title: 'Podcasts, Articles, Prices, and More!'
+  },
   components: {
     YoutubeCarousel
   },
