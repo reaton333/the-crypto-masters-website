@@ -146,7 +146,7 @@
       align="center"
       justify="center"
     >
-        <YoutubeCarousel />
+      <YoutubeCarousel />
     </v-row>
   </v-container>
 </template>
@@ -159,18 +159,11 @@ export default {
   metaInfo: {
     title: 'Podcasts, Articles, Prices, and More!',
     meta: [
-      // Twitter
-      { name: 'twitter:card', content: 'summary' },
-      { name: 'twitter:title', content: this.metaTitle },
-      { name: 'twitter:description', content: this.metaDesc },
-      // image must be an absolute path
-      {name: 'twitter:image', content: this.logo},
-      // Facebook OpenGraph
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: 'https://crypto-masters.web.app/' },
-      { property: 'og:title', content: this.metaTitle },
-      { property: 'og:description', content: this.metaDesc },
-      { property: 'og:image', content: this.metaLogo },
+      { property: 'og:title', content: 'Podcasts, Articles, Prices, and More! | The Crypto Masters' },
+      { property: 'og:description', content: 'Helping You Master an Understanding of Crypto Assets. Your crypto one-stop shop!' },
+      { property: 'og:image', content: require('../assets/meta_tag_logo.png') },
     ]
   },
   components: {
@@ -178,8 +171,6 @@ export default {
   },
   data () {
     return {
-      metaTitle: 'Podcasts, Articles, Prices, and More! | The Crypto Masters',
-      metaDesc: 'Helping You Master an Understanding of Crypto Assets. Your crypto one-stop shop!',
       metaLogo: require('../assets/meta_tag_logo.png'),
       catchPhrase: 'Helping You Master an Understanding of Crypto Assets',
       subPhrase: 'We provide information about crypto assets to allow the public to make their own decisions',
@@ -187,7 +178,7 @@ export default {
                 { id: 0, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
                 { id: 1, icon: 'mdi-spotify', url: 'https://open.spotify.com/show/38kIh4n39NvSbUTJew7rF4?si=p5LCiy0fTKuZipgXDNpFbg' },
                 { id: 2, icon: 'mdi-podcast', url: 'https://podcasts.apple.com/us/podcast/the-crypto-masters-podcast/id1507473032' },
-                { id: 3, icon: 'mdi-amazon', url: 'https://www.amazon.com/The-Crypto-Masters-Podcast/dp/B08K59B5WN' },
+                { id: 3, icon: 'mdi-amazon',  url: 'https://www.amazon.com/The-Crypto-Masters-Podcast/dp/B08K59B5WN' },
                 { id: 4, icon: 'mdi-google-podcast', url: 'https://podcasts.google.com/feed/aHR0cHM6Ly90aGVjcnlwdG9tYXN0ZXJzLnBvZGJlYW4uY29tL2ZlZWQueG1s' },
                 
       ],

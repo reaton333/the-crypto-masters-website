@@ -63,7 +63,7 @@ export default {
 
             this.loading = true
 
-            console.log(fullPath)
+            // console.log(fullPath)
 
             try {
                 const res = await axios.get(fullPath)
