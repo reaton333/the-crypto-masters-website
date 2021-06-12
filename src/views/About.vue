@@ -156,8 +156,16 @@
 <script>
 export default {
   name: 'About',
-  components: {
-
+  components: {},
+  metaInfo: {
+    title: 'About Us',
+    meta: [
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: 'https://crypto-masters.web.app/about' },
+      { property: 'og:title', content: 'About Us | The Crypto Masters' },
+      { property: 'og:description', content: 'We are The Crypto Masters and we are here to help you master an understanding of crypto assets.' },
+      { property: 'og:image', content: require('../assets/meta_tag_logo_aboutUS.png') },
+    ]
   },
   data () {
     return {
