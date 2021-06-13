@@ -45,7 +45,6 @@
       :items="coins"
       :items-per-page="pageSize"
       :mobile-breakpoint="0"
-      style="min-width:375px"
       :dense="isMobile"
       hide-default-footer
       class="elevation-1 font-weight-medium text-sm-caption-2 text-xs-caption-2 font-xs-weight-light"
@@ -344,20 +343,47 @@ export default {
 @media screen and (max-width: 775px) {
   
   #coinListContainer {
-    padding: 0 !important;
+    padding: 2px !important;
+  }
+
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td:first-child , 
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > th:first-child , 
+  .v-data-table > .v-data-table__wrapper > table > thead > tr > td:first-child , 
+  .v-data-table > .v-data-table__wrapper > table > thead > tr > th:first-child , 
+  .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td:first-child , 
+  .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th:first-child  {
+    padding-left: 8px !important;
+  }
+
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td:last-child , 
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > th:last-child , 
+  .v-data-table > .v-data-table__wrapper > table > thead > tr > td:last-child , 
+  .v-data-table > .v-data-table__wrapper > table > thead > tr > th:last-child , 
+  .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td:last-child , 
+  .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th:last-child  {
+    padding-right: 8px !important;
+  }
+  
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td, 
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > th, 
+  .v-data-table > .v-data-table__wrapper > table > thead > tr > td, 
+  .v-data-table > .v-data-table__wrapper > table > thead > tr > th, 
+  .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td, 
+  .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+    padding: 0 8px !important;
   }
 
   .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
-    padding: 0 !important;
+    padding: 2px !important;
     font-size: 12px !important;
   }
 
   .v-btn:not(.v-btn--round).v-size--x-small {
-    padding: 0 !important
+    padding: 2px !important
   }
 
   .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
-    padding: 0 !important;
+    padding: 2px !important;
     font-size: 12px !important;
   }
   
