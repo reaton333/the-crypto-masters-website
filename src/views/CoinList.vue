@@ -136,6 +136,17 @@ export default {
   components: {
     CoinSearch,
   },
+  metaInfo: {
+    title: 'Current Crypto Prices and Charts',
+    description: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!',
+    meta: [
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: 'https://crypto-masters.web.app/crypto' },
+      { property: 'og:title', content: 'Current Crypto Prices and Charts | The Crypto Masters' },
+      { property: 'og:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
+      { property: 'og:image', content: require('../assets/meta_tag_logo.png') },
+    ]
+  },
   data () {
     return {
         isMobile: false,

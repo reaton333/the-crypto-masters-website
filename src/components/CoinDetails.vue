@@ -236,12 +236,26 @@ export default {
     components: {
         CryptoPredictor,
     },
+    metaInfo() {
+        return {
+            title: this.coinName,
+            description: '',
+            meta: [
+                { property: 'og:type', content: 'website' },
+                { property: 'og:url', content: `https://crypto-masters.web.app/coin/${this.coinId}` },
+                { property: 'og:title', content: `${this.coinName} Prices, Charts, and More | The Crypto Masters` },
+                { property: 'og:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
+                { property: 'og:image', content: this.coinImage },
+            ]
+        }
+    },
     data() {
         return {
             chartNumberSampling: 0.0,
             loading: false,
             currency: 'usd',
             coinId: '',
+            coinName: '',
             coinDetails: {},
             coinImage: '',
             coinDescription: '',
@@ -301,8 +315,9 @@ export default {
 
         try {
             const res = await axios.get(baseURL + this.coinId + apiParams)
- 
+
             this.coinDetails = res.data;
+            this.coinName = this.coinDetails.name
             this.coinImage = this.coinDetails.image.large
             this.coinDescription = this.coinDetails.description.en
             this.coinGenesisDate = this.coinDetails.genesis_date
