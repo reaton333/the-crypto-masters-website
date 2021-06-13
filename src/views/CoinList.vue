@@ -23,8 +23,6 @@
       </v-col>
       <v-col>
       </v-col>
-      <v-col
-      >
         <div
           class="coinGeckoApi"
         >Powered by <a href="https://www.coingecko.com/en/api">CoinGecko API</a></div>
