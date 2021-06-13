@@ -15,29 +15,44 @@
         <CoinSearch v-bind:allCoins="allCoins"/>
       </v-col>
     </v-row>
+    <v-row
+      no-gutters
+      class="pa-0"
+    >
+      <v-col>
+      </v-col>
+      <v-col>
+      </v-col>
+      <v-col
+      >
+        <div
+          class="coinGeckoApi"
+        >Powered by <a href="https://www.coingecko.com/en/api">CoinGecko API</a></div>
+      </v-col>
+    </v-row>
     <!-- </v-container> -->
     <v-row v-if="loading" style="height: 300px;"
-      
-        class="fill-height"
-        align-content="center"
-        justify="center"
+    
+      class="fill-height"
+      align-content="center"
+      justify="center"
+    >
+      <v-col
+        class="subtitle-1 text-center"
+        cols="12"
       >
-        <v-col
-          class="subtitle-1 text-center"
-          cols="12"
-        >
-          Loading Coins
-        </v-col>
-        <v-col cols="6">
-          <v-progress-linear
-            color="secondary"
-            indeterminate
-            rounded
-            class="color: white"
-            height="6"
-          ></v-progress-linear>
-        </v-col>
-      </v-row>
+        Loading Coins
+      </v-col>
+      <v-col cols="6">
+        <v-progress-linear
+          color="secondary"
+          indeterminate
+          rounded
+          class="color: white"
+          height="6"
+        ></v-progress-linear>
+      </v-col>
+    </v-row>
     <!-- </v-container> -->
     <v-data-table
       v-else
@@ -336,11 +351,21 @@ export default {
 
 <style>
 
+.coinGeckoApi {
+  text-align: right;
+  font-size: 14px;
+}
+
 .coinLogo {
     transition: all 0.3s ease-in-out 0s;
 }
 
 @media screen and (max-width: 775px) {
+
+  .coinGeckoApi {
+    text-align: right;
+    font-size: 10px;
+  }
   
   #coinListContainer {
     padding: 2px !important;

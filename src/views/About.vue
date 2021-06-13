@@ -183,7 +183,7 @@ export default {
   data () {
     return {
       aboutText: 'About Us',
-      aboutSubText: 'We Aren\'t Just Crypto Enthusiats, We Are The Crypto Masters',
+      aboutSubText: 'We Aren\'t Just Crypto Enthusiasts, We Are The Crypto Masters',
       tCMApproach: 'The Crypto Masters Approach',
 //       tCMApproach: "The goal of The Crypto Masters is to provide information to investors and potential investors of crypto assets to assist them in making their decisions regarding which crypto assets, if any, would be an appropriate investment for them. There are currently thousands of investable coins and tokens. Needless to say, not all of these assets merit an investment."
 //         + "We believe that crypto assets are in the very early stage of their development. We also believe that the more widespread adoption of crypto assets is coming, but we do not know how soon. To be clear, we are not traders and do not offer trading advice. By this, we mean that we do not in any way attempt to predict short-term price movements and do not evaluate technical data such as moving averages of candlestick price patterns. If you are looking for that type of advice, we are not for you (but there are plenty on the internet)."
