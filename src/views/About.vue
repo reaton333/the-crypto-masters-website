@@ -126,7 +126,7 @@
             primary
           >
             <v-card
-              min-width="390"
+              min-width="350"
             >
               <v-avatar
                 class="profile"
