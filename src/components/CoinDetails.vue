@@ -242,7 +242,7 @@ export default {
             description: '',
             meta: [
                 { property: 'og:type', content: 'website' },
-                { property: 'og:url', content: `https://crypto-masters.web.app/coin/${this.coinId}` },
+                { property: 'og:url', content: `${this.$router.currentRoute.path}` },
                 { property: 'og:title', content: `${this.coinName} Prices, Charts, and More | The Crypto Masters` },
                 { property: 'og:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
                 { property: 'og:image', content: this.coinImage },

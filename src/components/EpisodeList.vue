@@ -83,16 +83,18 @@ export default {
     components: {
         EpisodeCard
     },
-    metaInfo: {
+    metaInfo() {
+      return {
         title: 'Podcast Episodes',
         description: 'Check out our latest episodes where we take a look at various crypto assets and latest crypto news.',
         meta: [
             { property: 'og:type', content: 'website' },
-            { property: 'og:url', content: 'https://crypto-masters.web.app/podcast' },
+            { property: 'og:url', content: `${this.$router.currentRoute.path}` },
             { property: 'og:title', content: 'Podcast Episodes | The Crypto Masters' },
             { property: 'og:description', content: 'Check out our latest episodes where we take a look at various crypto assets and latest crypto news.' },
             { property: 'og:image', content: require('../assets/meta_tag_logo_podcast.png') },
         ]
+      }
     },
     data () {
         return {
