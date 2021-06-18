@@ -18,6 +18,7 @@
           :items="allCoins"
           :filter="filterCoinAndSymbol"
           :loading="listLoading"
+          allow-overflow="false"
           item-text="name"
           item-value="id"
           no-data-text="No coins to display"
