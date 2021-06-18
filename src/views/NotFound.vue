@@ -3,20 +3,25 @@
   <div class="fourOhfour">
     <kinesis-container class="container">
         <kinesis-element :strength="150">
-          <img class="kinesis_logo" src="../assets/crypto_masters_logo_404.svg" alt="logrocket logo">
+          <img class="kinesis_logo" src="../assets/crypto_masters_logo_404.svg" alt="Crypto Masters 404 Image">
           <div
-            class="pb-6 text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-h5 font-weight-bold"
+            class="pb-8 text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-h5 font-weight-bold"
+          >
+            {{ notFoundError }}
+          </div>
+          <div
+            class="pb-2 text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 text-h6 font-weight-bold"
           >
             {{ randomJoke[0] }}
           </div>
           <div
-            class="text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 text-h5"
+            class="text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 text-h6"
           >
             {{ randomJoke[1] }}
           </div>
         </kinesis-element>
         <!-- background-circles-props -->
-        <kinesis-element :strength="50" axis="y">
+        <!-- <kinesis-element :strength="50" axis="y">
           <img class="circle bitcoin-circle" src="../assets/crypto_imgs/bitcoin-btc-logo.png" alt="logrocket logo">
         </kinesis-element>
         <kinesis-element :strength="80" axis="y">
@@ -36,7 +41,7 @@
         </kinesis-element>
         <kinesis-element :strength="80" axis="y">
           <img class="circle litecoin-circle" src="../assets/crypto_imgs/litecoin-ltc-logo.png" alt="logrocket logo">
-        </kinesis-element>
+        </kinesis-element> -->
       </kinesis-container>
     </div>
 </template>
@@ -45,6 +50,7 @@
 export default {
   data () {
     return {
+      notFoundError: 'Error! Page Not found.',
       bitcoinLogo: '../assets/crypto_imgs/bitcoin-btc-logo.png',
       randomJoke: [],
       cryptoJokes : [
