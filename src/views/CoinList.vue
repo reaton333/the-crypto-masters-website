@@ -31,20 +31,22 @@
           <template 
               v-slot:item="data"
           >
-              <v-list-item-avatar>
-              <v-img 
-                  :src="data.item.thumb"
-                  max-height="22"
-                  max-width="22"
-              >
-              </v-img>
-              </v-list-item-avatar>
               <v-list-item-content>
-              <v-list-item-title>
-                  {{ data.item.name }} - {{ data.item.symbol }}
-              </v-list-item-title>
-              
+
+                <v-list-item-title>
+                  #{{ data.item.market_cap_rank }} &nbsp; {{ data.item.name }}
+                </v-list-item-title>
+                <v-list-item-subtitle v-text="data.item.symbol"></v-list-item-subtitle>
+                
               </v-list-item-content>
+              <v-list-item-avatar>
+                <v-img 
+                    :src="data.item.thumb"
+                    max-height="22"
+                    max-width="22"
+                >
+                </v-img>
+              </v-list-item-avatar>
           </template>
 
           <!-- <v-list-item-subtitle>
@@ -259,6 +261,7 @@ export default {
           const res = await axios.get(fullPath)
 
           this.allCoins = res.data.coins;
+          console.log(this.allCoins)
           this.totalCoins = this.allCoins.length;
           this.listLoading = false;
       } catch (e) {
