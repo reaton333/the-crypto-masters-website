@@ -223,12 +223,18 @@ export default {
             // Query the API and assign the response to "response"
             const response = await this.$prismic.client.getByUID(this.prismicPageType, theEpisodeId)
             this.response = response  
-            // console.log('Prismic response: ', this.response)  
-            this.episodeData = this.response
-            this.episodeName = this.episodeData.data['episode_title'][0].text
-            this.episodeImage = this.episodeData.data['episode-image']['url']
-            console.log(this.episodeImage)
-            this.episodeSummary = this.episodeData.data['episode-summary']
+            // console.log('$$$$Prismic response: ', this.response)
+            if (this.response) {
+                this.episodeData = this.response
+                this.episodeName = this.episodeData.data['episode_title'][0].text
+                this.episodeImage = this.episodeData.data['episode-image']['url']
+                console.log(this.episodeImage)
+                this.episodeSummary = this.episodeData.data['episode-summary']
+            } else {
+                this.loading = false
+                this.$router.push('/NotFound')
+            }
+            
 
             this.loading = false
         },

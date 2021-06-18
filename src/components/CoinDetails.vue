@@ -337,7 +337,7 @@ export default {
 
         } catch (e) {
             if(e.response.status === 404) {
-                console.log('ahhhhhhhhhhh')
+                // console.log('ahhhhhhhhhhh')
                 this.$router.push('/NotFound')
             }
             console.log(e.response.status);
