@@ -3,6 +3,7 @@
         v-model="allCoins"
         :items="allCoins"
         :filter="filterCoinAndSymbol"
+        :loading="listLoading"
         item-text="name"
         item-value="id"
         no-data-text="No coins to display"
@@ -14,7 +15,7 @@
         @input="goToCoinDescription"
     >
         <template 
-        v-slot:item="data"
+            v-slot:item="data"
         >
             <v-list-item-avatar>
             <v-img 
@@ -42,6 +43,9 @@
 export default {
     name: 'CoinSearch',
     props: {
+        listLoading: {
+            default: 'secondary'
+        },
         allCoins: {
             default: [
                 {"id":"bitcoin","name":"Bitcoin","symbol":"BTC","market_cap_rank":1,"thumb":"https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png","large":"https://assets.coingecko.com/coins/images/1/large/bitcoin.png"},
@@ -56,7 +60,6 @@ export default {
     },
     data () {
         return {
-            
         }
     },
     created(){

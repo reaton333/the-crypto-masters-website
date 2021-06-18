@@ -12,7 +12,45 @@
       </v-col>
       <v-col
       >
-        <CoinSearch v-bind:allCoins="allCoins"/>
+        <!-- <CoinSearch v-bind:allCoins="allCoins" v-bind:listLoading="listLoading"/> -->
+        <v-autocomplete
+          v-model="allCoins"
+          :items="allCoins"
+          :filter="filterCoinAndSymbol"
+          :loading="listLoading"
+          item-text="name"
+          item-value="id"
+          no-data-text="No coins to display"
+          auto-select-first
+          dense
+          solo
+          filled
+          label="Search"
+          @input="goToCoinDescription"
+      >
+          <template 
+              v-slot:item="data"
+          >
+              <v-list-item-avatar>
+              <v-img 
+                  :src="data.item.thumb"
+                  max-height="22"
+                  max-width="22"
+              >
+              </v-img>
+              </v-list-item-avatar>
+              <v-list-item-content>
+              <v-list-item-title>
+                  {{ data.item.name }} - {{ data.item.symbol }}
+              </v-list-item-title>
+              
+              </v-list-item-content>
+          </template>
+
+          <!-- <v-list-item-subtitle>
+                  #{{ data.item.market_cap_rank }}
+              </v-list-item-subtitle> -->
+      </v-autocomplete>
       </v-col>
     </v-row>
     <v-row
@@ -141,12 +179,12 @@
 
 <script>
 import axios from 'axios';
-import CoinSearch from '@/components/CoinSearch.vue'
+// import CoinSearch from '@/components/CoinSearch.vue'
 
 export default {
   name: 'CoinList',
   components: {
-    CoinSearch,
+    // CoinSearch,
   },
   metaInfo() {
     return {
@@ -181,6 +219,7 @@ export default {
         ],
         // Storing the headers I remove here so I can add them back later
         // This is for mobile resizing
+        listLoading: 'primary',
         removedHeaders: [], 
         coins: [],
         searchableCoinList: [],
@@ -196,11 +235,14 @@ export default {
   },
   created() {
 
+    this.listLoading = 'secondary';
+
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
 
     this.page = 1;
     this.getAllCoins();
+    
     this.getCoinsList(this.page);
   },
   destroyed() {
@@ -218,6 +260,7 @@ export default {
 
           this.allCoins = res.data.coins;
           this.totalCoins = this.allCoins.length;
+          this.listLoading = false;
       } catch (e) {
           console.log(e);
       }
@@ -258,7 +301,7 @@ export default {
       this.$router.push({ 
           name: 'Coin',
           params: {
-          coinId: coinId
+            coinId: coinId
           }
       })
     },
@@ -287,9 +330,6 @@ export default {
         // overwrite headers list
         this.headers = tempHeaders;
       }
-    },
-    itemSelectedMethod(coinIdSelected) {
-      console.log('You selected an item!')
     },
     formatPrice(value) {
       // Create our number formatter.
@@ -338,6 +378,13 @@ export default {
       } else {
         return this.formatPrice(formattedNum).replace('$', '')+'%'
       }
+    },
+    filterCoinAndSymbol(item, queryText, itemText) {
+      return (
+          item.id.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) >
+              -1 ||
+          item.symbol.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1
+      );
     }
   },
   watch: {
