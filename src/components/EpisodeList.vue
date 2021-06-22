@@ -15,64 +15,80 @@
         </v-card-title>
       </v-card>
     </v-row>
-    <v-row
-      align="center"
-      justify="center"
+    <div
+      v-if="!errorString"
     >
-      <v-col
-        cols="8"
+      <v-row
+        align="center"
+        justify="center"
       >
-          <v-text-field
-            label="Search Episodes"
-            solo
-            dense
-            v-model="searchVal"
-            append-outer-icon="mdi-magnify"
-          ></v-text-field>
-      </v-col>
+        <v-col
+          cols="8"
+        >
+            <v-text-field
+              label="Search Episodes"
+              solo
+              dense
+              v-model="searchVal"
+              append-outer-icon="mdi-magnify"
+            ></v-text-field>
+        </v-col>
 
-    </v-row>
-    <div v-if="filteredEpisodes.length" class="episode-cards">
-      <div class="card" v-for="episode in filteredEpisodes" v-bind:key="episode">
-        <EpisodeCard :episodeData="episode" />
+      </v-row>
+      <div v-if="filteredEpisodes.length" class="episode-cards">
+        <div class="card" v-for="episode in filteredEpisodes" v-bind:key="episode">
+          <EpisodeCard :episodeData="episode" />
+        </div>
       </div>
+      <div v-else-if="loading">
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-skeleton-loader
+              v-if="loading"
+              class="mx-auto"
+              max-width="344"
+              min-width="300"
+              type="card"
+          ></v-skeleton-loader>
+          <v-skeleton-loader
+              v-if="loading"
+              class="mx-auto"
+              max-width="344"
+              min-width="300"
+              type="card"
+          ></v-skeleton-loader>
+          <v-skeleton-loader
+              v-if="loading"
+              class="mx-auto"
+              max-width="344"
+              min-width="300"
+              type="card"
+          ></v-skeleton-loader>
+        </v-row>
+      </div>
+      <div v-else>
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <h2>No Episodes match your search</h2>
+        </v-row>
+      </div>  
     </div>
-    <div v-else-if="loading">
+    <div
+      v-else
+    >
       <v-row
         align="center"
         justify="center"
       >
-        <v-skeleton-loader
-            v-if="loading"
-            class="mx-auto"
-            max-width="344"
-            min-width="300"
-            type="card"
-        ></v-skeleton-loader>
-        <v-skeleton-loader
-            v-if="loading"
-            class="mx-auto"
-            max-width="344"
-            min-width="300"
-            type="card"
-        ></v-skeleton-loader>
-        <v-skeleton-loader
-            v-if="loading"
-            class="mx-auto"
-            max-width="344"
-            min-width="300"
-            type="card"
-        ></v-skeleton-loader>
+        <h2
+          class="text-h2 font-weight-bold"
+        >Error Getting Episodes! Check back later.</h2>
       </v-row>
-    </div>
-    <div v-else>
-      <v-row
-        align="center"
-        justify="center"
-      >
-        <h2>No Episodes match your inquiry</h2>
-      </v-row>
-    </div>    
+    </div>  
   </v-container>
 </template>
 
@@ -102,9 +118,10 @@ export default {
             searchVal: '',
             loading: true,
             response: null,
+            errorString: ''
         };
     },
-    async created () {
+    created () {
 
         // this.getContent();
         this.getContentVue();
@@ -112,16 +129,24 @@ export default {
     methods: {
       async getContentVue() {
         this.loading = true;
-        // console.log('ENTER getContentVue()')
-        // Query the API and assign the response to "response"
-        const response = await this.$prismic.client.query('')
-        this.response = response  
-        // console.log('Prismic response: ', this.response)  
+
+        var theDocument = ''
+      
+        this.document = await this.$prismic.client.query(
+          this.$prismic.Predicates.at('document.type', 'episode-summary'),
+          { pageSize: 50 },
+          ( error, document ) => error ? this.errorString = error : theDocument = document
+        )
+
+        if(!this.errorString) {
+
+          this.episodes = theDocument.results
+          this.episodes.sort((a, b) => (a.data.release_date < b.data.release_date) ? 1 : -1)
+          // console.log(this.episodes)
+        }
         
-        this.episodes = this.response.results;
-        this.filteredEpisodes = this.episodes
+        // this.filteredEpisodes = this.episodes
         this.loading = false;
-        // console.log(this.episodes)
       },
       // async getContent() {
 
