@@ -47,7 +47,7 @@
         >
           <v-skeleton-loader
               v-if="loading"
-              class="mx-auto"
+              class="mx-auto mb-6"
               max-width="344"
               min-width="300"
               type="card"

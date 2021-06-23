@@ -9,10 +9,10 @@
       height="200px"
     ></v-img>
     <v-card-title>
-      {{ episodeData.data['episode_title'][0].text }}
+      {{ this.episodeTitle }}
     </v-card-title>
     <v-card-subtitle class="flex">
-      {{ episodeData.data['episode-summary'][0].text.substring(0, this.summaryCharLimit) + '.....'}}
+      {{ this.episodeSummary }}
     </v-card-subtitle>
     <v-card-actions>
       <v-btn
@@ -31,7 +31,10 @@
 export default {
     data() {
         return {
-          summaryCharLimit: '200'
+          titleCharLimit: 45,
+          summaryCharLimit: 175,
+          episodeTitle: '',
+          episodeSummary: '',
         }
     },
     props: {
@@ -40,6 +43,22 @@ export default {
     created() {
 
       // console.log('Episode Data:' + this.episodeData.data['episode_title'][0].text)
+      
+      var tempTitle = this.episodeData.data['episode_title'][0].text
+      var tempSummary = this.episodeData.data['episode-summary'][0].text
+
+      if (tempTitle.length > this.titleCharLimit) {
+        this.episodeTitle = tempTitle.substring(0, this.titleCharLimit) + '...'
+      } else {
+        this.episodeTitle = tempTitle
+      }
+
+      if (tempSummary.length > this.summaryCharLimit) {
+        this.episodeSummary = tempSummary.substring(0, this.summaryCharLimit) + '.....'
+      } else {
+        this.episodeSummary = tempSummary
+      }
+      
 
     },
     methods: {
@@ -58,7 +77,7 @@ export default {
 
 <style>
 .episode_card {
-  overflow-y: auto; 
-  height: 490px
+  /* overflow-y: auto;  */
+  height: 520px
 }
 </style>
