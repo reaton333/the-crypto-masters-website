@@ -118,7 +118,7 @@ export default {
             searchVal: '',
             loading: true,
             response: null,
-            errorString: ''
+            errorString: '',
         };
     },
     created () {
@@ -148,30 +148,6 @@ export default {
         // this.filteredEpisodes = this.episodes
         this.loading = false;
       },
-      // async getContent() {
-
-      //     const MASTER_REF = 'YJtEMhEAACMAOife'
-      //     const baseURL = `https://the-crypto-masters-website.cdn.prismic.io/api/v2/documents/search?ref=${MASTER_REF}`
-      //     var apiParams = `&format=json`
-
-      //     var full_path = baseURL + apiParams;
-      //     console.log(full_path);
-
-      //     try {
-      //         const res = await axios.get(full_path)
-
-      //         this.episodes = res.data.results;
-      //         this.filteredEpisodes = this.episodes
-      //         this.loading = false;
-      //         // console.log(this.results)
-      //     } catch (e) {
-      //         if(e.response.status === 404) {
-      //             console.log('ahhhhhhhhhhh')
-      //             this.$router.push('/NotFound')
-      //         }
-      //         console.log(e.response.status);
-      //     }
-      // },
     },
     computed: {
         filteredEpisodes() {

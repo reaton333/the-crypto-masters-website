@@ -1,6 +1,7 @@
 <template>
   <v-card
     max-width="344"
+    class="episode_card flex d-flex flex-column"
   >
     <v-img
       :src="episodeData.data['episode-image'].url"
@@ -10,8 +11,10 @@
     <v-card-title>
       {{ episodeData.data['episode_title'][0].text }}
     </v-card-title>
-    <v-card-subtitle>
-      {{ episodeData.data['episode-summary'][0].text }}
+    <v-card-subtitle class="flex">
+      {{ episodeData.data['episode-summary'][0].text.substring(0, this.summaryCharLimit) + '.....'}}
+      <!-- <v-divider></v-divider>
+      <v-divider></v-divider> -->
     </v-card-subtitle>
     <v-card-actions>
       <v-btn
@@ -30,7 +33,7 @@
 export default {
     data() {
         return {
-
+          summaryCharLimit: '200'
         }
     },
     props: {
@@ -38,7 +41,7 @@ export default {
     },
     created() {
 
-      console.log('Episode Data:' + this.episodeData.data['episode_title'][0].text)
+      // console.log('Episode Data:' + this.episodeData.data['episode_title'][0].text)
 
     },
     methods: {
@@ -56,7 +59,8 @@ export default {
 </script>
 
 <style>
-/* .card {
-  border: none !important;
-}z */
+.episode_card {
+  overflow-y: auto; 
+  height: 490px
+}
 </style>
