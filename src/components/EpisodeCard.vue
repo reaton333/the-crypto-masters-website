@@ -13,8 +13,6 @@
     </v-card-title>
     <v-card-subtitle class="flex">
       {{ episodeData.data['episode-summary'][0].text.substring(0, this.summaryCharLimit) + '.....'}}
-      <!-- <v-divider></v-divider>
-      <v-divider></v-divider> -->
     </v-card-subtitle>
     <v-card-actions>
       <v-btn
