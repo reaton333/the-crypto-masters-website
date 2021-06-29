@@ -109,6 +109,12 @@ export default {
             { property: 'og:title', content: 'Podcast Episodes | The Crypto Masters' },
             { property: 'og:description', content: 'Check out our latest episodes where we take a look at various crypto assets and latest crypto news.' },
             { property: 'og:image', content: require('../assets/meta_tag_logo_podcast.png') },
+
+            { property: 'twitter:card', content: 'summary_large_image' },
+            { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
+            { property: 'twitter:title', content: 'Podcast Episodes | The Crypto Masters' },
+            { property: 'twitter:description', content: 'Check out our latest episodes where we take a look at various crypto assets and latest crypto news.' },
+            { property: 'twitter:image', content: require('../assets/meta_tag_logo_podcast.png') },
         ]
       }
     },

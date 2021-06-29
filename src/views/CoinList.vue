@@ -197,10 +197,16 @@ export default {
       description: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!',
       meta: [
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://crypto-masters.web.app/crypto' },
+        { property: 'og:url', content: `${this.$router.currentRoute.path}` },
         { property: 'og:title', content: 'Current Crypto Prices and Charts | The Crypto Masters' },
         { property: 'og:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
         { property: 'og:image', content: require('../assets/meta_tag_logo.png') },
+
+        { property: 'twitter:card', content: 'summary_large_image' },
+        { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
+        { property: 'twitter:title', content: 'Current Crypto Prices and Charts | The Crypto Masters' },
+        { property: 'twitter:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
+        { property: 'twitter:image', content: require('../assets/meta_tag_logo.png') },
       ]
     }
   },

@@ -161,8 +161,14 @@ export default {
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: `${this.$router.currentRoute.path}` },
         { property: 'og:title', content: 'Podcasts, Articles, Prices, and More! | The Crypto Masters' },
-        { property: 'og:description', content: 'Helping You Master an Understanding of Crypto Assets. Your crypto one-stop shop!' },
+        { property: 'og:description', content: 'Helping You Master an Understanding of Crypto Assets' },
         { property: 'og:image', content: require('../assets/meta_tag_logo.png') },
+
+        { property: 'twitter:card', content: 'summary_large_image' },
+        { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
+        { property: 'twitter:title', content: 'Podcasts, Articles, Prices, and More! | The Crypto Masters' },
+        { property: 'twitter:description', content: 'Helping You Master an Understanding of Crypto Assets' },
+        { property: 'twitter:image', content: require('../assets/meta_tag_logo.png') },
       ]
     }
   },

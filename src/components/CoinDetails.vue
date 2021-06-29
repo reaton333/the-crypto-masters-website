@@ -246,6 +246,12 @@ export default {
                 { property: 'og:title', content: `${this.coinName} Prices, Charts, and More | The Crypto Masters` },
                 { property: 'og:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
                 { property: 'og:image', content: this.coinImage },
+
+                { property: 'twitter:card', content: 'summary_large_image' },
+                { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
+                { property: 'twitter:title', content: `${this.coinName} Prices, Charts, and More | The Crypto Masters` },
+                { property: 'twitter:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
+                { property: 'twitter:image', content: this.coinImage },
             ]
         }
     },

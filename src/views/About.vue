@@ -172,6 +172,12 @@ export default {
         { property: 'og:title', content: 'About Us | The Crypto Masters' },
         { property: 'og:description', content: 'We are The Crypto Masters and we are here to help you master an understanding of crypto assets.' },
         { property: 'og:image', content: require('../assets/meta_tag_logo_aboutUS.png') },
+
+        { property: 'twitter:card', content: 'summary_large_image' },
+        { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
+        { property: 'twitter:title', content: 'About Us | The Crypto Masters' },
+        { property: 'twitter:description', content: 'We are The Crypto Masters and we are here to help you master an understanding of crypto assets.' },
+        { property: 'twitter:image', content: require('../assets/meta_tag_logo_aboutUS.png') },
       ]
     }
   },
