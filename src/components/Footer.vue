@@ -23,7 +23,11 @@
               {{ social.icon }}
             </v-icon>
           </v-btn>
-          <v-btn icon :href="'mailto:' + cryptoMastersEmail">
+          <v-btn 
+            icon 
+            class="mx-4"
+            :href="'mailto:' + cryptoMastersEmail"
+          >
             <v-icon color="secondary">mdi-email</v-icon>
           </v-btn>
         </v-card-text>
@@ -50,7 +54,6 @@ export default {
             { id: 2, icon: 'mdi-twitter', url: 'https://twitter.com/theCryptoMS1' },
             { id: 3, icon: 'mdi-instagram', url: 'https://www.instagram.com/the_crypto_masters/' },
             { id: 4, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
-            // { id: 5, icon: 'mdi-rss', url: 'https://feed.podbean.com/thecryptomasters/feed.xml' },
         ],
         cryptoMastersEmail: 'info@thecryptomasters.com',
         legalText: 'Nothing in our podcast, website, or social media should be considered investment advice. We are not financial advisors. Please do not consider any of our information or personal opinions to be investment advice.'
