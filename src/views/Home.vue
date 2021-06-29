@@ -143,6 +143,9 @@
     >
       <YoutubeCarousel />
     </v-row>
+    <v-row
+      class="pa-12"
+    ></v-row>
   </v-container>
 </template>
 
