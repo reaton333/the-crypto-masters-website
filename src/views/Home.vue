@@ -14,7 +14,7 @@
         >
           <v-card-title
             class="text-left pb-12 font-weight-bold
-              text-xl-h3 text-lg-h3 text-md-h3 text-sm-h4 text-h5 
+              text-xl-h3 text-lg-h3 text-md-h3 text-sm-h4 text-h4 
               "
           >
             {{ catchPhrase }}
@@ -56,7 +56,7 @@
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-body-2"
                 @click="$router.push('/crypto')"
               >
-                Crypto
+                Crypto Prices
                 <v-icon
                   right
                   light
@@ -87,10 +87,7 @@
       </v-col>
     </v-row>
     <v-row
-      class="pa-16"
-    ></v-row>
-    <v-row
-      class="pa-8"
+      class="pa-12"
     ></v-row>
     <v-row
       align="center"
@@ -101,6 +98,7 @@
       align="center"
       tile
       width="100%"
+      max-width="1100"
     >
       <v-card-title
         class="justify-center white--text text-h4"
@@ -137,11 +135,8 @@
       </v-card>
     </v-row>
     <v-row
-      class="pa-8"
+      class="pa-12"
     ></v-row>
-    <!-- <v-row
-      class="pa-8"
-    ></v-row> -->
     <v-row
       align="center"
       justify="center"
@@ -175,7 +170,7 @@ export default {
     return {
       metaLogo: require('../assets/meta_tag_logo.png'),
       catchPhrase: 'Helping You Master an Understanding of Crypto Assets',
-      subPhrase: 'We provide information about crypto assets to allow the public to make their own decisions',
+      subPhrase: 'We provide information about crypto assets to assist the public in making their own investment decisions',
       podcasts: [
                 { id: 0, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
                 { id: 1, icon: 'mdi-spotify', url: 'https://open.spotify.com/show/38kIh4n39NvSbUTJew7rF4?si=p5LCiy0fTKuZipgXDNpFbg' },

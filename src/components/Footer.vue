@@ -53,7 +53,7 @@ export default {
             // { id: 5, icon: 'mdi-rss', url: 'https://feed.podbean.com/thecryptomasters/feed.xml' },
         ],
         cryptoMastersEmail: 'info@thecryptomasters.com',
-        legalText: 'Nothing in our podcasts or on our web sites or social media outlets should be considered to be investment advice. We are not financial advisors. Please do not consider any of our information or personal opinions to be investment advice.'
+        legalText: 'Nothing in our podcast, website, or social media should be considered investment advice. We are not financial advisors. Please do not consider any of our information or personal opinions to be investment advice.'
     }
   },
   methods: {

@@ -73,7 +73,7 @@
           align="center"
           justify="center"
         >
-          <h2>No Episodes match your search</h2>
+          <h2>No episodes match your search</h2>
         </v-row>
       </div>  
     </div>

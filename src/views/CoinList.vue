@@ -8,11 +8,8 @@
     >
       <v-col>
       </v-col>
-      <v-col>
-      </v-col>
       <v-col
       >
-        <!-- <CoinSearch v-bind:allCoins="allCoins" v-bind:listLoading="listLoading"/> -->
         <v-autocomplete
           v-model="allCoins"
           :items="allCoins"
@@ -49,24 +46,29 @@
                 </v-img>
               </v-list-item-avatar>
           </template>
-
-          <!-- <v-list-item-subtitle>
-                  #{{ data.item.market_cap_rank }}
-              </v-list-item-subtitle> -->
       </v-autocomplete>
       </v-col>
     </v-row>
     <v-row
-      no-gutters
+      
       class="pa-0"
+      v-if="!loading"
+      align="end"
+      justify="end"
     >
-      <v-col>
+      <v-col
+        class="text-left pt-2 font-weight-bold pb-6
+              text-xl-h3 text-lg-h5 text-md-h6 text-sm-h6 subtitle-1"
+      >
+        Cryptocurrency Prices by Market Cap
       </v-col>
+      
       <v-col>
-      </v-col>
         <div
           class="coinGeckoApi"
-        >Powered by <a href="https://www.coingecko.com/en/api">CoinGecko API</a></div>
+        >
+          Powered by <a href="#" @click="linkToNewTab('https://www.coingecko.com/en/api')">CoinGecko API</a>
+        </div>
       </v-col>
     </v-row>
     <!-- </v-container> -->
@@ -238,7 +240,7 @@ export default {
   },
   created() {
 
-    this.listLoading = 'secondary';
+    this.listLoading = 'primary';
 
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
@@ -389,7 +391,10 @@ export default {
               -1 ||
           item.symbol.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1
       );
-    }
+    },
+    linkToNewTab(theLink) {
+      window.open(theLink, "_blank")
+    },
   },
   watch: {
   }, 

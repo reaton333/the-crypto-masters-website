@@ -57,6 +57,7 @@
           >
             <v-card
               min-width="255"
+              height="325"
             >
               <div
                 class="pa-6 text-center"
@@ -112,9 +113,6 @@
                 <v-btn icon @click="linkToNewTab(brianObject.twitter)">
                   <v-icon color="secondary">mdi-twitter</v-icon>
                 </v-btn>
-                <v-btn icon @click="linkToNewTab(brianObject.instagram)">
-                  <v-icon color="secondary">mdi-instagram</v-icon>
-                </v-btn>
                 <v-btn icon :href="'mailto:' + brianObject.email">
                   <v-icon color="secondary">mdi-email</v-icon>
                 </v-btn>
@@ -149,9 +147,6 @@
                 <v-spacer></v-spacer>
                 <v-btn icon @click="linkToNewTab(rossObject.twitter)">
                   <v-icon color="secondary">mdi-twitter</v-icon>
-                </v-btn>
-                <v-btn icon @click="linkToNewTab(rossObject.instagram)">
-                  <v-icon color="secondary">mdi-instagram</v-icon>
                 </v-btn>
                 <v-btn icon :href="'mailto:' + rossObject.email">
                   <v-icon color="secondary">mdi-email</v-icon>
@@ -191,15 +186,15 @@ export default {
 //         +  "So, although we call ourselves The Crypto Masters, we are not attempting to provide substantial “deep dives” on the assets we are discussing. There simply is not time to do so. There are numerous resources on the internet for people to do more thorough investigations. However, we hope to provide sufficient information and personal opinions that our listeners and readers can form some preliminary opinions about different altcoins. From there, it is up to each investor to make their own investment decisions.",
         aboutObject: [
           { id: 0, icon: 'mdi-bullseye', title: 'Our Goal', text: "Provide information about crypto assets to assist with making your own decisions" },
-          { id: 1, icon: 'mdi-strategy', title: 'Focus', text: "We focus on cryptocurrency mainly as a long term investment" },
+          { id: 1, icon: 'mdi-strategy', title: 'Focus', text: "We focus on cryptocurrency for long term investing                                  " },
           { id: 2, icon: 'mdi-hand-heart', title: 'Helping You', text: "We do the hard research and provide you an overview of the key details" },
           // { id: 3, icon: 'mdi-clock-outline', text: "Focused on crypto assets for a long term investment. We see crypto as the future of currency and finance" },
         ],
         brianObject: { 
-          id: 0, image: '../assets/brian_headshot.jpeg', fullName: 'Brian McCoy', aboutText: 'Hey I\'m Brian. I am a current practicing lawyer. I co-managed a frontier markets hedge fund for almost 20 years. So my background in investing is in equities. I have been investing in crypto currency since 2018 and am focused on bitcoin and altcoins as a long term investment.', email: 'brian@thecryptomasters.com', instagram: 'https://www.instagram.com/brianmccoy81', twitter: 'https://twitter.com/cryptolerable'
+          id: 0, image: '../assets/brian_headshot.jpeg', fullName: 'Brian McCoy', aboutText: 'Hey I\'m Brian. I am a current practicing lawyer. I co-managed a frontier markets hedge fund for almost 20 years. So my background in investing is in equities. I have been investing in crypto currency since 2018 and am focused on bitcoin and altcoins as a long term investment.', email: 'brian@thecryptomasters.com', twitter: 'https://twitter.com/cryptolerable'
         },
         rossObject: { 
-          id: 1, image: '../assets/ross_headshot.png', fullName: 'Ross Eaton', aboutText: 'Hello I\'m Ross. I have a degree in Computer Science with 6 years of experience in software development and data analysis. I have been in the world of cryptocurrency since 2017. I see crypto as the tech of the future with potential of replacing traditional banking systems.', email: 'ross@thecryptomasters.com', instagram: 'https://www.instagram.com/rossbo3', twitter: 'https://twitter.com/RosstheCryptoB1'
+          id: 1, image: '../assets/ross_headshot.png', fullName: 'Ross Eaton', aboutText: 'Hello I\'m Ross. I have a degree in Computer Science with 6 years of experience in software development and data analysis. I have been in the world of cryptocurrency since 2017. I see crypto as the tech of the future with potential of replacing traditional banking systems.', email: 'ross@thecryptomasters.com', twitter: 'https://twitter.com/RosstheCryptoB1'
         },
     }
   },

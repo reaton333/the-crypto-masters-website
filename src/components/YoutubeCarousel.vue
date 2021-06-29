@@ -1,37 +1,33 @@
 <template>
-    <v-carousel
-        cycle
-        class="pt-12"
+    <v-card
+        width="100%"
+        max-width="900"
     >
-        <v-carousel-item
-            v-for="(episode, index) in episodes"
-            :key="index"
-            :src="episode.snippet.thumbnails.high.url"
-            reverse-transition="fade-transition"
-            transition="fade-transition"
-            @click="linkToVideo(episode.id.videoId)"
-        ></v-carousel-item>
-    </v-carousel>
-    <!-- <v-carousel 
-        cycle
-        show-arrows-on-hover
-        style="width:480px;height:360px;"
-    >
-        <v-carousel-item
-            v-for="(episode, index) in episodes"
-            :key="index"
-            :src="episode.snippet.thumbnails.high.url"
-            style="width:480px;height:360px;"
+        <v-card-title
+            class="justify-center text-h4"
+            style="background: #E9C46A"
         >
-            <div 
-                class="display-2"
-                align="center"
-                justify="center"        
-            >
-                {{ episode.snippet.title }}
-            </div>    
-        </v-carousel-item>
-    </v-carousel> -->
+            Recent Episodes
+        </v-card-title>
+        <v-carousel
+            cycle
+            height="475"
+            show-arrows-on-hover
+            dark
+            class="height-carousel" 
+            style="max-width: 900px; max-height: 475px; overflow: hidden"
+            
+        >
+            <v-carousel-item
+                v-for="(episode, index) in episodes"
+                :key="index"
+                :src="episode.snippet.thumbnails.high.url"
+                reverse-transition="fade-transition"
+                transition="fade-transition"
+                @click="linkToVideo(episode.id.videoId)"
+            ></v-carousel-item>
+        </v-carousel>
+    </v-card>
 </template>
 
 <script>
