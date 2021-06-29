@@ -431,6 +431,7 @@ export default {
             let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
 
             chart.numberFormatter.smallNumberThreshold = 0.000000000001
+            chart.tapToActivate = true;
 
             chart.preloader.disabled = true;
         
