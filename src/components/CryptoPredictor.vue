@@ -9,13 +9,41 @@
             ref="form"
         >
             <v-container>  
-            <v-row>
-                <v-card-title>
-                    <b>Professor Hindsight</b> 
-                    <span>
-                        {{ coinName }}
-                    </span>
+            <v-row
+                justify="center"
+            >
+                <v-col class="shrink">
+                        <v-img src="../../src/assets/professor_hindsight.png" max-width="300" class="ml-3"></v-img>
+                </v-col>
+            </v-row>
+            <v-row
+                justify="center"
+            >
+                <v-card-title 
+                    class="pa-0
+                        font-weight-bold
+                        text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 h5"
+                >
+                    Professor Hindsight
                 </v-card-title>
+            </v-row>
+            <v-row
+                class="pl-2"
+                align="center"
+            >
+                <v-avatar 
+                    v-if="coinImage"
+                    left 
+                    size="35"
+                >
+                    <img :src="coinImage" >
+                </v-avatar>
+                <span
+                    v-if="coinName"
+                    class="pl-2 font-weight-medium text-xl-h6 text-lg-h6 text-md-h6 text-sm-h6 h5"
+                >
+                    {{ coinName }}
+                </span>
             </v-row>
             <v-row
                 v-if="!coinName"
@@ -30,11 +58,11 @@
                         item-text="name"
                         item-value="id"
                         no-data-text="No coins to display"
+                        prepend-icon="mdi-bitcoin"
                         auto-select-first
                         dense
-                        solo
-                        filled
                         label="Select Coin"
+                        :rules="coinIdRules"
                     >
                         <template 
                             v-slot:item="data"
@@ -54,7 +82,6 @@
                                 </v-img>
                             </v-list-item-avatar>
                         </template>
-
                     </v-autocomplete>
                 </v-col>
             </v-row>
@@ -267,12 +294,13 @@ export default {
     validations: {
       whatIfStartDate: { required },
       whatIfEndDate: { required },
-    //   select: { required },
+      myCoinId: { required },
     },
     components: {},
     props: {
         coinName: String,
         coinId: String,
+        coinImage: String,
         // coinStartDate: Datex
     },
     data () {
@@ -320,7 +348,9 @@ export default {
             investedRules: [
                 v => !!v || 'Amount Invested is Required',
             ],
-
+            coinIdRules: [
+                v => !!v || 'Coin Selection is Required',
+            ],
         }
     },
     mounted() {

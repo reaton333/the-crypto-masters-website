@@ -217,7 +217,7 @@
         </div>
             
         <div class="coinChart" ref="chartdiv"></div>
-        <CryptoPredictor :coinName="coinDetails.name" :coinId="coinId"/>
+        <CryptoPredictor :coinName="coinDetails.name" :coinId="coinId" :coinImage="coinImage"/>
     </div>
 </template>
 
