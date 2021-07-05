@@ -8,25 +8,60 @@
             v-model="valid"
             ref="form"
         >
-            <v-container>    
-            <v-row v-if="coinId === null">
-                <CoinSearch/>
-            </v-row>
+            <v-container>  
             <v-row>
                 <v-card-title>
-                    <v-icon
-                        x-large
-                        color="secondary"
-                    >
-                        mdi-robot-happy-outline
-                    </v-icon>
-                    <b>&nbsp;Professor Hindsight</b>: {{ coinName }}
+                    <b>Professor Hindsight</b> 
+                    <span>
+                        {{ coinName }}
+                    </span>
                 </v-card-title>
+            </v-row>
+            <v-row
+                v-if="!coinName"
+            >
+                <v-col
+                    cols="10"
+                    md="8"
+                >
+                    <v-autocomplete
+                        v-model="myCoinId"
+                        :items="allCoins"
+                        item-text="name"
+                        item-value="id"
+                        no-data-text="No coins to display"
+                        auto-select-first
+                        dense
+                        solo
+                        filled
+                        label="Select Coin"
+                    >
+                        <template 
+                            v-slot:item="data"
+                        >
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    #{{ data.item.market_cap_rank }} &nbsp; {{ data.item.name }}
+                                </v-list-item-title>
+                                <v-list-item-subtitle v-text="data.item.symbol"></v-list-item-subtitle>
+                            </v-list-item-content>
+                            <v-list-item-avatar>
+                                <v-img 
+                                    :src="data.item.thumb"
+                                    max-height="22"
+                                    max-width="22"
+                                >
+                                </v-img>
+                            </v-list-item-avatar>
+                        </template>
+
+                    </v-autocomplete>
+                </v-col>
             </v-row>
             <v-row>
                 <v-col
-                cols="10"
-                md="4"
+                    cols="10"
+                    md="4"
                 >
                 <v-menu
                     ref="startDateMenu"
@@ -110,13 +145,13 @@
                 @click="validate"
             >
                 <v-icon
-                left
-                light
+                    left
+                    light
                 >
                     mdi-calculator
                 </v-icon>
                     Calculate
-                </v-btn>
+            </v-btn>
             </v-container>
         </v-form>
         <v-row v-if="hindsightErrorMessage">
@@ -138,7 +173,6 @@
             </v-progress-circular>
         </div>
         <div v-if="newAmount !== ''">
-        <!-- <div> -->
             <v-card-title>
                 <v-row align="start">
                     <div class="text-caption grey--text text-uppercase">
@@ -148,7 +182,7 @@
                     <span 
                         class="font-weight-bold" 
                         :class="(newAmount - amountInvested) >= 0 ? 'success--text' : 'error--text'">
-                        {{ this.formatPrice(newAmount - amountInvested) }}
+                        {{ this.totalProfit }}
                     </span>
                     </div>
                 </v-row>
@@ -225,7 +259,7 @@ import axios from 'axios';
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
-import CoinSearch from '@/components/CoinSearch.vue'
+// import CoinSearch from '@/components/CoinSearch.vue'
 
 
 export default {
@@ -235,9 +269,7 @@ export default {
       whatIfEndDate: { required },
     //   select: { required },
     },
-    components: {
-        CoinSearch,
-    },
+    components: {},
     props: {
         coinName: String,
         coinId: String,
@@ -273,7 +305,10 @@ export default {
             newAmount: '',
             priceAtStart: '',
             priceAtEnd: '',
-            newAmount: '',
+            allCoins: [],
+            myCoinId: '',
+            totalProfit: '',
+            listLoading: 'primary',
             hindsightErrorMessage: '',
             loadingCalculation: false,
             startDateRules: [
@@ -286,6 +321,13 @@ export default {
                 v => !!v || 'Amount Invested is Required',
             ],
 
+        }
+    },
+    mounted() {
+        this.allCoins = this.$session.get('allCoins')
+
+        if(this.coinId) {
+            this.myCoinId = this.coinId
         }
     },
     watch: {
@@ -317,7 +359,7 @@ export default {
 
             const baseURL = `https://api.coingecko.com/api/v3/coins/`
             // 
-            var apiParams = `${this.coinId}/market_chart/range?vs_currency=usd&from=${formattedStartDate}&to=${formattedEndDate}`
+            var apiParams = `${this.myCoinId}/market_chart/range?vs_currency=usd&from=${formattedStartDate}&to=${formattedEndDate}`
 
             try {
                 // console.log(baseURL + apiParams)
@@ -336,6 +378,8 @@ export default {
                 var totalEarnings = tempStartingAmount * this.priceAtEnd
 
                 this.newAmount = totalEarnings
+
+                this.totalProfit = this.formatPrice(this.newAmount - this.amountInvested)
                 // console.log(this.newAmount)
 
             } catch (e) {

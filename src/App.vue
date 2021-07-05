@@ -15,37 +15,47 @@ import Home from '@/views/Home.vue'
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 
+import axios from 'axios';
+
 export default {
   name: 'App',
-  // metaInfo: {
-  //   title: 'Podcasts, Articles, Prices, and More!',
-  //   titleTemplate: '%s | The Crypto Masters',
-  //   content: 'Helping You Master an Understanding of Crypto Assets. Your crypto one-stop shop!'
-  // },
-  // metaInfo() {
-  //   return {
-  //     meta: [
-  //       { property: 'og:type', content: 'website' },
-  //       { property: 'og:url', content: `${this.$router.currentRoute.path}` },
-  //       { property: 'og:title', content: 'Podcasts, Articles, Prices, and More! | The Crypto Masters' },
-  //       { property: 'og:description', content: 'Helping You Master an Understanding of Crypto Assets.' },
-  //       { property: 'og:image', content: require('../public/meta_tag_logo.png') },
-
-  //       { property: 'twitter:card', content: 'summary_large_image' },
-  //       { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
-  //       { property: 'twitter:title', content: 'Podcasts, Articles, Prices, and More! | The Crypto Masters'},
-  //       { property: 'twitter:description', content: 'Helping You Master an Understanding of Crypto Assets.' },
-  //       { property: 'twitter:image', content: require('../public/meta_tag_logo.png')  },
-  //     ]
-  //   }
-  // },
   components: {
     Home,
     NavBar,
     Footer
   },
   data () {
-    return {}
+    return {
+      allCoins: [],
+    }
+  },
+  mounted() {
+
+    this.allCoins = this.$session.get('allCoins')
+    
+    if (!this.allCoins) {
+      this.getAllCoins()
+    }
+  },
+  methods: {
+    async getAllCoins() {
+
+      try {
+          const baseURL = `https://api.coingecko.com/api/v3/search`
+          const params = `?local=en`
+          const fullPath = baseURL + params
+          // console.log(fullPath)
+          const res = await axios.get(fullPath)
+
+          this.allCoins = res.data.coins;
+          // console.log(this.allCoins)
+          this.$session.set("allCoins", this.allCoins);
+          this.$session.set("totalCoins", this.allCoins.length);
+      } catch (e) {
+          console.log(e);
+      }
+
+    },
   }
 }
 </script>

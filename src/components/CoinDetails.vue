@@ -361,7 +361,7 @@ export default {
         this.createChart('firstLoad');
         
     }, // mounted
-    async beforeUnmount() {
+    beforeUnmount() {
 
         if (this.chart) {
 
@@ -374,6 +374,9 @@ export default {
             vm.breadCrumbItems[0].href = from
             // console.log(from)
         })
+    },
+    beforeRouteLeave() {
+        this.chart.dispose()
     },
     watch: {
         // These functions make sure the date picker opens on year first

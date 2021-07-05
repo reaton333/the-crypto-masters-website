@@ -15,7 +15,7 @@
           :items="allCoins"
           :filter="filterCoinAndSymbol"
           :loading="listLoading"
-          allow-overflow="false"
+          :allow-overflow="false"
           item-text="name"
           item-value="id"
           no-data-text="No coins to display"
@@ -184,12 +184,12 @@
 
 <script>
 import axios from 'axios';
-// import CoinSearch from '@/components/CoinSearch.vue'
+import CoinSearch from '@/components/CoinSearch.vue'
 
 export default {
   name: 'CoinList',
   components: {
-    // CoinSearch,
+    CoinSearch,
   },
   metaInfo() {
     return {
@@ -252,7 +252,15 @@ export default {
     this.handleResize();
 
     this.page = 1;
-    this.getAllCoins();
+
+    this.allCoins = this.$session.get('allCoins')
+
+    if (!this.allCoins) {
+      this.getAllCoins()
+    } else {
+      this.totalCoins = this.$session.get('totalCoins')
+      this.listLoading = false;
+    }
     
     this.getCoinsList(this.page);
   },
@@ -270,7 +278,7 @@ export default {
           const res = await axios.get(fullPath)
 
           this.allCoins = res.data.coins;
-          console.log(this.allCoins)
+          // console.log(this.allCoins)
           this.totalCoins = this.allCoins.length;
           this.listLoading = false;
       } catch (e) {
@@ -309,7 +317,7 @@ export default {
       }
     },
     goToCoinDescription(coinId){
-      console.log('ENTER coinDescription for: ' + coinId)
+      // console.log('ENTER coinDescription for: ' + coinId)
       this.$router.push({ 
           name: 'Coin',
           params: {

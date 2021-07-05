@@ -50,7 +50,7 @@
           v-for="navItem in navItems" 
           :key="navItem.id"
           class="d-none d-md-flex"
-          >
+        >
           <v-btn 
             text
             :to="navItem.route"
@@ -58,8 +58,32 @@
             {{ navItem.name }}
           </v-btn>
         </span>
+        <v-menu bottom offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              color="primary"
+              dark
+              v-on="on"
+              elevation="0"
+            >
+              Crypto
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="item in cryptoNavItems"
+              :key="item.id"
+              v-model="item.active"
+              :prepend-icon="item.icon"
+              no-action
+              :to="item.route"
+            >
+                <v-list-item-title>{{ item.name }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-app-bar>
-    </div>
+    </div> 
 </template>
 
 <script>
@@ -71,7 +95,10 @@ export default {
         { id: 1, name: 'Home', icon: 'mdi-home', route: '/'},
         { id: 2, name: 'About', icon: 'mdi-information', route: '/about'},
         { id: 3, name: 'Podcast', icon: 'mdi-microphone', route: '/podcast/'},
-        { id: 4, name: 'Crypto', icon: 'mdi-bitcoin', route: '/crypto'},
+      ],
+      cryptoNavItems: [
+        { id: 4, name: 'Crypto Prices', icon: 'mdi-bitcoin', route: '/crypto'},
+        { id: 5, name: 'Hindsight Tool', icon: 'mdi-bitcoin', route: '/profitCalculator'},
       ],
       navTitle: 'THE CRYPTO MASTERS'
     }
