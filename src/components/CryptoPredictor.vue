@@ -311,13 +311,13 @@ export default {
             meta: [
                 { property: 'og:type', content: 'website' },
                 { property: 'og:url', content: `${this.$router.currentRoute.path}` },
-                { property: 'og:title', content: `Professor Hindsight - Past Price Predictions` },
+                { property: 'og:title', content: `Professor Hindsight - Crypto Investment Calculator` },
                 { property: 'og:description', content: 'The answer to the question \'What if I invested in crypto on this date \'' },
                 { property: 'og:image', content: require('../assets/professor_hindsight.png') },
 
                 { property: 'twitter:card', content: 'summary_large_image' },
                 { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
-                { property: 'twitter:title', content: `Professor Hindsight - Past Price Predictions` },
+                { property: 'twitter:title', content: `Professor Hindsight - Crypto Investment Calculator` },
                 { property: 'twitter:description', content: 'The answer to the question \'What if I invested in crypto on this date \'' },
                 { property: 'twitter:image', content: require('../assets/professor_hindsight.png')  },
             ]
