@@ -1,89 +1,98 @@
 <template>
-    <div>
-      <v-navigation-drawer
-        v-model="drawer"
-        temporary
-        bottom
-        dark
-        class="primary"
-        app
+  <div>
+    <v-navigation-drawer
+      v-model="drawer"
+      temporary
+      bottom
+      dark
+      class="primary"
+      app
+    >
+      <v-list dense>
+        <v-list-item
+          v-for="navItem in allNavItems"
+          :key="navItem.id"
+          :to="navItem.route"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ navItem.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title
+              class="font-weight-bold"
+            >
+              {{ navItem.name }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <v-app-bar
+      app
+      dark
+      class="primary font-weight-bold"
+      elevate-on-scroll
+      fixed
+    >
+      <v-app-bar-nav-icon
+        class="d-sm-flex d-md-none"
+        @click.stop="drawer = !drawer"
       >
-        <v-list dense>
-          <v-list-item
-            v-for="navItem in navItems"
-            :key="navItem.id"
-            :to="navItem.route"
-            link
+      </v-app-bar-nav-icon>
+      <img class="mr-3" :src="require('../assets/logo.svg')" height="40" >
+      <v-toolbar-title
+        style="cursor: pointer" 
+        @click="$router.push('/')"
+      >{{ navTitle }}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <span 
+        v-for="navItem in navItems" 
+        :key="navItem.id"
+        class="d-none d-md-flex"
+      >
+        <v-btn 
+          text
+          :to="navItem.route"
+        >
+          {{ navItem.name }}
+        </v-btn>
+      </span>
+      <v-menu 
+        bottom offset-y
+      >
+        <template v-slot:activator="{ on }">
+          <v-btn
+            class="cryptoAppBarItem"
+            color="primary"
+            dark
+            v-on="on"
+            elevation="0"
           >
-            <v-list-item-icon>
-              <v-icon>{{ navItem.icon }}</v-icon>
+            Crypto
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="item in cryptoNavItems"
+            :key="item.id"
+            v-model="item.active"
+            no-action
+            :to="item.route"
+          >
+            <v-list-content>
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
+            </v-list-content>
+            <v-list-item-icon
+              align="right"
+            >
+              <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title
-                class="font-weight-bold"
-              >
-                {{ navItem.name }}
-              </v-list-item-title>
-            </v-list-item-content>
           </v-list-item>
         </v-list>
-      </v-navigation-drawer>
-      <v-app-bar
-        app
-        dark
-        class="primary font-weight-bold"
-        elevate-on-scroll
-        fixed
-      >
-        <v-app-bar-nav-icon
-          class="d-sm-flex d-md-none"
-          @click.stop="drawer = !drawer"
-        >
-        </v-app-bar-nav-icon>
-        <img class="mr-3" :src="require('../assets/logo.svg')" height="40" >
-        <v-toolbar-title
-          style="cursor: pointer" 
-          @click="$router.push('/')"
-        >{{ navTitle }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <span 
-          v-for="navItem in navItems" 
-          :key="navItem.id"
-          class="d-none d-md-flex"
-        >
-          <v-btn 
-            text
-            :to="navItem.route"
-          >
-            {{ navItem.name }}
-          </v-btn>
-        </span>
-        <v-menu bottom offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn
-              color="primary"
-              dark
-              v-on="on"
-              elevation="0"
-            >
-              Crypto
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="item in cryptoNavItems"
-              :key="item.id"
-              v-model="item.active"
-              :prepend-icon="item.icon"
-              no-action
-              :to="item.route"
-            >
-                <v-list-item-title>{{ item.name }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-app-bar>
-    </div> 
+      </v-menu>
+    </v-app-bar>
+  </div>
 </template>
 
 <script>
@@ -98,15 +107,26 @@ export default {
       ],
       cryptoNavItems: [
         { id: 4, name: 'Crypto Prices', icon: 'mdi-bitcoin', route: '/crypto'},
-        { id: 5, name: 'Hindsight Tool', icon: 'mdi-bitcoin', route: '/profitCalculator'},
+        { id: 5, name: 'Hindsight Tool', icon: 'mdi-school', route: '/profitCalculator'},
       ],
+      allNavItems: [],
       navTitle: 'THE CRYPTO MASTERS'
     }
+  },
+  created() {
+    this.allNavItems = [...this.navItems, ...this.cryptoNavItems];
   }
 
 }
 </script>
 
 <style>
+
+@media screen and (max-width: 959px) {
+  .cryptoAppBarItem {
+    display: none !important;
+  }
+}
+
 
 </style>
