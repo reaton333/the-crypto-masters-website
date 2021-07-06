@@ -55,6 +55,7 @@
                     <v-autocomplete
                         v-model="myCoinId"
                         :items="allCoins"
+                        clearable
                         item-text="name"
                         item-value="id"
                         no-data-text="No coins to display"
