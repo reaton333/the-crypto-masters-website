@@ -58,6 +58,7 @@
                         clearable
                         item-text="name"
                         item-value="id"
+                        :loading="listLoading"
                         no-data-text="No coins to display"
                         prepend-icon="mdi-bitcoin"
                         auto-select-first
@@ -287,9 +288,6 @@ import axios from 'axios';
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
-// import CoinSearch from '@/components/CoinSearch.vue'
-
-
 export default {
     mixins: [ validationMixin ],
     validations: {
@@ -308,6 +306,7 @@ export default {
         return {
             title: 'Professor Hindsight - Past Price Predictions',
             description: '',
+            listLoading: 'primary',
             meta: [
                 { property: 'og:type', content: 'website' },
                 { property: 'og:url', content: `${this.$router.currentRoute.path}` },
@@ -356,7 +355,7 @@ export default {
             allCoins: [],
             myCoinId: '',
             totalProfit: '',
-            listLoading: 'primary',
+            listLoading: false,
             hindsightErrorMessage: '',
             loadingCalculation: false,
             startDateRules: [
@@ -379,6 +378,11 @@ export default {
         if(this.coinId) {
             this.myCoinId = this.coinId
         }
+
+        if (!this.allCoins) {
+            this.listLoading = 'primary'
+            this.getAllCoins()
+        }
     },
     watch: {
         // These functions make sure the date picker opens on year first
@@ -396,6 +400,25 @@ export default {
             if (this.$refs.form.validate()) {
                 this.getWhatIfData() 
             }
+        },
+        async getAllCoins() {
+
+            try {
+                const baseURL = `https://api.coingecko.com/api/v3/search`
+                const params = `?local=en`
+                const fullPath = baseURL + params
+                // console.log(fullPath)
+                const res = await axios.get(fullPath)
+
+                this.allCoins = res.data.coins;
+                // console.log(this.allCoins)
+                this.$session.set("allCoins", this.allCoins);
+                this.$session.set("totalCoins", this.allCoins.length);
+                this.listLoading = false
+            } catch (e) {
+                console.log(e);
+            }
+
         },
         async getWhatIfData() {
 
