@@ -103,6 +103,7 @@
       :mobile-breakpoint="0"
       :dense="isMobile"
       hide-default-footer
+      @click:row="handleClick"
       class="elevation-1 font-weight-medium text-sm-caption-2 text-xs-caption-2 font-xs-weight-light"
     >
       <template v-slot:item.name="{ item }">
@@ -315,6 +316,10 @@ export default {
       } catch (e) {
           console.log(e);
       }
+    },
+    handleClick(value) {
+      // console.log(value.id)
+      this.goToCoinDescription(value.id)
     },
     goToCoinDescription(coinId){
       // console.log('ENTER coinDescription for: ' + coinId)
