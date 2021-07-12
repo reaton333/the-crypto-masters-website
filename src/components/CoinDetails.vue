@@ -176,7 +176,7 @@
             </v-row>
         </div>
         <v-divider></v-divider>
-        <div v-if="$vuetify.breakpoint.mobile">
+        <div v-if="$vuetify.breakpoint.xsOnly">
             <template>
                 <div class="text-left">
                     <v-menu offset-y>

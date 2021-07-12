@@ -185,12 +185,12 @@
 
 <script>
 import axios from 'axios';
-import CoinSearch from '@/components/CoinSearch.vue'
+// import CoinSearch from '@/components/CoinSearch.vue'
 
 export default {
   name: 'CoinList',
   components: {
-    CoinSearch,
+    // CoinSearch,
   },
   metaInfo() {
     return {
