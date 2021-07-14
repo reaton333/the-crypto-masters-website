@@ -224,7 +224,7 @@
             <v-progress-linear 
                 indeterminate
                 value="15"
-                color="#00C4F9"
+                color="secondary"
             ></v-progress-linear>
         </div>
         <div class="coinChart" ref="chartdiv"></div>
@@ -579,11 +579,14 @@ export default {
 
             series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] {valueY.formatNumber('" + tooltipPriceFormatString + "')}"
             
+            series.tooltip.autoTextColor = false;
+            series.tooltip.label.fill = am4core.color("#000");
+
             series.tooltip.getFillFromObject = false;
-            series.tooltip.background.fill = am4core.color("#2A9D8F");
+            series.tooltip.background.fill = am4core.color("#E9C46A");
 
             series.strokeWidth = 3;
-            series.stroke = am4core.color("#00C4F9");
+            series.stroke = am4core.color("#2A9D8F");
 
             let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
             categoryAxis.renderer.grid.template.disabled = true;
