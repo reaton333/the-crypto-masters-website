@@ -56,6 +56,7 @@
                         v-model="myCoinId"
                         :items="allCoins"
                         clearable
+                        :filter="filterCoinAndSymbol"
                         item-text="name"
                         item-value="id"
                         :loading="listLoading"
@@ -489,6 +490,13 @@ export default {
             });
 
             return formatter.format(value)
+        },
+        filterCoinAndSymbol(item, queryText, itemText) {
+            return (
+                item.id.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) >
+                    -1 ||
+                item.symbol.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1
+            );
         },
         // async getPriceAtDate(theDate){
 
