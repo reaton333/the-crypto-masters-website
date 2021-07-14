@@ -460,7 +460,6 @@ export default {
                     this.chartLoading = false;
                 }
 
-                this.chartLoading = false;
                 this.formatChart();
             }
         },
@@ -597,6 +596,7 @@ export default {
             chart.scrollbarX = scrollbarX;
 
             this.chart = chart;
+            this.chartLoading = false;
 
             // this.hideIndicator();
         },
