@@ -325,6 +325,14 @@ export default {
 
         this.coinId = this.$route.params.coinId;
 
+        this.detailsPageMetaInfo = {
+            title: this.coinName,
+            description: `${this.coinName} prices, historical data, and more!`,
+            image: this.coinImage,
+            url: `${this.$router.currentRoute.path}`,
+        }   
+        // console.log(this.detailsPageMetaInfo)
+
         this.loading = true
 
         const baseURL = `https://api.coingecko.com/api/v3/coins/`
@@ -350,14 +358,8 @@ export default {
             this.sourceCode = this.coinDetails.links.repos_url.github[0]
             // console.log(this.coinDetails.market_data.current_price.usd)
 
-            this.detailsPageMetaInfo = {
-                title: this.coinName,
-                description: `${this.coinName} prices, historical data, and more!`,
-                image: this.coinImage,
-                url: `${this.$router.currentRoute.path}`,
-            }   
-
-            console.log(this.detailsPageMetaInfo)
+            // this.createChart(this.fromDateRange, this.toDateRange);
+            this.createChart('firstLoad');
 
             this.loading = false
 
@@ -375,10 +377,10 @@ export default {
     async mounted() {
         
         // TODO: add to coin component
-        this.coinId = this.$route.params.coinId;
+        // this.coinId = this.$route.params.coinId;
 
         // this.createChart(this.fromDateRange, this.toDateRange);
-        this.createChart('firstLoad');
+        // this.createChart('firstLoad');
         
     }, // mounted
     beforeUnmount() {
@@ -460,13 +462,13 @@ export default {
             }
             
             let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
+            chart = this.showChartIndicator(chart);
 
             chart.numberFormatter.smallNumberThreshold = 0.000000000001
             chart.tapToActivate = true;
 
             chart.preloader.disabled = true;
         
-            chart = this.showChartIndicator(chart);
             // chart.paddingRight = 20;
 
             let data = [];
