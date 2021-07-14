@@ -395,6 +395,8 @@ export default {
         if (!this.allCoins) {
             this.listLoading = 'primary'
             this.getAllCoins()
+        } else {
+            this.listLoading = false;
         }
     },
     watch: {
