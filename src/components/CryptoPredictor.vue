@@ -470,6 +470,9 @@ export default {
             this.loadingCalculation = false
 
         },
+        // getMetaData() {
+            
+        // },
         convertDateToUnix(dateToConvert){
 
             // console.log(dateToConvert)

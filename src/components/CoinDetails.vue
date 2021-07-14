@@ -399,9 +399,11 @@ export default {
 
                 const baseURL = `https://api.coingecko.com/api/v3/coins/${ this.coinId }/market_chart/`
 
+                var apiParams = ''
+
                 if (dateRange == 'max') {
 
-                    var apiParams = `?vs_currency=usd&days=max&interval=monthly`
+                    apiParams = `?vs_currency=usd&days=max&interval=monthly`
                     // console.log(this.coinGenesisDate)
                     // this.fromDateRange = new Date(this.coinGenesisDate).getTime() / 1000
                     // this.fromDateRange = this.coinGenesisDate;
@@ -409,7 +411,7 @@ export default {
                 } else {
 
                     this.setDateRangesUnix(dateRange)
-                    var apiParams = `range?vs_currency=usd&from=${ this.fromDateRange }&to=${ this.toDateRange }`
+                    apiParams = `range?vs_currency=usd&from=${ this.fromDateRange }&to=${ this.toDateRange }`
                 }
 
                 var fullURL = baseURL + apiParams
@@ -530,11 +532,13 @@ export default {
 
             let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
             dateAxis.renderer.grid.template.location = 0;
+            dateAxis.renderer.grid.template.disabled = true;
             // dateAxis.tooltipDateFormat = "yyyy-MM-dd";
 
             let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
             valueAxis.tooltip.disabled = true;
             valueAxis.renderer.minWidth = 5;
+
             // valueAxis.adjustLabelPrecision = false;
 
             valueAxis.numberFormatter = new am4core.NumberFormatter();
@@ -551,6 +555,13 @@ export default {
             series.tooltip.getFillFromObject = false;
             series.tooltip.background.fill = am4core.color("#2A9D8F");
 
+            series.strokeWidth = 3;
+            series.stroke = am4core.color("#00C4F9");
+
+            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.renderer.grid.template.disabled = true;
+
+
             chart.cursor = new am4charts.XYCursor();
 
             let scrollbarX = new am4charts.XYChartScrollbar();
@@ -565,25 +576,25 @@ export default {
 
             if (samplingPrice < 1 & samplingPrice >= .001) {
                 
-                this.chartNumberFormatString = '#,###.00000'
+                this.chartNumberFormatString = '$#,###.00000'
             } else if (samplingPrice < .001 & samplingPrice >= .0001) {
 
-                this.chartNumberFormatString = '#,###.000000'
+                this.chartNumberFormatString = '$#,###.000000'
             } else if (samplingPrice < .0001 & samplingPrice >= .00001) {
 
-                this.chartNumberFormatString = '#,###.0000000'
+                this.chartNumberFormatString = '$#,###.0000000'
             } else if (samplingPrice < .00001 & samplingPrice >= .000001) {
 
-                this.chartNumberFormatString = '#,###.00000000'
+                this.chartNumberFormatString = '$#,###.00000000'
             } else if (samplingPrice < .000001 & samplingPrice >= .0000001) {
 
-                this.chartNumberFormatString = '#,###.000000000'
+                this.chartNumberFormatString = '$#,###.000000000'
             } else if (samplingPrice < .0000001 & samplingPrice >= .00000001) {
 
-                this.chartNumberFormatString = '#,###.0000000000'
+                this.chartNumberFormatString = '$#,###.0000000000'
             } else {
 
-                this.chartNumberFormatString = '#,###.00'
+                this.chartNumberFormatString = '$#,###.00'
             }
 
             return this.chartNumberFormatString
