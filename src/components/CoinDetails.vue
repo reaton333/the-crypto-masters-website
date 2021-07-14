@@ -224,7 +224,7 @@
             <v-progress-linear 
                 indeterminate
                 value="15"
-                color="#E9C46A"
+                color="#2A9D8F"
             ></v-progress-linear>
         </div>
         <div class="coinChart" ref="chartdiv"></div>
