@@ -224,7 +224,7 @@
             <v-progress-linear 
                 indeterminate
                 value="15"
-                color="secondary"
+                color="#E9C46A"
             ></v-progress-linear>
         </div>
         <div class="coinChart" ref="chartdiv"></div>
@@ -461,6 +461,7 @@ export default {
                 }
 
                 this.formatChart();
+                this.chartLoading = false;
             }
         },
         formatChart() {
@@ -599,8 +600,6 @@ export default {
             chart.scrollbarX = scrollbarX;
 
             this.chart = chart;
-            this.chartLoading = false;
-
             // this.hideIndicator();
         },
         setTooltipPrice(samplingPrice) {
