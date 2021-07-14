@@ -301,30 +301,36 @@ export default {
         coinName: String,
         coinId: String,
         coinImage: String,
+        detailsPageMetaInfo: {},
         // coinStartDate: Datex
     },
     metaInfo() {
         return {
-            title: 'Professor Hindsight - Past Price Predictions',
-            description: '',
-            listLoading: 'primary',
+            title: this.hindsightPageMetaInfo.title,
+            description: this.hindsightPageMetaInfo.description,
             meta: [
                 { property: 'og:type', content: 'website' },
-                { property: 'og:url', content: `${this.$router.currentRoute.path}` },
-                { property: 'og:title', content: `Professor Hindsight - Crypto Investment Calculator` },
-                { property: 'og:description', content: 'The answer to the question \'What if I invested in crypto on this date \'' },
-                { property: 'og:image', content: require('../assets/professor_hindsight.png') },
+                { property: 'og:url', content: this.hindsightPageMetaInfo.url },
+                { property: 'og:title', content: this.hindsightPageMetaInfo.title },
+                { property: 'og:description', content: this.hindsightPageMetaInfo.description },
+                { property: 'og:image', content: this.hindsightPageMetaInfo.image },
 
                 { property: 'twitter:card', content: 'summary_large_image' },
-                { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
-                { property: 'twitter:title', content: `Professor Hindsight - Crypto Investment Calculator` },
-                { property: 'twitter:description', content: 'The answer to the question \'What if I invested in crypto on this date \'' },
-                { property: 'twitter:image', content: require('../assets/professor_hindsight.png')  },
+                { property: 'twitter:url', content: this.hindsightPageMetaInfo.url },
+                { property: 'twitter:title', content: this.hindsightPageMetaInfo.title },
+                { property: 'twitter:description', content: this.hindsightPageMetaInfo.description },
+                { property: 'twitter:image', content: this.hindsightPageMetaInfo.image  },
             ]
         }
     },
     data () {
         return {
+            hindsightPageMetaInfo: {
+                title: 'Professor Hindsight - Past Price Predictions',
+                description: 'See what could have happened if you invested',
+                image: require('../assets/professor_hindsight.png'),
+                url: `${this.$router.currentRoute.path}`,
+            },
             //////////////////////////////////
             // Sparkline properties
             //////////////////////////////////
@@ -356,7 +362,7 @@ export default {
             allCoins: [],
             myCoinId: '',
             totalProfit: '',
-            listLoading: false,
+            listLoading: 'primary',
             hindsightErrorMessage: '',
             loadingCalculation: false,
             startDateRules: [
@@ -373,7 +379,13 @@ export default {
             ],
         }
     },
+    created() {
+        if (this.detailsPageMetaInfo) {
+            this.hindsightPageMetaInfo = this.detailsPageMetaInfo
+        }
+    },
     mounted() {
+
         this.allCoins = this.$session.get('allCoins')
 
         if(this.coinId) {

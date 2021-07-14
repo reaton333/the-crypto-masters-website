@@ -222,7 +222,12 @@
         </div>
             
         <div class="coinChart" ref="chartdiv"></div>
-        <CryptoPredictor :coinName="coinDetails.name" :coinId="coinId" :coinImage="coinImage"/>
+        <CryptoPredictor 
+            v-if="detailsPageMetaInfo"
+            :coinName="coinDetails.name" 
+            :coinId="coinId" 
+            :coinImage="coinImage" 
+            :detailsPageMetaInfo="detailsPageMetaInfo"/>
     </div>
 </template>
 
@@ -243,25 +248,26 @@ export default {
     },
     metaInfo() {
         return {
-            title: this.coinName,
-            description: '',
+            title: this.detailsPageMetaInfo.title,
+            description: this.detailsPageMetaInfo.description,
             meta: [
                 { property: 'og:type', content: 'website' },
-                { property: 'og:url', content: `${this.$router.currentRoute.path}` },
-                { property: 'og:title', content: `${this.coinName} Prices, Charts, and More | The Crypto Masters` },
-                { property: 'og:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
-                { property: 'og:image', content: this.coinImage },
+                { property: 'og:url', content: this.detailsPageMetaInfo.url },
+                { property: 'og:title', content: this.detailsPageMetaInfo.title },
+                { property: 'og:description', content: this.detailsPageMetaInfo.description },
+                { property: 'og:image', content: this.detailsPageMetaInfo.image },
 
-                { property: 'twitter:card', content: 'summary_large_image' },
-                { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
-                { property: 'twitter:title', content: `${this.coinName} Prices, Charts, and More | The Crypto Masters` },
-                { property: 'twitter:description', content: 'Get the latest prices and stats on your favorite cryptocurrency coins and tokens!' },
-                { property: 'twitter:image', content: this.coinImage },
+                { property: 'twitter:card', content: 'summary_large_image'} ,
+                { property: 'twitter:url', content: this.detailsPageMetaInfo.url },
+                { property: 'twitter:title', content: this.detailsPageMetaInfo.title },
+                { property: 'twitter:description', content: this.detailsPageMetaInfo.description },
+                { property: 'twitter:image', content: this.detailsPageMetaInfo.image },
             ]
         }
     },
     data() {
         return {
+            detailsPageMetaInfo: null,
             chartNumberSampling: 0.0,
             loading: false,
             currency: 'usd',
@@ -343,6 +349,15 @@ export default {
             this.priceChangePercentage24h = this.coinDetails.market_data.price_change_percentage_24h
             this.sourceCode = this.coinDetails.links.repos_url.github[0]
             // console.log(this.coinDetails.market_data.current_price.usd)
+
+            this.detailsPageMetaInfo = {
+                title: this.coinName,
+                description: `${this.coinName} prices, historical data, and more!`,
+                image: this.coinImage,
+                url: `${this.$router.currentRoute.path}`,
+            }   
+
+            console.log(this.detailsPageMetaInfo)
 
             this.loading = false
 
@@ -550,7 +565,7 @@ export default {
 
             let tooltipPriceFormatString = this.chartNumberFormatString;
 
-            series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] ${valueY.formatNumber('" + tooltipPriceFormatString + "')}"
+            series.tooltipText = "[bold]{dateX.formatDate('MMM, dd yyyy')}[/]\n[bold]Price:[/] {valueY.formatNumber('" + tooltipPriceFormatString + "')}"
             
             series.tooltip.getFillFromObject = false;
             series.tooltip.background.fill = am4core.color("#2A9D8F");
