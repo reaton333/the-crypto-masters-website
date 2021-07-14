@@ -50,7 +50,6 @@
       </v-col>
     </v-row>
     <v-row
-      
       class="pa-0"
       v-if="!loading"
       align="end"

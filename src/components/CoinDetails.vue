@@ -220,7 +220,13 @@
                 >{{ theRange.text }}</v-btn>
             </v-btn-toggle>
         </div>
-            
+        <div v-if="chartLoading">
+            <v-progress-linear 
+                indeterminate
+                value="15"
+                color="#00C4F9"
+            ></v-progress-linear>
+        </div>
         <div class="coinChart" ref="chartdiv"></div>
         <CryptoPredictor 
             v-if="detailsPageMetaInfo"
@@ -297,6 +303,7 @@ export default {
             totalVolumes: [],
             firstLoad: false,
             // prevRoute: null,
+            chartLoading: false,
             chartNumberFormatString: '',
             chartRanges: [
                 { id: '24H', text: '24HR' },
@@ -412,6 +419,8 @@ export default {
     methods: {
         async createChart(dateRange) {
 
+            this.chartLoading = true;
+
             if (this.currentDateRange !== dateRange) {
 
                 const baseURL = `https://api.coingecko.com/api/v3/coins/${ this.coinId }/market_chart/`
@@ -448,8 +457,10 @@ export default {
                 } catch (e) {
                     console.log('ERROR')
                     console.log(e.response);
+                    this.chartLoading = false;
                 }
 
+                this.chartLoading = false;
                 this.formatChart();
             }
         },
@@ -636,9 +647,9 @@ export default {
 
                 let indicatorLabel = indicator.createChild(am4core.Label);
                 if (this.coinDetails.name) {
-                    indicatorLabel.text = `Loading ${this.coinDetails.name} History...`;    
+                    indicatorLabel.text = `Finalizing ${this.coinDetails.name} Chart...`;    
                 } else {
-                    indicatorLabel.text = `Loading History...`; 
+                    indicatorLabel.text = `Finalizing Chart...`; 
                 }
                 
                 indicatorLabel.align = "center";
