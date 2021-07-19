@@ -85,7 +85,7 @@
       <v-container fluid>
         <v-row dense>
           <v-col
-            class="mx-auto py-4 pr-2"
+            class="mx-auto py-4"
             primary
           >
             <v-card
@@ -120,7 +120,7 @@
             </v-card>
           </v-col>
           <v-col
-            class="mx-auto py-4 pl-2"
+            class="mx-auto py-4"
             primary
           >
             <v-card
