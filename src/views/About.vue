@@ -85,11 +85,11 @@
       <v-container fluid>
         <v-row dense>
           <v-col
-            class="mx-auto pa-4"
+            class="mx-auto py-4 pr-2"
             primary
           >
             <v-card
-              min-width="350"
+              min-width="300"
             >
               <v-avatar
                 class="profile"
@@ -120,11 +120,11 @@
             </v-card>
           </v-col>
           <v-col
-            class="mx-auto pa-4"
+            class="mx-auto py-4 pl-2"
             primary
           >
             <v-card
-              min-width="350"
+              min-width="300"
             >
               <v-avatar
                 class="profile"
