@@ -562,13 +562,14 @@ export default {
 
             let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
             dateAxis.renderer.grid.template.location = 0;
+            dateAxis.tooltip.disabled = true;
             // Disables the vertical lines...
             dateAxis.renderer.grid.template.disabled = true;
                         
             // dateAxis.tooltipDateFormat = "yyyy-MM-dd";
 
             let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            // valueAxis.tooltip.disabled = true;
+            valueAxis.tooltip.disabled = true;
             valueAxis.renderer.minWidth = 5;
 
             // valueAxis.adjustLabelPrecision = false;
