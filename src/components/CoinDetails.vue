@@ -512,9 +512,11 @@ export default {
                 return false;
             },
             state: function(target, stateId) {
+
+                let state = ''
                 
                 if (target instanceof am4charts.Chart) {
-                    var state = target.states.create(stateId);
+                    state = target.states.create(stateId);
                     state.properties.paddingTop = 0;
                     state.properties.paddingRight = 15;
                     state.properties.paddingBottom = 5;
@@ -523,7 +525,7 @@ export default {
                 }
                 
                 if (target instanceof am4core.Scrollbar) {
-                    var state = target.states.create(stateId);
+                    state = target.states.create(stateId);
                     state.properties.marginBottom = -10;
                     return state;
                 }
@@ -560,11 +562,13 @@ export default {
 
             let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
             dateAxis.renderer.grid.template.location = 0;
+            // Disables the vertical lines...
             dateAxis.renderer.grid.template.disabled = true;
+                        
             // dateAxis.tooltipDateFormat = "yyyy-MM-dd";
 
             let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.tooltip.disabled = true;
+            // valueAxis.tooltip.disabled = true;
             valueAxis.renderer.minWidth = 5;
 
             // valueAxis.adjustLabelPrecision = false;
@@ -588,9 +592,6 @@ export default {
 
             series.strokeWidth = 3;
             series.stroke = am4core.color("#2A9D8F");
-
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.renderer.grid.template.disabled = true;
 
 
             chart.cursor = new am4charts.XYCursor();
@@ -793,9 +794,9 @@ export default {
             let formattedNum = parseFloat(value).toFixed(2);
 
             if(isNaN(formattedNum)) {
-            return this.formatPrice(0.0).replace('$', '')+'%'
+                return this.formatPrice(0.0).replace('$', '')+'%'
             } else {
-            return this.formatPrice(formattedNum).replace('$', '')+'%'
+                return this.formatPrice(formattedNum).replace('$', '')+'%'
             }
         },
         formatUnixDate(theUnixDate) {
