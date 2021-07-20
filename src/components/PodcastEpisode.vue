@@ -22,8 +22,17 @@
                 type="article, image"
             ></v-skeleton-loader>
         </div>
-        <div v-else>
-            <v-container
+        <div 
+            v-else
+        >
+            <v-row 
+                    justify="space-around"
+                    align="center"
+                >
+            <v-card
+                class="pa-8"
+                align="center"
+                justify="center"
                 style="max-width: 900px"
             >
                 <v-row 
@@ -35,10 +44,20 @@
                             text-h4 
                             text-md-h3
                             text-sm-h4
-                            font-weight-bold"
+                            font-weight-bold
+                            px-4"
                     >
                         {{ episodeData.data['episode_title'][0].text }}
                     </h1>
+                </v-row>
+                <v-row>
+                    <p
+                        justify="space-around"
+                        align="left"
+                        class="text-justify pa-4"
+                    >
+                        <b>Release Date</b> {{ episodeData.data['release_date'] }}
+                    </p>
                 </v-row>
                 <v-row 
                     justify="space-around"
@@ -66,9 +85,8 @@
                 <div 
                     v-for="(item, index) in episodeSummary"
                     :key="index"
-                    class="px-4 py-2"
+                    class="px-4 py-2 text-h6"
                 >
-            
                     <v-row 
                         v-if="item.type == 'embed'"
                         justify="space-around"
@@ -85,10 +103,9 @@
                         justify="left"
                         align="left"
                         class="text-justify"
+                        style="max-width: 750px"
                     >
-                        <p>
-                            {{ item.text }}
-                        </p>
+                        <p v-html="item.text"></p>
                     </v-row>
                     <v-row
                         v-if="item.type == 'heading2'"
@@ -166,7 +183,8 @@
                         </p>
                     </v-row>
                 </div>
-            </v-container>
+            </v-card>
+            </v-row>
         </div>
     </div>
 </template>
@@ -277,5 +295,9 @@ export default {
         width: 201px !important; 
         height: 201px !important;
     }
+}
+
+.episode-div {
+    background-color: white;
 }
 </style>
