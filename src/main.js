@@ -10,8 +10,9 @@ import VueSessionStorage from "vue-sessionstorage";
 import VueGtag from "vue-gtag";
 
 Vue.use(VueGtag, {
-  config: { id: "UA-165712336-1" }
-});
+  config: { id: "UA-165712336-1" },
+  appName: 'The Crypto Masters Website'
+}, router);
 
 Vue.use(VueSessionStorage);
 
