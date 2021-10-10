@@ -7,6 +7,12 @@ import PrismicVue from '@prismicio/vue'
 import linkResolver from './link-resolver'
 import VueKinesis from 'vue-kinesis'
 import VueSessionStorage from "vue-sessionstorage";
+import VueGtag from "vue-gtag";
+
+Vue.use(VueGtag, {
+  config: { id: "UA-165712336-1" }
+});
+
 Vue.use(VueSessionStorage);
 
 
