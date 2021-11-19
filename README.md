@@ -1,4 +1,5 @@
 # the-crypto-masters-website
+The official site for The Crypto Masters. This includes information about the team, cryptocurrency prices and information (provided by coingecko), charts, profits calculators, and links to The Crypto Masters podcast episodes.
 
 ## Project setup
 ```
