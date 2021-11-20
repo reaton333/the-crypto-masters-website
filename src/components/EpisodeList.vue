@@ -20,25 +20,26 @@
       v-if="!errorString"
     >
       <v-row
-        
         align="center"
         justify="center"
       >
         <v-col
-          cols="8"
+          align="center"
+          justify="center"
         >
-            <v-text-field
-              label="Search Episodes"
-              solo
-              dense
-              v-model="searchVal"
-              append-outer-icon="mdi-magnify"
-            ></v-text-field>
+          <v-text-field
+            label="Search Episodes"
+            class="px-12"
+            solo
+            dense
+            v-model="searchVal"
+            append-outer-icon="mdi-magnify"
+          ></v-text-field>
         </v-col>
       </v-row>
       <!-- END title and search bar -->
       <v-row
-        v-if="filteredEpisodes.length" class="episode-cards"
+        v-if="filteredEpisodes.length"
         align="center"
         justify="center"
       >
