@@ -55,27 +55,36 @@
         align="center"
         justify="center"
       >
-        <v-skeleton-loader
-            v-if="loading"
-            class="mx-auto mb-6"
-            max-width="344"
-            min-width="300"
-            type="card"
-        ></v-skeleton-loader>
-        <v-skeleton-loader
-            v-if="loading"
-            class="mx-auto"
-            max-width="344"
-            min-width="300"
-            type="card"
-        ></v-skeleton-loader>
-        <v-skeleton-loader
-            v-if="loading"
-            class="mx-auto"
-            max-width="344"
-            min-width="300"
-            type="card"
-        ></v-skeleton-loader>
+        <v-col 
+          align="center"
+          justify="center"
+        >
+          <v-skeleton-loader
+              v-if="loading"
+              max-width="344"
+              type="card"
+          ></v-skeleton-loader>
+        </v-col>
+        <v-col 
+          align="center"
+          justify="center"
+        >
+          <v-skeleton-loader
+              v-if="loading"
+              max-width="344"
+              type="card"
+          ></v-skeleton-loader>
+        </v-col>
+        <v-col 
+          align="center"
+          justify="center"
+        >
+          <v-skeleton-loader
+              v-if="loading"
+              max-width="344"
+              type="card"
+          ></v-skeleton-loader>
+        </v-col>
       </v-row>
       <v-row
         v-else
