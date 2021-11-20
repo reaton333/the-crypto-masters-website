@@ -30,7 +30,6 @@
           <v-text-field
             label="Search Episodes"
             class="px-12"
-            min-width=""
             solo
             dense
             v-model="searchVal"
@@ -46,8 +45,8 @@
       >
         <v-col 
           align="center"
-          v-for="episode in filteredEpisodes" 
-          v-bind:key="episode">
+          v-for="(episode, idx) in filteredEpisodes" 
+          v-bind:key="idx">
           <EpisodeCard :episodeData="episode" />
         </v-col>
       </v-row>
@@ -181,5 +180,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* this is for setting the max width of the search box */
+.v-input {
+  max-width: 800px;
+}
 </style>

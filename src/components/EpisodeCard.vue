@@ -7,9 +7,9 @@
     <v-img
       :src="episodeData.data['episode-image'].url"
       lazy-src="url('assets/crypo_masters_logoIcon_withBg.png)"
-      height="200px"
+      height="50%"
     ></v-img>
-    <v-card-title>
+    <v-card-title class="font-weight-bold">
       {{ this.episodeTitle }}
     </v-card-title>
     <v-card-subtitle class="flex">
