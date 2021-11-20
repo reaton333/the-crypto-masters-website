@@ -1,7 +1,8 @@
 <template>
   <v-card
     max-width="344"
-    class="episode_card"
+    class="episode_card d-flex flex-column"
+    align="left"
   >
     <v-img
       :src="episodeData.data['episode-image'].url"
@@ -29,49 +30,49 @@
 
 <script>
 export default {
-    data() {
-        return {
-          titleCharLimit: 45,
-          summaryCharLimit: 175,
-          episodeTitle: '',
-          episodeSummary: '',
-        }
-    },
-    props: {
-        episodeData: null
-    },
-    created() {
-
-      // console.log('Episode Data:' + this.episodeData.data['episode_title'][0].text)
-      
-      var tempTitle = this.episodeData.data['episode_title'][0].text
-      var tempSummary = this.episodeData.data['episode-summary'][0].text
-
-      if (tempTitle.length > this.titleCharLimit) {
-        this.episodeTitle = tempTitle.substring(0, this.titleCharLimit) + '...'
-      } else {
-        this.episodeTitle = tempTitle
+  data() {
+      return {
+        titleCharLimit: 45,
+        summaryCharLimit: 175,
+        episodeTitle: '',
+        episodeSummary: '',
       }
+  },
+  props: {
+      episodeData: null
+  },
+  created() {
 
-      if (tempSummary.length > this.summaryCharLimit) {
-        this.episodeSummary = tempSummary.substring(0, this.summaryCharLimit) + '.....'
-      } else {
-        this.episodeSummary = tempSummary
-      }
-      
+    // console.log('Episode Data:' + this.episodeData.data['episode_title'][0].text)
+    
+    var tempTitle = this.episodeData.data['episode_title'][0].text
+    var tempSummary = this.episodeData.data['episode-summary'][0].text
 
-    },
-    methods: {
-        goToEpisode(episodeId){
-            // console.log(episodeId)
-            this.$router.push({ 
-                name: 'PodcastEpisode',
-                params: {
-                    episodeId: episodeId
-                }
-            })
-        },
+    if (tempTitle.length > this.titleCharLimit) {
+      this.episodeTitle = tempTitle.substring(0, this.titleCharLimit) + '...'
+    } else {
+      this.episodeTitle = tempTitle
     }
+
+    if (tempSummary.length > this.summaryCharLimit) {
+      this.episodeSummary = tempSummary.substring(0, this.summaryCharLimit) + '.....'
+    } else {
+      this.episodeSummary = tempSummary
+    }
+    
+
+  },
+  methods: {
+    goToEpisode(episodeId){
+        // console.log(episodeId)
+        this.$router.push({ 
+            name: 'PodcastEpisode',
+            params: {
+                episodeId: episodeId
+            }
+        })
+    },
+  }
 }
 </script>
 

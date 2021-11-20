@@ -30,6 +30,7 @@
           <v-text-field
             label="Search Episodes"
             class="px-12"
+            min-width=""
             solo
             dense
             v-model="searchVal"
@@ -45,7 +46,6 @@
       >
         <v-col 
           align="center"
-          justify="center"
           v-for="episode in filteredEpisodes" 
           v-bind:key="episode">
           <EpisodeCard :episodeData="episode" />
