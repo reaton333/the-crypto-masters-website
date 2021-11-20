@@ -1,7 +1,7 @@
 <template>
   <v-card
     max-width="344"
-    class="episode_card flex d-flex flex-column"
+    class="episode_card"
   >
     <v-img
       :src="episodeData.data['episode-image'].url"

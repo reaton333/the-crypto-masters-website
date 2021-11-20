@@ -42,7 +42,11 @@
         align="center"
         justify="center"
       >
-        <v-col class="card" v-for="episode in filteredEpisodes" v-bind:key="episode">
+        <v-col 
+          align="center"
+          justify="center"
+          v-for="episode in filteredEpisodes" 
+          v-bind:key="episode">
           <EpisodeCard :episodeData="episode" />
         </v-col>
       </v-row>
