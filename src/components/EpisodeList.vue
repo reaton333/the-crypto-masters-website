@@ -57,11 +57,9 @@
       >
         <v-col 
           align="center"
-          justify="center"
         >
           <v-skeleton-loader
               v-if="loading"
-              max-width="344"
               type="card"
           ></v-skeleton-loader>
         </v-col>
@@ -71,7 +69,6 @@
         >
           <v-skeleton-loader
               v-if="loading"
-              max-width="344"
               type="card"
           ></v-skeleton-loader>
         </v-col>
@@ -81,7 +78,6 @@
         >
           <v-skeleton-loader
               v-if="loading"
-              max-width="344"
               type="card"
           ></v-skeleton-loader>
         </v-col>
@@ -184,5 +180,11 @@ export default {
 /* this is for setting the max width of the search box */
 .v-input {
   max-width: 800px;
+}
+.episode_card {
+  /* overflow-y: auto;  */
+  height: 520px;
+  min-width: "344px";
+  max-width: "345px";
 }
 </style>

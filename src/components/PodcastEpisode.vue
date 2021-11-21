@@ -19,16 +19,17 @@
                 v-if="loading"                    
                 max-width="950"
                 min-width="300"
-                type="article, image"
+                type="image, article"
             ></v-skeleton-loader>
         </div>
         <div 
             v-else
         >
             <v-row 
-                    justify="space-around"
-                    align="center"
-                >
+                justify="space-around"
+                align="center"
+                class="pb-8"
+            >
             <v-card
                 class="pa-8"
                 align="center"
