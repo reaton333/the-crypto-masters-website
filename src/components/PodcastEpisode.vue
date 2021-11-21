@@ -59,7 +59,7 @@
                         <b>Release Date</b> {{ episodeData.data['release_date'] }}
                     </p>
                 </v-row>
-                <v-row 
+                <!-- <v-row 
                     justify="space-around"
                     align="center"
                     class="pa-8"
@@ -75,7 +75,24 @@
                         :src="episodeData.data['episode-image']['url']" 
                         :alt="episodeData.data['episode-image']['alt']"
                     ></v-img>
-                </v-row>
+                </v-row> -->
+                <div 
+                    v-for="(item, index) in youtubeVideo"
+                    :key="index"
+                    class="px-4 py-2 text-h6"
+                >
+                    <v-row 
+                        v-if="item.type == 'embed'"
+                        justify="space-around"
+                        align="center"
+                        class="py-6 ma-2"
+                    >
+                        <div
+                            v-html="item.oembed.html"
+                        >
+                        </div>
+                    </v-row>
+                </div>
                 <!-- depending on the type of object we get back from the CRM
                 I want to display it according it in an element that cooresponds to 
                 it's given type -->
@@ -214,6 +231,7 @@ export default {
             episodeId: '',
             episodeName: '',
             episodeImage: '',
+            youtubeVideo: '',
             breadCrumbItems: [
                 {
                     text: 'Back to Episodes',
@@ -248,6 +266,7 @@ export default {
                 this.episodeImage = this.episodeData.data['episode-image']['url']
                 console.log(this.episodeImage)
                 this.episodeSummary = this.episodeData.data['episode-summary']
+                this.youtubeVideo = this.episodeData.data['youtube-link']
             } else {
                 this.loading = false
                 this.$router.push('/NotFound')
@@ -261,7 +280,7 @@ export default {
 </script>
 
 <style>
-@media screen and (max-width: 2000px) {
+@media screen and (min-width: 981px) {
     iframe {
         width: 900px !important;
         height: 508px !important;
