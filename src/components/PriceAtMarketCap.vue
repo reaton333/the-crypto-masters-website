@@ -7,7 +7,14 @@
             v-model="valid"
             ref="form"
         >
-            <v-container>  
+          <v-container>  
+            <v-row
+                justify="center"
+            >
+                <v-col class="shrink">
+                        <v-img src="../../src/assets/priceAtMarketCap.png" max-width="300" class="ml-3"></v-img>
+                </v-col>
+            </v-row>
             <v-row
                 justify="center"
             >
@@ -28,11 +35,12 @@
               ></v-select> 
             </v-row>
             <v-row
-              v-if="calculationMethod"
+              v-if="calculationMethod !== ''"
               class="mx-8"
             >
               <v-autocomplete
                   v-model="baseCoin"
+                  ref="baseCoin"
                   :items="allCoins"
                   clearable
                   :filter="filterCoinAndSymbol"
@@ -44,7 +52,7 @@
                   auto-select-first
                   dense
                   label="Select Coin"
-                  :rules="coinIdRules"
+                  :rules="marketCapMultipleCoinRules"
               >
                   <template 
                       v-slot:item="data"
@@ -67,12 +75,12 @@
               </v-autocomplete>
             </v-row>
             <v-row
-              v-if="calculationMethod"
+              v-if="calculationMethod !== ''"
               class="mx-8"
               justify="center"
             >
               <p
-                class="pa-0 mb-0
+                class="pa-0 mb-4
                       text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
               > with market cap of </p>
             </v-row>
@@ -81,7 +89,8 @@
               class="mx-8 pb-8"
             >
               <v-autocomplete
-                  v-model="multipleCoin"
+                  v-model="marketCapMultipleCoin"
+                  ref="marketCapMultipleCoin"
                   :items="allCoins"
                   clearable
                   :filter="filterCoinAndSymbol"
@@ -93,7 +102,7 @@
                   auto-select-first
                   dense
                   label="Select Coin"
-                  :rules="coinIdRules"
+                  :rules="marketCapMultipleCoinRules"
               >
                   <template 
                       v-slot:item="data"
@@ -120,16 +129,16 @@
               class="mx-8 pb-8"
             >
               <v-text-field
-                  v-model="marketCapValue"
-                  ref="marketCapValue"
+                  v-model="marketCapMultipleValue"
+                  ref="marketCapMultipleValue"
                   label="Market Cap Value"
-                  :rules="investedRules"
                   pattern="\d*"
                   prepend-icon="mdi-currency-usd"
+                  :rules="marketCapMultipleValueRules"
               ></v-text-field>
             </v-row>
             <v-btn
-                v-if="calculationMethod"
+                v-if="calculationMethod !== ''"
                 color="secondary"
                 class="text-left black--text
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
@@ -144,90 +153,44 @@
                 </v-icon>
                     Calculate
             </v-btn>
-            </v-container>
+          </v-container>
         </v-form>
-        <v-row v-if="priceAtMarketCapErrorMessage">
-            <v-card-subtitle 
-                class="red--text font-weight-bold
-                text-xl-subtitle-2 text-lg-subtitle-2 text-md-subtitle-2 text-sm-body-1 text-xs-body-1"
-            >
-                {{ priceAtMarketCapErrorMessage }}
-            </v-card-subtitle>
+        <v-row v-if="priceAtMarketCapErrorMessage !== ''">
+            {{ priceAtMarketCapErrorMessage }}
         </v-row>
-        <div 
-            class="text-center"
-            v-if="loadingCalculation"
+        <v-progress-circular
+          class="text-center"
+          v-if="loadingCalculation"
+          indeterminate
+          color="primary"
         >
-            <v-progress-circular
-            indeterminate
-            color="primary"
-            >
-            </v-progress-circular>
-        </div>
+        </v-progress-circular>
         <div v-if="priceAtNewMarketCap !== ''">
-            <v-card-title>
-                <v-row align="start">
-                    <div class="text-caption grey--text text-uppercase">
-                        Total Profit
-                    </div>
-                    <div>
-                    <span 
-                        class="font-weight-bold" 
-                        :class="(newAmount - amountInvested) >= 0 ? 'success--text' : 'error--text'">
-                        {{ this.totalProfit }}
-                    </span>
-                    </div>
-                </v-row>
-            </v-card-title>
-            <v-card-subtitle 
-                class="black--text font-weight-bold
-                text-xl-h6 text-lg-h6 text-md-h6 text-sm-subtitle-1 text-xs-subtitle-1"
+            <v-row
+              align="center"
+              justify="center"
             >
-                Investment Details
-            </v-card-subtitle>
-            <v-row>
-                <v-col
-                    cols="10"
-                    md="4"
+              <p
+                class="pa-0 mt-8 font-weight-bold
+                  text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
+              > 
+                <img :src="baseCoinImage" :alt="baseCoinName">
+                {{this.baseCoinName}} New Price of </p>
+            </v-row>
+            <v-row 
+              align="center"
+              justify="center"
+            >
+                <p 
+                    class="pa-0 mb-8
+                    text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
                 >
-                    <v-card-subtitle 
-                        class="black--text
-                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
-                    >
-                        <p class="mb-0 font-weight-bold">
-                            Starting Price
-                        </p> 
-                            {{ this.formatPrice(priceAtStart) }}
-                    </v-card-subtitle>
-                </v-col>
-                <v-col
-                    cols="10"
-                    md="4"
-                >
-                    <v-card-subtitle 
-                        class="black--text 
-                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
-                    >
-                        <p class="mb-0 font-weight-bold">
-                            Ending Price
-                        </p>
-                        {{ this.formatPrice(priceAtEnd) }}
-                    </v-card-subtitle>
-                </v-col>
-                <v-col
-                    cols="10"
-                    md="4"
-                >
-                    <v-card-subtitle 
-                        class="black--text
-                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
-                    >
-                        <p class="mb-0 font-weight-bold">
-                            New Amount
-                        </p>
-                        {{ this.formatPrice(newAmount) }}
-                    </v-card-subtitle>
-                </v-col>
+                    {{ this.priceAtNewMarketCap }} 
+                    <span
+                      class="font-weight-bold" 
+                      :class="(marketCapMultiple) >= 1 ? 'success--text' : 'error--text'">
+                    (x{{ this.formatValue(marketCapMultiple) }}) </span>
+                </p>
             </v-row>
         </div>
     </v-card>
@@ -235,13 +198,16 @@
 
 <script>
 import axios from 'axios';
-// import { validationMixin } from 'vuelidate'
-// import { required } from 'vuelidate/lib/validators'
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
-  props: {
-    detailsPageMetaInfo: {},
-  },
+  mixins: [ validationMixin ],
+    validations: {
+      baseCoin: { required },
+      marketCapMultipleCoin: { required },
+      marketCapMultipleValue: { required },
+    },
   metaInfo() {
     return {
       title: this.priceAtMarketCapMetaInfo.title,
@@ -264,25 +230,39 @@ export default {
   data () {
     return {
       allCoins: [],
+      listLoading: 'primary',
       calculationMethod: '',
       baseCoin: '',
-      multipleCoin: '',
-      marketCapValue: null,
+      baseCoinData: '',
+      baseCoinName: '',
+      baseCoinImage: '',
+      baseCoinMarketCap: '',
+      multipleCoinData: '',
+      multipleCoinName: '',
+      multipleCoinMarketCap: '',
       calulationMethods: ['Market Cap Price', 'Coin Comparison'],
-      coinDetails: '',
-      coinName: '',
-      coinImage: '',
-      coinSymbol: '',
-      currentPrice: '',
-      marketCapRank: '',
-      marketCap: '',
+      marketCapMultipleCoin: '',
+      marketCapMultipleValue: '',
+      marketCapMultiple: '',
       priceAtNewMarketCap: '',
+      priceAtMarketCapErrorMessage: '',
+      loadingCalculation: false,
+      valid: true,
       priceAtMarketCapMetaInfo: {
           title: 'Price at Market',
           description: 'What price a coin would be at a given market cap',
           image: require('../assets/priceAtMarketCap.png'),
           url: `${this.$router.currentRoute.path}`,
       },
+      baseCoinRules: [
+        v => !!v || 'Coin is Required',
+      ],
+      marketCapMultipleValueRules: [
+        v => !!v || 'Value is Required',
+      ],
+      marketCapMultipleCoinRules: [
+        v => !!v || 'Coin is Required',
+      ],
     }
   },
   created() {
@@ -324,43 +304,116 @@ export default {
       }
     },
     async calcPriceAtMarketCap() {
-      this.loading = true
-      // base marketCap * multiple marketCap
+      this.priceAtMarketCapErrorMessage = ''
+      this.loadingCalculation = true
 
-      this.loading = false
+      // base marketCap * multiple marketCap
+      if (this.calculationMethod == 'Market Cap Price' && isNaN(this.marketCapMultipleValue)) {
+        this.priceAtMarketCapErrorMessage = 'Market Cap Value is not a number!'
+        // console.log('Market Cap Value is not a number!')
+      } else if (this.calculationMethod == 'Coin Comparison' && (this.baseCoin == this.marketCapMultipleCoin)) {
+        this.priceAtMarketCapErrorMessage = 'Coins are the same. Please select different coins!'
+        // console.log('Coins are the same. Please select different coins!')
+      } else {
+        // console.log('Market Cap Value is valid!!!')
+
+        if (this.calculationMethod == 'Market Cap Price') {
+          this.calcPriceAtMarketCap_Value()
+        } else {
+          this.calcPriceAtMarketCap_Comparison()
+        }
+      }
+
+      this.loadingCalculation = false
     },
-    async getCoinData(coinId) {
+    async calcPriceAtMarketCap_Value() {
 
         const baseURL = `https://api.coingecko.com/api/v3/coins/`
-        var apiParams = `?tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`
+        var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
+
+        let fullURL = baseURL + this.baseCoin + apiParams
+        console.log(fullURL)
 
         try {
-            const res = await axios.get(baseURL + coinId + apiParams)
+            // console.log('Waiting for a response....')
+            const res = await axios.get(fullURL)
+            // console.log('Got the response!!!')
 
-            this.coinDetails = res.data;
-            this.coinName = this.coinDetails.name
-            this.coinImage = this.coinDetails.image.large
-            this.coinSymbol = this.coinDetails.symbol.toUpperCase()
-            this.currentPrice = this.formatPrice(this.coinDetails.market_data.current_price.usd)
-            this.marketCapRank = this.coinDetails.market_cap_rank
-            this.marketCap = this.coinDetails.market_data.market_cap.usd
-            // console.log(this.coinDetails.market_data.current_price.usd)
+            this.baseCoinData = res.data
+            // console.log(this.baseCoinData)
+            this.baseCoinName = this.baseCoinData.name
+            this.baseCoinImage = this.baseCoinData.image.small
+            this.baseCoinMarketCap = this.baseCoinData.market_data.market_cap.usd
+            this.baseCoinPrice = this.baseCoinData.market_data.current_price.usd
 
-            // this.createChart(this.fromDateRange, this.toDateRange);
-            this.createChart('firstLoad');
-
-            this.loading = false
+            this.marketCapMultiple = this.marketCapMultipleValue / this.baseCoinMarketCap
+            this.priceAtNewMarketCap = this.formatPrice(this.baseCoinPrice * this.marketCapMultiple)
 
         } catch (e) {
+            console.log('ERRROOOORRRR')
             if(e.response.status === 404) {
                 // console.log('ahhhhhhhhhhh')
                 this.$router.push('/NotFound')
             }
             console.log(e.response.status);
-
-            this.loading = false
+            this.loadingCalculation = false
         }
-        this.loading = false
+    },
+    async calcPriceAtMarketCap_Comparison() {
+
+        const baseURL = `https://api.coingecko.com/api/v3/coins/`
+        var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
+
+        let fullURL_baseCoin = baseURL + this.baseCoin + apiParams
+        let fullURL_multipleCoin = baseURL + this.marketCapMultipleCoin + apiParams
+        // console.log(fullURL_baseCoin)
+        // console.log(fullURL_multipleCoin)
+
+        try {
+            // console.log('Waiting for a response....')
+            const res_base = await axios.get(fullURL_baseCoin)
+            const res_MultipleCoin = await axios.get(fullURL_multipleCoin)
+            // console.log('Got the response!!!')
+
+            this.baseCoinData = res_base.data
+            this.baseCoinImage = this.baseCoinData.image.small
+            // console.log(this.baseCoinData)
+            this.baseCoinName = this.baseCoinData.name
+            this.baseCoinMarketCap = this.baseCoinData.market_data.market_cap.usd
+            this.baseCoinPrice = this.baseCoinData.market_data.current_price.usd
+
+            this.multipleCoinData = res_MultipleCoin.data
+            // console.log(this.baseCoinData)
+            // this.multipleCoinName = this.multipleCoinData.name
+            this.multipleCoinMarketCap = this.multipleCoinData.market_data.market_cap.usd
+            // this.multipleCoinPrice = this.multipleCoinData.market_data.current_price.usd
+
+
+            this.marketCapMultiple = this.multipleCoinMarketCap / this.baseCoinMarketCap
+            this.priceAtNewMarketCap = this.formatPrice(this.baseCoinPrice * this.marketCapMultiple)
+
+        } catch (e) {
+            console.log('ERRROOOORRRR')
+            if(e.response.status === 404) {
+                // console.log('ahhhhhhhhhhh')
+                this.$router.push('/NotFound')
+            }
+            this.loadingCalculation = false
+            console.log(e.response.status);
+        }
+    },
+    async validate () {
+      console.log('Validating....')
+      if (this.$refs.form.validate()) {
+          this.calcPriceAtMarketCap() 
+      }
+    },
+    filterCoinAndSymbol(item, queryText, itemText) {
+      return (
+        item.id.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) >
+          -1 ||
+        item.symbol.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1
+      );
     },
     formatPrice(value) {
       let formatOptions = {
@@ -380,6 +433,25 @@ export default {
       var formatter = new Intl.NumberFormat('en-US', formatOptions);
 
       return formatter.format(value)
+    },
+    formatValue(value) {
+      let formatOptions = {
+          style: 'currency',
+          currency: 'USD',
+          // These options are needed to round to whole numbers if that's what you want.
+          //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+          //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+      }
+
+      if (value < 0.01) {
+          formatOptions.minimumSignificantDigits = 2
+          formatOptions.maximumSignificantDigits = 2
+      }
+
+      // Create our number formatter
+      var formatter = new Intl.NumberFormat('en-US', formatOptions);
+
+      return formatter.format(value).replace('$', '')
     },
   }
 }
