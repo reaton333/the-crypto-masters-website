@@ -1,5 +1,4 @@
 <template>
-  <div>
     <v-card
         class="mx-auto mt-8 pa-3"
         max-width="1000"
@@ -281,7 +280,6 @@
             </v-row>
         </div>
     </v-card>
-  </div>
 </template>
 
 <script>

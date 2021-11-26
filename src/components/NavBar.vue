@@ -80,14 +80,12 @@
             no-action
             :to="item.route"
           >
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
             <v-list-content>
               <v-list-item-title>{{ item.name }}</v-list-item-title>
             </v-list-content>
-            <v-list-item-icon
-              align="right"
-            >
-              <v-icon v-text="item.icon"></v-icon>
-            </v-list-item-icon>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -108,6 +106,7 @@ export default {
       cryptoNavItems: [
         { id: 4, name: 'Crypto Prices', icon: 'mdi-bitcoin', route: '/crypto'},
         { id: 5, name: 'Hindsight Tool', icon: 'mdi-school', route: '/profitCalculator'},
+        { id: 6, name: 'Price at Market Cap', icon: 'mdi-cash-multiple', route: '/priceAtMarketCap'},
       ],
       allNavItems: [],
       navTitle: 'THE CRYPTO MASTERS'

@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import Coin from '../views/Coin.vue'
 import CoinList from '../views/CoinList.vue'
 import CryptoPredictor from '../components/CryptoPredictor.vue'
+import PriceAtMarketCap from '../components/PriceAtMarketCap.vue'
 import PodcastEpisode from '../components/PodcastEpisode.vue'
 import EpisodeList from '../components/EpisodeList.vue'
 import NotFound from '../views/NotFound.vue'
@@ -38,6 +39,11 @@ const routes = [
     path: '/profitCalculator',
     name: 'CryptoPredictor',
     component: CryptoPredictor
+  },
+  {
+    path: '/priceAtMarketCap',
+    name: 'PriceAtMarketCap',
+    component: PriceAtMarketCap
   },
   {
     // path: '/podcast/:episodeName',
