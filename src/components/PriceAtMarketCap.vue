@@ -203,6 +203,7 @@
             </v-row>
             <v-row>
               <v-divider
+                class="mx-8"
                 inset
               ></v-divider>
             </v-row>
@@ -278,7 +279,7 @@
             </v-row>
             <v-row>
               <v-divider
-                inset
+                class="mx-8"
               ></v-divider>
             </v-row>
             <!-- Multiple Coin!!! -->
