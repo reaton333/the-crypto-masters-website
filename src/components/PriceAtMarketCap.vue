@@ -140,7 +140,7 @@
             <v-btn
                 v-if="calculationMethod !== ''"
                 color="secondary"
-                class="text-left black--text
+                class="mx-8 text-left black--text 
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
                 dark
                 @click="validate"
@@ -155,8 +155,17 @@
             </v-btn>
           </v-container>
         </v-form>
-        <v-row v-if="priceAtMarketCapErrorMessage !== ''">
+        <v-row 
+          v-if="priceAtMarketCapErrorMessage !== ''"
+          align="center"
+          justify="center"
+        >
+          <p
+            class="red--text font-weight-bold mx-8 pt-8
+                text-xl-subtitle-2 text-lg-subtitle-2 text-md-subtitle-2 text-sm-body-1 text-xs-body-1"
+          >
             {{ priceAtMarketCapErrorMessage }}
+          </p>
         </v-row>
         <v-progress-circular
           class="text-center"
@@ -171,7 +180,7 @@
               justify="center"
             >
               <p
-                class="pa-0 mt-8 font-weight-bold
+                class="pa-0 mt-8 font-weight-bold mx-8
                   text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
               > 
                 <img :src="baseCoinImage" :alt="baseCoinName">
@@ -182,7 +191,7 @@
               justify="center"
             >
                 <p 
-                    class="pa-0 mb-8
+                    class="pa-0 mb-8 mx-8
                     text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
                 >
                     {{ this.priceAtNewMarketCap }} 
@@ -191,6 +200,158 @@
                       :class="(marketCapMultiple) >= 1 ? 'success--text' : 'error--text'">
                     (x{{ this.formatValue(marketCapMultiple) }}) </span>
                 </p>
+            </v-row>
+            <v-row>
+              <v-divider
+                inset
+              ></v-divider>
+            </v-row>
+            <v-row
+              class="mx-8"
+            >
+                <v-col
+                    cols="10"
+                    md="4"
+                    align="center"
+                    justify="center"
+                >
+                    <v-card-subtitle 
+                        class="black--text
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            <img 
+                              :src="baseCoinImage" 
+                              :alt="baseCoinName"
+                              height="22"
+                              width="22"
+                            >
+                            {{this.baseCoinSymbol}} Current Price
+                        </p> 
+                        {{ this.formatPrice(this.baseCoinPrice) }}
+                    </v-card-subtitle>
+                </v-col>
+                <v-col
+                    cols="10"
+                    md="4"
+                    align="center"
+                    justify="center"
+                >
+                    <v-card-subtitle 
+                        class="black--text 
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            <img 
+                              :src="baseCoinImage" 
+                              :alt="baseCoinName"
+                              height="22"
+                              width="22"
+                            >
+                            {{this.baseCoinSymbol}} Current Market Cap
+                        </p>
+                        {{ this.formatPrice(this.baseCoinMarketCap) }}
+                    </v-card-subtitle>
+                </v-col>
+                <v-col
+                    cols="10"
+                    md="4"
+                    align="center"
+                    justify="center"
+                >
+                    <v-card-subtitle 
+                        class="black--text
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            <img 
+                              :src="baseCoinImage" 
+                              :alt="baseCoinName"
+                              height="22"
+                              width="22"
+                            >
+                            {{this.baseCoinSymbol}} Market Cap Rank
+                        </p>
+                        #{{ this.baseCoinMarketCapRank }}
+                    </v-card-subtitle>
+                </v-col>
+            </v-row>
+            <v-row>
+              <v-divider
+                inset
+              ></v-divider>
+            </v-row>
+            <!-- Multiple Coin!!! -->
+            <v-row
+              v-if="calculationMethod == 'Coin Comparison'"
+              class="mx-8"
+            >
+                <v-col
+                    cols="10"
+                    md="4"
+                    align="center"
+                    justify="center"
+                >
+                    <v-card-subtitle 
+                        class="black--text
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            <img 
+                              :src="multipleCoinImage" 
+                              :alt="multipleCoinName"
+                              height="22"
+                              width="22"
+                            >
+                            {{this.multipleCoinSymbol}} Current Price
+                        </p> 
+                        {{ this.formatPrice(this.multipleCoinPrice) }}
+                    </v-card-subtitle>
+                </v-col>
+                <v-col
+                    cols="10"
+                    md="4"
+                    align="center"
+                    justify="center"
+                >
+                    <v-card-subtitle 
+                        class="black--text 
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            <img 
+                              :src="multipleCoinImage" 
+                              :alt="multipleCoinName"
+                              height="22"
+                              width="22"
+                            >
+                            {{this.multipleCoinSymbol}} Current Market Cap
+                        </p>
+                        {{ this.formatPrice(this.multipleCoinMarketCap) }}
+                    </v-card-subtitle>
+                </v-col>
+                <v-col
+                    cols="10"
+                    md="4"
+                    align="center"
+                    justify="center"
+                >
+                    <v-card-subtitle 
+                        class="black--text
+                        text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
+                    >
+                        <p class="mb-0 font-weight-bold">
+                            <img 
+                              :src="multipleCoinImage" 
+                              :alt="multipleCoinName"
+                              height="22"
+                              width="22"
+                            >
+                            {{this.multipleCoinSymbol}} Market Cap Rank
+                        </p>
+                        #{{ this.multipleCoinMarketCapRank }}
+                    </v-card-subtitle>
+                </v-col>
             </v-row>
         </div>
     </v-card>
@@ -235,10 +396,14 @@ export default {
       baseCoin: '',
       baseCoinData: '',
       baseCoinName: '',
+      baseCoinSymbol: '',
       baseCoinImage: '',
       baseCoinMarketCap: '',
+      baseCoinMarketCapRank: '',
       multipleCoinData: '',
       multipleCoinName: '',
+      multipleCoinSymbol: '',
+      multipleCoinPrice: '',
       multipleCoinMarketCap: '',
       calulationMethods: ['Market Cap Price', 'Coin Comparison'],
       marketCapMultipleCoin: '',
@@ -249,7 +414,7 @@ export default {
       loadingCalculation: false,
       valid: true,
       priceAtMarketCapMetaInfo: {
-          title: 'Price at Market',
+          title: 'Price at Market Cap',
           description: 'What price a coin would be at a given market cap',
           image: require('../assets/priceAtMarketCap.png'),
           url: `${this.$router.currentRoute.path}`,
@@ -332,7 +497,7 @@ export default {
         var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
 
         let fullURL = baseURL + this.baseCoin + apiParams
-        console.log(fullURL)
+        // console.log(fullURL)
 
         try {
             // console.log('Waiting for a response....')
@@ -342,7 +507,9 @@ export default {
             this.baseCoinData = res.data
             // console.log(this.baseCoinData)
             this.baseCoinName = this.baseCoinData.name
+            this.baseCoinSymbol = this.baseCoinData.symbol.toUpperCase()
             this.baseCoinImage = this.baseCoinData.image.small
+            this.baseCoinMarketCapRank = this.baseCoinData.market_cap_rank
             this.baseCoinMarketCap = this.baseCoinData.market_data.market_cap.usd
             this.baseCoinPrice = this.baseCoinData.market_data.current_price.usd
 
@@ -377,12 +544,19 @@ export default {
 
             this.baseCoinData = res_base.data
             this.baseCoinImage = this.baseCoinData.image.small
+            this.baseCoinSymbol = this.baseCoinData.symbol.toUpperCase()
+            this.baseCoinMarketCapRank = this.baseCoinData.market_cap_rank
             // console.log(this.baseCoinData)
             this.baseCoinName = this.baseCoinData.name
             this.baseCoinMarketCap = this.baseCoinData.market_data.market_cap.usd
             this.baseCoinPrice = this.baseCoinData.market_data.current_price.usd
 
             this.multipleCoinData = res_MultipleCoin.data
+            this.multipleCoinImage = this.multipleCoinData.image.small
+            this.multipleCoinSymbol = this.multipleCoinData.symbol.toUpperCase()
+            this.multipleCoinMarketCapRank = this.multipleCoinData.market_cap_rank
+            this.multipleCoinMarketCapRank = this.multipleCoinData.market_cap_rank
+            this.multipleCoinPrice = this.multipleCoinData.market_data.current_price.usd
             // console.log(this.baseCoinData)
             // this.multipleCoinName = this.multipleCoinData.name
             this.multipleCoinMarketCap = this.multipleCoinData.market_data.market_cap.usd
@@ -403,7 +577,7 @@ export default {
         }
     },
     async validate () {
-      console.log('Validating....')
+      // console.log('Validating....')
       if (this.$refs.form.validate()) {
           this.calcPriceAtMarketCap() 
       }
