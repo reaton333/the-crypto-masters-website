@@ -69,7 +69,7 @@
             v-on="on"
             elevation="0"
           >
-            Crypto
+            Crypto Tools
           </v-btn>
         </template>
         <v-list>
