@@ -167,13 +167,19 @@
             {{ priceAtMarketCapErrorMessage }}
           </p>
         </v-row>
-        <v-progress-circular
-          class="text-center"
+        <v-row
           v-if="loadingCalculation"
-          indeterminate
-          color="primary"
+          class="mx-8 pb-8"
+          align="center"
+          justify="center"
         >
-        </v-progress-circular>
+          <v-progress-circular
+            class="text-center"
+            indeterminate
+            color="primary"
+          >
+          </v-progress-circular>
+        </v-row>
         <div v-if="priceAtNewMarketCap !== ''">
             <v-row
               align="center"
@@ -489,8 +495,6 @@ export default {
           this.calcPriceAtMarketCap_Comparison()
         }
       }
-
-      this.loadingCalculation = false
     },
     async calcPriceAtMarketCap_Value() {
 
@@ -524,8 +528,8 @@ export default {
                 this.$router.push('/NotFound')
             }
             console.log(e.response.status);
-            this.loadingCalculation = false
         }
+        this.loadingCalculation = false
     },
     async calcPriceAtMarketCap_Comparison() {
 
@@ -573,9 +577,9 @@ export default {
                 // console.log('ahhhhhhhhhhh')
                 this.$router.push('/NotFound')
             }
-            this.loadingCalculation = false
             console.log(e.response.status);
         }
+        this.loadingCalculation = false
     },
     async validate () {
       // console.log('Validating....')
