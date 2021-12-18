@@ -26,16 +26,7 @@
                     Price at Market Cap
                 </v-card-title>
             </v-row>
-            <v-row align="center" class="pl-2 mx-8">
-              <v-select
-                v-model="calculationMethod"
-                :items="calulationMethods"
-                label="Calculation Method"
-                outlined
-              ></v-select> 
-            </v-row>
             <v-row
-              v-if="calculationMethod !== ''"
               class="mx-8"
             >
               <v-autocomplete
@@ -75,7 +66,6 @@
               </v-autocomplete>
             </v-row>
             <v-row
-              v-if="calculationMethod !== ''"
               class="mx-8"
               justify="center"
             >
@@ -85,7 +75,6 @@
               > with market cap of </p>
             </v-row>
             <v-row
-              v-if="calculationMethod == 'Coin Comparison'"
               class="mx-8 pb-8"
             >
               <v-autocomplete
@@ -124,21 +113,7 @@
                   </template>
               </v-autocomplete>
             </v-row>
-            <v-row 
-              v-if="calculationMethod == 'Market Cap Price'"
-              class="mx-8 pb-8"
-            >
-              <v-text-field
-                  v-model="marketCapMultipleValue"
-                  ref="marketCapMultipleValue"
-                  label="Market Cap Value"
-                  pattern="\d*"
-                  prepend-icon="mdi-currency-usd"
-                  :rules="marketCapMultipleValueRules"
-              ></v-text-field>
-            </v-row>
             <v-btn
-                v-if="calculationMethod !== ''"
                 color="secondary"
                 class="mx-8 text-left black--text 
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
@@ -290,7 +265,6 @@
             </v-row>
             <!-- Multiple Coin!!! -->
             <v-row
-              v-if="calculationMethod == 'Coin Comparison'"
               class="mx-8"
             >
                 <v-col
@@ -399,7 +373,6 @@ export default {
     return {
       allCoins: [],
       listLoading: 'primary',
-      calculationMethod: '',
       baseCoin: '',
       baseCoinData: '',
       baseCoinName: '',
@@ -480,58 +453,13 @@ export default {
       this.loadingCalculation = true
 
       // base marketCap * multiple marketCap
-      if (this.calculationMethod == 'Market Cap Price' && isNaN(this.marketCapMultipleValue)) {
-        this.priceAtMarketCapErrorMessage = 'Market Cap Value is not a number!'
-        // console.log('Market Cap Value is not a number!')
-      } else if (this.calculationMethod == 'Coin Comparison' && (this.baseCoin == this.marketCapMultipleCoin)) {
+      if (this.baseCoin == this.marketCapMultipleCoin) {
         this.priceAtMarketCapErrorMessage = 'Coins are the same. Please select different coins!'
-        // console.log('Coins are the same. Please select different coins!')
       } else {
-        // console.log('Market Cap Value is valid!!!')
-
-        if (this.calculationMethod == 'Market Cap Price') {
-          this.calcPriceAtMarketCap_Value()
-        } else {
-          this.calcPriceAtMarketCap_Comparison()
-        }
+        this.calcPriceAtMarketCap()
       }
     },
-    async calcPriceAtMarketCap_Value() {
-
-        const baseURL = `https://api.coingecko.com/api/v3/coins/`
-        var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
-
-        let fullURL = baseURL + this.baseCoin + apiParams
-        // console.log(fullURL)
-
-        try {
-            // console.log('Waiting for a response....')
-            const res = await axios.get(fullURL)
-            // console.log('Got the response!!!')
-
-            this.baseCoinData = res.data
-            // console.log(this.baseCoinData)
-            this.baseCoinName = this.baseCoinData.name
-            this.baseCoinSymbol = this.baseCoinData.symbol.toUpperCase()
-            this.baseCoinImage = this.baseCoinData.image.small
-            this.baseCoinMarketCapRank = this.baseCoinData.market_cap_rank
-            this.baseCoinMarketCap = this.baseCoinData.market_data.market_cap.usd
-            this.baseCoinPrice = this.baseCoinData.market_data.current_price.usd
-
-            this.marketCapMultiple = this.marketCapMultipleValue / this.baseCoinMarketCap
-            this.priceAtNewMarketCap = this.formatPrice(this.baseCoinPrice * this.marketCapMultiple)
-
-        } catch (e) {
-            console.log('ERRROOOORRRR')
-            if(e.response.status === 404) {
-                // console.log('ahhhhhhhhhhh')
-                this.$router.push('/NotFound')
-            }
-            console.log(e.response.status);
-        }
-        this.loadingCalculation = false
-    },
-    async calcPriceAtMarketCap_Comparison() {
+    async calcPriceAtMarketCap() {
 
         const baseURL = `https://api.coingecko.com/api/v3/coins/`
         var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
