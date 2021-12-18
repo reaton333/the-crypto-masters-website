@@ -145,7 +145,7 @@
         </v-row>
         <v-row
           v-if="loadingCalculation"
-          class="mx-8 pb-8"
+          class="ma-8"
           align="center"
           justify="center"
         >
@@ -164,9 +164,11 @@
               <p
                 class="pa-0 mt-8 font-weight-bold mx-8
                   text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
+                style="align-items: center; display: flex;"
               > 
                 <img :src="baseCoinImage" :alt="baseCoinName">
-                {{this.baseCoinName}} New Price of </p>
+                <span class="ml-2">{{this.baseCoinName}} New Price </span>
+              </p>
             </v-row>
             <v-row 
               align="center"
@@ -190,7 +192,8 @@
               ></v-divider>
             </v-row>
             <v-row
-              class="mx-8"
+              class="mx-2"
+              justify="center"
             >
                 <v-col
                     cols="10"
@@ -202,14 +205,17 @@
                         class="black--text
                         text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
                     >
-                        <p class="mb-0 font-weight-bold">
+                        <p 
+                          class="mb-0 font-weight-bold"
+                          style="align-items: center; display: flex;"
+                        >
                             <img 
                               :src="baseCoinImage" 
                               :alt="baseCoinName"
                               height="22"
                               width="22"
                             >
-                            {{this.baseCoinSymbol}} Current Price
+                            <span class="ml-1">{{this.baseCoinSymbol}} Current Price </span>
                         </p> 
                         {{ this.formatPrice(this.baseCoinPrice) }}
                     </v-card-subtitle>
@@ -224,16 +230,21 @@
                         class="black--text 
                         text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
                     >
-                        <p class="mb-0 font-weight-bold">
+                        <p 
+                          class="mb-0 font-weight-bold"
+                          style="align-items: center; display: flex;"
+                        >
                             <img 
                               :src="baseCoinImage" 
                               :alt="baseCoinName"
                               height="22"
                               width="22"
                             >
-                            {{this.baseCoinSymbol}} Current Market Cap
+                            <span class="ml-1">{{this.baseCoinSymbol}} Market Cap </span>
                         </p>
-                        {{ this.formatPrice(this.baseCoinMarketCap) }}
+                        <p>
+                          {{ this.formatPrice(this.baseCoinMarketCap) }}
+                        </p>
                     </v-card-subtitle>
                 </v-col>
                 <v-col
@@ -246,14 +257,17 @@
                         class="black--text
                         text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
                     >
-                        <p class="mb-0 font-weight-bold">
+                        <p 
+                          class="mb-0 font-weight-bold"
+                          style="align-items: center; display: flex;"
+                        >
                             <img 
                               :src="baseCoinImage" 
                               :alt="baseCoinName"
                               height="22"
                               width="22"
                             >
-                            {{this.baseCoinSymbol}} Market Cap Rank
+                            <span class="ml-1"> {{this.baseCoinSymbol}} Rank</span>
                         </p>
                         #{{ this.baseCoinMarketCapRank }}
                     </v-card-subtitle>
@@ -266,7 +280,7 @@
             </v-row>
             <!-- Multiple Coin!!! -->
             <v-row
-              class="mx-8"
+              class="mx-2"
             >
                 <v-col
                     cols="10"
@@ -278,15 +292,18 @@
                         class="black--text
                         text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
                     >
-                        <p class="mb-0 font-weight-bold">
+                        <p 
+                          class="mb-0 font-weight-bold"
+                          style="align-items: center; display: flex;"
+                        >
                             <img 
                               :src="multipleCoinImage" 
                               :alt="multipleCoinName"
                               height="22"
                               width="22"
                             >
-                            {{this.multipleCoinSymbol}} Current Price
-                        </p> 
+                            <span class="ml-1">{{this.multipleCoinSymbol}} Current Price</span>
+                        </p>
                         {{ this.formatPrice(this.multipleCoinPrice) }}
                     </v-card-subtitle>
                 </v-col>
@@ -300,14 +317,17 @@
                         class="black--text 
                         text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
                     >
-                        <p class="mb-0 font-weight-bold">
+                        <p 
+                          class="mb-0 font-weight-bold"
+                          style="align-items: center; display: flex;"
+                        >
                             <img 
                               :src="multipleCoinImage" 
                               :alt="multipleCoinName"
                               height="22"
                               width="22"
                             >
-                            {{this.multipleCoinSymbol}} Current Market Cap
+                            <span class="ml-1">{{this.multipleCoinSymbol}} Market Cap</span>
                         </p>
                         {{ this.formatPrice(this.multipleCoinMarketCap) }}
                     </v-card-subtitle>
@@ -322,16 +342,21 @@
                         class="black--text
                         text-xl-subtitle-1 text-lg-subtitle-1 text-md-subtitle-1 text-sm-subtitle-2 text-xs-subtitle-2"
                     >
-                        <p class="mb-0 font-weight-bold">
+                        <p 
+                          class="mb-0 font-weight-bold"
+                          style="align-items: center; display: flex;"
+                        >
                             <img 
                               :src="multipleCoinImage" 
                               :alt="multipleCoinName"
                               height="22"
                               width="22"
                             >
-                            {{this.multipleCoinSymbol}} Market Cap Rank
+                           <span class="ml-1">{{this.multipleCoinSymbol}} Rank</span>
                         </p>
-                        #{{ this.multipleCoinMarketCapRank }}
+                        <p>
+                          #{{ this.multipleCoinMarketCapRank }}
+                        </p>
                     </v-card-subtitle>
                 </v-col>
             </v-row>
