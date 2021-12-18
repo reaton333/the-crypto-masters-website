@@ -1,19 +1,17 @@
 <template>
   <v-card
-        class="mx-auto mt-8 pa-3"
-        max-width="1000"
+      class="mx-auto my-4 pa-3"
+      max-width="800"
     >
-        <v-form 
-            v-model="valid"
-            ref="form"
-        >
-          <v-container>  
+      <v-container>
+          <v-form 
+              v-model="valid"
+              ref="form"
+          >  
             <v-row
                 justify="center"
             >
-                <v-col class="shrink">
-                        <v-img src="../../src/assets/priceAtMarketCap.png" max-width="300" class="ml-3"></v-img>
-                </v-col>
+                <v-img src="../../src/assets/priceAtMarketCap.png" max-width="250" class="shrink ml-3"></v-img>
             </v-row>
             <v-row
                 justify="center"
@@ -28,20 +26,20 @@
             </v-row>
             <v-row
               class="mx-8"
+              justify="center"
             >
               <v-autocomplete
+                  style="max-width: 400px;"
                   v-model="baseCoin"
                   ref="baseCoin"
                   :items="allCoins"
-                  clearable
+                  solo
                   :filter="filterCoinAndSymbol"
                   item-text="name"
                   item-value="id"
                   :loading="listLoading"
                   no-data-text="No coins to display"
-                  prepend-icon="mdi-bitcoin"
                   auto-select-first
-                  dense
                   label="Select Coin"
                   :rules="marketCapMultipleCoinRules"
               >
@@ -70,26 +68,27 @@
               justify="center"
             >
               <p
-                class="pa-0 mb-4
+                class="pa-0 mb-6
                       text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
               > with market cap of </p>
             </v-row>
             <v-row
-              class="mx-8 pb-8"
+              class="mx-8"
+              justify="center"
             >
               <v-autocomplete
+                  style="max-width: 400px;"
                   v-model="marketCapMultipleCoin"
                   ref="marketCapMultipleCoin"
                   :items="allCoins"
-                  clearable
                   :filter="filterCoinAndSymbol"
                   item-text="name"
                   item-value="id"
                   :loading="listLoading"
                   no-data-text="No coins to display"
-                  prepend-icon="mdi-bitcoin"
                   auto-select-first
-                  dense
+                  solo
+                  inverted
                   label="Select Coin"
                   :rules="marketCapMultipleCoinRules"
               >
@@ -113,23 +112,25 @@
                   </template>
               </v-autocomplete>
             </v-row>
-            <v-btn
-                color="secondary"
-                class="mx-8 text-left black--text 
-                text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
-                dark
-                @click="validate"
-            >
-                <v-icon
-                    left
-                    light
-                >
-                    mdi-calculator
-                </v-icon>
-                    Calculate
-            </v-btn>
-          </v-container>
-        </v-form>
+            <v-row>
+              <v-btn
+                  color="secondary"
+                  class="mx-8 mb-4 text-left black--text 
+                  text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
+                  dark
+                  @click="validate"
+              >
+                  <v-icon
+                      left
+                      light
+                  >
+                      mdi-calculator
+                  </v-icon>
+                      Calculate
+              </v-btn>
+            </v-row>
+          </v-form>
+        </v-container>
         <v-row 
           v-if="priceAtMarketCapErrorMessage !== ''"
           align="center"
@@ -448,13 +449,17 @@ export default {
         console.log(e);
       }
     },
-    async calcPriceAtMarketCap() {
+    async calcPriceAtMarketCap_inputCheck() {
       this.priceAtMarketCapErrorMessage = ''
       this.loadingCalculation = true
+
+      // console.log(this.baseCoin);
+      // console.log(this.marketCapMultipleCoin);
 
       // base marketCap * multiple marketCap
       if (this.baseCoin == this.marketCapMultipleCoin) {
         this.priceAtMarketCapErrorMessage = 'Coins are the same. Please select different coins!'
+        this.loadingCalculation = false
       } else {
         this.calcPriceAtMarketCap()
       }
@@ -512,7 +517,7 @@ export default {
     async validate () {
       // console.log('Validating....')
       if (this.$refs.form.validate()) {
-          this.calcPriceAtMarketCap() 
+          this.calcPriceAtMarketCap_inputCheck() 
       }
     },
     filterCoinAndSymbol(item, queryText, itemText) {
