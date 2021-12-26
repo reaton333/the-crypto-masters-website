@@ -1,137 +1,138 @@
 <template>
-  <v-card
-      class="mx-auto my-4 pa-3"
-      max-width="800"
-    >
-      <v-container>
-          <v-form 
-              v-model="valid"
-              ref="form"
-          >  
-            <v-row
-                justify="center"
+  <v-container>
+     <v-card
+      class="mx-auto my-6 pa-3"
+      :max-width="maxWidth"
+     >
+      <v-form 
+          v-model="valid"
+          ref="form"
+      >  
+        <v-row
+            justify="center"
+        >
+            <v-img src="../../src/assets/priceAtMarketCap.png" max-width="250" class="shrink ml-3"></v-img>
+        </v-row>
+        <v-row
+            justify="center"
+        >
+            <v-card-title 
+                class="pa-0 mb-8
+                    font-weight-bold
+                    text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 h5"
             >
-                <v-img src="../../src/assets/priceAtMarketCap.png" max-width="250" class="shrink ml-3"></v-img>
-            </v-row>
-            <v-row
-                justify="center"
-            >
-                <v-card-title 
-                    class="pa-0 mb-8
-                        font-weight-bold
-                        text-xl-h4 text-lg-h4 text-md-h4 text-sm-h4 h5"
-                >
-                    Price at Market Cap
-                </v-card-title>
-            </v-row>
-            <v-row
-              class="mx-8"
-              justify="center"
-            >
-              <v-autocomplete
-                  style="max-width: 400px;"
-                  v-model="baseCoin"
-                  ref="baseCoin"
-                  :items="allCoins"
-                  solo
-                  :filter="filterCoinAndSymbol"
-                  item-text="name"
-                  item-value="id"
-                  :loading="listLoading"
-                  no-data-text="No coins to display"
-                  auto-select-first
-                  label="Select Coin"
-                  :rules="marketCapMultipleCoinRules"
+                Price at Market Cap
+            </v-card-title>
+        </v-row>
+        <v-row
+          class="mx-8"
+          justify="center"
+        >
+          <v-autocomplete
+              style="max-width: 400px;"
+              v-model="baseCoin"
+              ref="baseCoin"
+              :items="allCoins"
+              solo
+              clearable
+              :filter="filterCoinAndSymbol"
+              item-text="name"
+              item-value="id"
+              :loading="listLoading"
+              no-data-text="No coins to display"
+              auto-select-first
+              label="Select Coin"
+              :rules="marketCapMultipleCoinRules"
+          >
+              <template 
+                  v-slot:item="data"
               >
-                  <template 
-                      v-slot:item="data"
-                  >
-                      <v-list-item-content>
-                          <v-list-item-title>
-                              #{{ data.item.market_cap_rank }} &nbsp; {{ data.item.name }}
-                          </v-list-item-title>
-                          <v-list-item-subtitle v-text="data.item.symbol"></v-list-item-subtitle>
-                      </v-list-item-content>
-                      <v-list-item-avatar>
-                          <v-img 
-                              :src="data.item.thumb"
-                              max-height="22"
-                              max-width="22"
-                          >
-                          </v-img>
-                      </v-list-item-avatar>
-                  </template>
-              </v-autocomplete>
-            </v-row>
-            <v-row
-              class="mx-8"
-              justify="center"
-            >
-              <p
-                class="pa-0 mb-6
-                      text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
-              > with market cap of </p>
-            </v-row>
-            <v-row
-              class="mx-8"
-              justify="center"
-            >
-              <v-autocomplete
-                  style="max-width: 400px;"
-                  v-model="marketCapMultipleCoin"
-                  ref="marketCapMultipleCoin"
-                  :items="allCoins"
-                  :filter="filterCoinAndSymbol"
-                  item-text="name"
-                  item-value="id"
-                  :loading="listLoading"
-                  no-data-text="No coins to display"
-                  auto-select-first
-                  solo
-                  inverted
-                  label="Select Coin"
-                  :rules="marketCapMultipleCoinRules"
+                  <v-list-item-content>
+                      <v-list-item-title>
+                          #{{ data.item.market_cap_rank }} &nbsp; {{ data.item.name }}
+                      </v-list-item-title>
+                      <v-list-item-subtitle v-text="data.item.symbol"></v-list-item-subtitle>
+                  </v-list-item-content>
+                  <v-list-item-avatar>
+                      <v-img 
+                          :src="data.item.thumb"
+                          max-height="22"
+                          max-width="22"
+                      >
+                      </v-img>
+                  </v-list-item-avatar>
+              </template>
+          </v-autocomplete>
+        </v-row>
+        <v-row
+          class="mx-8"
+          justify="center"
+        >
+          <p
+            class="pa-0 mb-6
+                  text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
+          > with market cap of </p>
+        </v-row>
+        <v-row
+          class="mx-8"
+          justify="center"
+        >
+          <v-autocomplete
+              style="max-width: 400px;"
+              v-model="marketCapMultipleCoin"
+              ref="marketCapMultipleCoin"
+              :items="allCoins"
+              :filter="filterCoinAndSymbol"
+              clearable
+              item-text="name"
+              item-value="id"
+              :loading="listLoading"
+              no-data-text="No coins to display"
+              auto-select-first
+              solo
+              inverted
+              label="Select Coin"
+              :rules="marketCapMultipleCoinRules"
+          >
+              <template 
+                  v-slot:item="data"
               >
-                  <template 
-                      v-slot:item="data"
-                  >
-                      <v-list-item-content>
-                          <v-list-item-title>
-                              #{{ data.item.market_cap_rank }} &nbsp; {{ data.item.name }}
-                          </v-list-item-title>
-                          <v-list-item-subtitle v-text="data.item.symbol"></v-list-item-subtitle>
-                      </v-list-item-content>
-                      <v-list-item-avatar>
-                          <v-img 
-                              :src="data.item.thumb"
-                              max-height="22"
-                              max-width="22"
-                          >
-                          </v-img>
-                      </v-list-item-avatar>
-                  </template>
-              </v-autocomplete>
-            </v-row>
-            <v-row>
-              <v-btn
-                  color="secondary"
-                  class="mx-8 mb-4 text-left black--text 
-                  text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
-                  dark
-                  @click="validate"
+                  <v-list-item-content>
+                      <v-list-item-title>
+                          #{{ data.item.market_cap_rank }} &nbsp; {{ data.item.name }}
+                      </v-list-item-title>
+                      <v-list-item-subtitle v-text="data.item.symbol"></v-list-item-subtitle>
+                  </v-list-item-content>
+                  <v-list-item-avatar>
+                      <v-img 
+                          :src="data.item.thumb"
+                          max-height="22"
+                          max-width="22"
+                      >
+                      </v-img>
+                  </v-list-item-avatar>
+              </template>
+          </v-autocomplete>
+        </v-row>
+        <v-row>
+          <v-btn
+              color="secondary"
+              class="mx-8 mb-6 text-left black--text 
+              text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
+              dark
+              @click="validate"
+          >
+              <v-icon
+                  left
+                  light
               >
-                  <v-icon
-                      left
-                      light
-                  >
-                      mdi-calculator
-                  </v-icon>
-                      Calculate
-              </v-btn>
-            </v-row>
-          </v-form>
-        </v-container>
-        <v-row 
+                  mdi-calculator
+              </v-icon>
+                  Calculate
+          </v-btn>
+        </v-row>
+      </v-form>
+      <v-row 
           v-if="priceAtMarketCapErrorMessage !== ''"
           align="center"
           justify="center"
@@ -156,10 +157,79 @@
           >
           </v-progress-circular>
         </v-row>
-        <div v-if="priceAtNewMarketCap !== ''">
+        
+    </v-card>
+    <!-- <div
+      v-if="priceAtNewMarketCap !== ''"
+    >  
+    <v-card
+      align="center"
+      justify="center"
+      class="mx-auto my-4 pa-3"
+      :max-width="maxWidth"
+    >
+      <v-row
+        justify="center"
+      >
+        <v-card-title>
+          <img 
+            :src="baseCoinImage" 
+            :alt="baseCoinName"
+            height="44"
+            width="44"
+          >
+          <span class="text-xl-h5 text-lg-h5 text-md-h5 ml-1 text-sm-h5 subtitle-1 font-weight-bold">{{this.baseCoinName}} Target Price </span>
+        </v-card-title>
+      </v-row>
+      <v-card-text 
+        class="pa-0 mx-8 font-weight-bold
+        text-xl-h5 text-lg-h5 text-md-h5 text-sm-h5 subtitle-1"
+      >
+          {{ this.priceAtNewMarketCap }} 
+        <span
+          class="font-weight-bold" 
+          :class="(marketCapMultiple) >= 1 ? 'success--text' : 'error--text'">
+          (x{{ this.formatValue(marketCapMultiple) }}) 
+        </span>
+      </v-card-text>
+    </v-card>
+      <v-row
+        :max-width="maxWidth"
+      >
+        <v-col
+          
+        >
+          <v-card>
+            <v-img
+              :src="baseCoinImage" 
+              :alt="baseCoinName"
+              height="44"
+              width="44"
+            >
+              <v-card-title>{{this.baseCoinName}} Current Price</v-card-title>
+            </v-img>
+          </v-card>
+        </v-col>
+      </v-row>
+</div>   -->
+
+  <CoinMarketCapCalc 
+    v-if="priceAtNewMarketCap !== ''"
+    :baseCoinName="baseCoinName"
+    :baseCoinSymbol="baseCoinSymbol" 
+    :baseCoinImage="baseCoinImage"
+    :isBaseStableCoin="isBaseStableCoin"
+    :priceAtNewMarketCap="priceAtNewMarketCap"
+    :marketCapMultiple="marketCapMultiple"
+    :multipleCoinSymbol="multipleCoinSymbol"
+  /> 
+
+</v-container>
+<!--         
+
+        <div >
             <v-row
-              align="center"
-              justify="center"
+              
             >
               <p
                 class="pa-0 mt-8 font-weight-bold mx-8
@@ -278,7 +348,7 @@
                 class="mx-8"
               ></v-divider>
             </v-row>
-            <!-- Multiple Coin!!! -->
+            
             <v-row
               class="mx-2"
             >
@@ -361,21 +431,27 @@
                 </v-col>
             </v-row>
         </div>
-    </v-card>
+    </v-card> 
+    -->
 </template>
+
 
 <script>
 import axios from 'axios';
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
+import CoinMarketCapCalc from '@/components/CoinMarketCapCalc.vue'
 
 export default {
   mixins: [ validationMixin ],
-    validations: {
-      baseCoin: { required },
-      marketCapMultipleCoin: { required },
-      marketCapMultipleValue: { required },
-    },
+  validations: {
+    baseCoin: { required },
+    marketCapMultipleCoin: { required },
+    marketCapMultipleValue: { required },
+  },
+  components: {
+    CoinMarketCapCalc,
+  },
   metaInfo() {
     return {
       title: this.priceAtMarketCapMetaInfo.title,
@@ -398,6 +474,7 @@ export default {
   data () {
     return {
       allCoins: [],
+      maxWidth: 800,
       listLoading: 'primary',
       baseCoin: '',
       baseCoinData: '',
@@ -406,6 +483,7 @@ export default {
       baseCoinImage: '',
       baseCoinMarketCap: '',
       baseCoinMarketCapRank: '',
+      isBaseStableCoin: false,
       multipleCoinData: '',
       multipleCoinName: '',
       multipleCoinSymbol: '',
@@ -416,6 +494,7 @@ export default {
       marketCapMultipleValue: '',
       marketCapMultiple: '',
       priceAtNewMarketCap: '',
+      stableCoinWarningMessage: '',
       priceAtMarketCapErrorMessage: '',
       loadingCalculation: false,
       valid: true,
@@ -437,6 +516,8 @@ export default {
     }
   },
   created() {
+    this.isBaseStableCoin = false;
+
     if (this.detailsPageMetaInfo) {
       this.hindsightPageMetaInfo = this.detailsPageMetaInfo
     }
@@ -491,59 +572,67 @@ export default {
     },
     async calcPriceAtMarketCap() {
 
-        const baseURL = `https://api.coingecko.com/api/v3/coins/`
-        var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
+      const baseURL = `https://api.coingecko.com/api/v3/coins/`
+      var apiParams = `?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
 
-        let fullURL_baseCoin = baseURL + this.baseCoin + apiParams
-        let fullURL_multipleCoin = baseURL + this.marketCapMultipleCoin + apiParams
-        // console.log(fullURL_baseCoin)
-        // console.log(fullURL_multipleCoin)
+      let fullURL_baseCoin = baseURL + this.baseCoin + apiParams
+      let fullURL_multipleCoin = baseURL + this.marketCapMultipleCoin + apiParams
+      // console.log(fullURL_baseCoin)
+      // console.log(fullURL_multipleCoin)
 
-        try {
-            // console.log('Waiting for a response....')
-            const res_base = await axios.get(fullURL_baseCoin)
-            const res_MultipleCoin = await axios.get(fullURL_multipleCoin)
-            // console.log('Got the response!!!')
+      try {
+        // console.log('Waiting for a response....')
+        const res_base = await axios.get(fullURL_baseCoin)
+        const res_MultipleCoin = await axios.get(fullURL_multipleCoin)
+        // console.log('Got the response!!!')
 
-            this.baseCoinData = res_base.data
-            this.baseCoinImage = this.baseCoinData.image.small
-            this.baseCoinSymbol = this.baseCoinData.symbol.toUpperCase()
-            this.baseCoinMarketCapRank = this.baseCoinData.market_cap_rank
-            // console.log(this.baseCoinData)
-            this.baseCoinName = this.baseCoinData.name
-            this.baseCoinMarketCap = this.baseCoinData.market_data.market_cap.usd
-            this.baseCoinPrice = this.baseCoinData.market_data.current_price.usd
+        this.baseCoinData = res_base.data
+        this.baseCoinImage = this.baseCoinData.image.small
+        this.baseCoinSymbol = this.baseCoinData.symbol.toUpperCase()
+        this.baseCoinMarketCapRank = this.baseCoinData.market_cap_rank
+        this.isBaseStableCoin = await this.isStableCoin(this.baseCoinData.categories)
+        // console.log(this.isBaseStableCoin)
+        this.baseCoinName = this.baseCoinData.name
+        this.baseCoinMarketCap = this.baseCoinData.market_data.market_cap.usd
+        this.baseCoinPrice = this.baseCoinData.market_data.current_price.usd
 
-            this.multipleCoinData = res_MultipleCoin.data
-            this.multipleCoinImage = this.multipleCoinData.image.small
-            this.multipleCoinSymbol = this.multipleCoinData.symbol.toUpperCase()
-            this.multipleCoinMarketCapRank = this.multipleCoinData.market_cap_rank
-            this.multipleCoinMarketCapRank = this.multipleCoinData.market_cap_rank
-            this.multipleCoinPrice = this.multipleCoinData.market_data.current_price.usd
-            // console.log(this.baseCoinData)
-            // this.multipleCoinName = this.multipleCoinData.name
-            this.multipleCoinMarketCap = this.multipleCoinData.market_data.market_cap.usd
-            // this.multipleCoinPrice = this.multipleCoinData.market_data.current_price.usd
+        this.multipleCoinData = res_MultipleCoin.data
+        this.multipleCoinImage = this.multipleCoinData.image.small
+        this.multipleCoinSymbol = this.multipleCoinData.symbol.toUpperCase()
+        this.multipleCoinMarketCapRank = this.multipleCoinData.market_cap_rank
+        this.multipleCoinMarketCapRank = this.multipleCoinData.market_cap_rank
+        this.multipleCoinPrice = this.multipleCoinData.market_data.current_price.usd
+        // console.log(this.baseCoinData)
+        // this.multipleCoinName = this.multipleCoinData.name
+        this.multipleCoinMarketCap = this.multipleCoinData.market_data.market_cap.usd
+        // this.multipleCoinPrice = this.multipleCoinData.market_data.current_price.usd
 
+        this.marketCapMultiple = this.multipleCoinMarketCap / this.baseCoinMarketCap
 
-            this.marketCapMultiple = this.multipleCoinMarketCap / this.baseCoinMarketCap
-            this.priceAtNewMarketCap = this.formatPrice(this.baseCoinPrice * this.marketCapMultiple)
-
-        } catch (e) {
-            console.log('ERRROOOORRRR')
-            if(e.response.status === 404) {
-                // console.log('ahhhhhhhhhhh')
-                this.$router.push('/NotFound')
-            }
-            console.log(e.response.status);
+        if(!this.isBaseStableCoin) {
+          this.priceAtNewMarketCap = this.formatPrice(this.baseCoinPrice * this.marketCapMultiple)
+        } else {
+          this.priceAtNewMarketCap = this.formatPrice(this.baseCoinPrice)
         }
-        this.loadingCalculation = false
+          
+      } catch (e) {
+        console.log('ERRROOOORRRR')
+        if(e.response.status === 404) {
+            // console.log('ahhhhhhhhhhh')
+            this.$router.push('/NotFound')
+        }
+        console.log(e.response.status);
+      }
+      this.loadingCalculation = false
     },
     async validate () {
       // console.log('Validating....')
       if (this.$refs.form.validate()) {
           this.calcPriceAtMarketCap_inputCheck() 
       }
+    },
+    async isStableCoin(coinCategories) {
+      return coinCategories.includes('Stablecoins')
     },
     filterCoinAndSymbol(item, queryText, itemText) {
       return (
