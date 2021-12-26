@@ -538,19 +538,18 @@ export default {
     async getAllCoins() {
 
       try {
-        const baseURL = `https://api.coingecko.com/api/v3/search`
-        const params = `?local=en`
-        const fullPath = baseURL + params
-        // console.log(fullPath)
-        const res = await axios.get(fullPath)
+          const baseURL = `https://api.coingecko.com/api/v3/search`
+          const params = `?local=en`
+          const fullPath = baseURL + params
+          // console.log(fullPath)
+          const res = await axios.get(fullPath)
 
-        this.allCoins = res.data.coins;
-        // console.log(this.allCoins)
-        this.$session.set("allCoins", this.allCoins);
-        this.$session.set("totalCoins", this.allCoins.length);
-        this.listLoading = false
+          this.allCoins = res.data.coins;
+          // console.log(this.allCoins)
+          this.totalCoins = this.allCoins.length;
+          this.listLoading = false;
       } catch (e) {
-        console.log(e);
+          console.log(e);
       }
     },
     async calcPriceAtMarketCap_inputCheck() {

@@ -425,13 +425,11 @@ export default {
 
                 this.allCoins = res.data.coins;
                 // console.log(this.allCoins)
-                this.$session.set("allCoins", this.allCoins);
-                this.$session.set("totalCoins", this.allCoins.length);
-                this.listLoading = false
+                this.totalCoins = this.allCoins.length;
+                this.listLoading = false;
             } catch (e) {
                 console.log(e);
             }
-
         },
         async getWhatIfData() {
 
