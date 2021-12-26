@@ -516,21 +516,21 @@ export default {
     }
   },
   created() {
+
+    this.listLoading = 'primary';
+
     this.isBaseStableCoin = false;
 
     if (this.detailsPageMetaInfo) {
       this.hindsightPageMetaInfo = this.detailsPageMetaInfo
     }
 
-    this.allCoins = this.$session.get('allCoins')
+     this.allCoins = this.$session.get('allCoins')
 
-    if(this.coinId) {
-      this.myCoinId = this.coinId
-    }
     if (!this.allCoins) {
-      this.listLoading = 'primary'
       this.getAllCoins()
     } else {
+      this.totalCoins = this.$session.get('totalCoins')
       this.listLoading = false;
     }
   },
