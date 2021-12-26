@@ -521,8 +521,6 @@ export default {
     if (this.detailsPageMetaInfo) {
       this.hindsightPageMetaInfo = this.detailsPageMetaInfo
     }
-  },
-  mounted() {
 
     this.allCoins = this.$session.get('allCoins')
 
