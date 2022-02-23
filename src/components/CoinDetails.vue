@@ -228,12 +228,6 @@
             ></v-progress-linear>
         </div>
         <div class="coinChart" ref="chartdiv"></div>
-        <CryptoPredictor 
-            v-if="detailsPageMetaInfo"
-            :coinName="coinDetails.name" 
-            :coinId="coinId" 
-            :coinImage="coinImage" 
-            :detailsPageMetaInfo="detailsPageMetaInfo"/>
     </div>
 </template>
 
@@ -243,18 +237,16 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-import CryptoPredictor from '@/components/CryptoPredictor.vue'
-
 am4core.useTheme(am4themes_animated);
 
 export default {
     name: 'CoinDetails',
     components: {
-        CryptoPredictor,
+        
     },
     metaInfo() {
         return {
-            title: this.detailsPageMetaInfo.title,
+            title: this.$route.params.coinId,
             description: this.detailsPageMetaInfo.description,
             meta: [
                 { property: 'og:type', content: 'website' },
@@ -273,7 +265,12 @@ export default {
     },
     data() {
         return {
-            detailsPageMetaInfo: null,
+            detailsPageMetaInfo: {
+                title: this.coinName,
+                description: `${this.coinName} prices, historical data, and more!`,
+                image: this.coinImage,
+                url: `${this.$router.currentRoute.path}`,
+            }, 
             chartNumberSampling: 0.0,
             loading: false,
             currency: 'usd',
@@ -331,13 +328,7 @@ export default {
     async created() {
 
         this.coinId = this.$route.params.coinId;
-
-        this.detailsPageMetaInfo = {
-            title: this.coinName,
-            description: `${this.coinName} prices, historical data, and more!`,
-            image: this.coinImage,
-            url: `${this.$router.currentRoute.path}`,
-        }   
+  
         // console.log(this.detailsPageMetaInfo)
 
         this.loading = true
