@@ -10,43 +10,7 @@
       </v-col>
       <v-col
       >
-        <v-autocomplete
-          v-model="allCoins"
-          :items="allCoins"
-          :filter="filterCoinAndSymbol"
-          :loading="listLoading"
-          :allow-overflow="false"
-          item-text="name"
-          item-value="id"
-          no-data-text="No coins to display"
-          auto-select-first
-          dense
-          solo
-          filled
-          label="Search"
-          @input="goToCoinDescription"
-      >
-          <template 
-              v-slot:item="data"
-          >
-              <v-list-item-content>
-
-                <v-list-item-title>
-                  #{{ data.item.market_cap_rank }} &nbsp; {{ data.item.name }}
-                </v-list-item-title>
-                <v-list-item-subtitle v-text="data.item.symbol"></v-list-item-subtitle>
-                
-              </v-list-item-content>
-              <v-list-item-avatar>
-                <v-img 
-                    :src="data.item.thumb"
-                    max-height="22"
-                    max-width="22"
-                >
-                </v-img>
-              </v-list-item-avatar>
-          </template>
-      </v-autocomplete>
+        <CoinSearch/>
       </v-col>
     </v-row>
     <v-row
@@ -183,13 +147,13 @@
 </template>
 
 <script>
-import axios from 'axios';
-// import CoinSearch from '@/components/CoinSearch.vue'
+import axios from 'axios'
+import CoinSearch from '@/components/CoinSearch.vue'
 
 export default {
   name: 'CoinList',
   components: {
-    // CoinSearch,
+    CoinSearch,
   },
   metaInfo() {
     return {
@@ -230,9 +194,7 @@ export default {
         ],
         // Storing the headers I remove here so I can add them back later
         // This is for mobile resizing
-        listLoading: 'primary',
         removedHeaders: [], 
-        coins: [],
         searchableCoinList: [],
         loading: true,
         currentSort: 'market_cap',
@@ -245,8 +207,6 @@ export default {
     }
   },
   created() {
-
-    this.listLoading = 'primary';
 
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
@@ -280,7 +240,6 @@ export default {
           this.allCoins = res.data.coins;
           // console.log(this.allCoins)
           this.totalCoins = this.allCoins.length;
-          this.listLoading = false;
       } catch (e) {
           console.log(e);
       }
@@ -414,8 +373,6 @@ export default {
       window.open(theLink, "_blank")
     },
   },
-  watch: {
-  }, 
   computed: {
   }
 }

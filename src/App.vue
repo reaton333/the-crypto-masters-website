@@ -38,24 +38,24 @@ export default {
     }
   },
   methods: {
-    async getAllCoins() {
+    // async getAllCoins() {
 
-      try {
-          const baseURL = `https://api.coingecko.com/api/v3/search`
-          const params = `?local=en`
-          const fullPath = baseURL + params
-          // console.log(fullPath)
-          const res = await axios.get(fullPath)
+    //   try {
+    //       const baseURL = `https://api.coingecko.com/api/v3/search`
+    //       const params = `?local=en`
+    //       const fullPath = baseURL + params
+    //       // console.log(fullPath)
+    //       const res = await axios.get(fullPath)
 
-          this.allCoins = res.data.coins;
-          // console.log(this.allCoins)
-          this.$session.set("allCoins", this.allCoins);
-          this.$session.set("totalCoins", this.allCoins.length);
-      } catch (e) {
-          console.log(e);
-      }
+    //       this.allCoins = res.data.coins;
+    //       // console.log(this.allCoins)
+    //       this.$session.set("allCoins", this.allCoins);
+    //       this.$session.set("totalCoins", this.allCoins.length);
+    //   } catch (e) {
+    //       console.log(e);
+    //   }
 
-    },
+    // },
   }
 }
 </script>
