@@ -7,6 +7,19 @@
                 divider="/"
             ></v-breadcrumbs>
         </v-row>
+        <v-row
+            no-gutters
+            class="pa-0 ma-0"
+        >
+            <v-col>
+            </v-col>
+            <v-col>
+            </v-col>
+            <v-col
+            >
+                <CoinSearch/>
+            </v-col>
+        </v-row>
         <div v-if="loading">
             <v-skeleton-loader
                 type="list-item-avatar-three-line, image, article"
@@ -237,16 +250,19 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
+import CoinSearch from '@/components/CoinSearch.vue'
+
+
 am4core.useTheme(am4themes_animated);
 
 export default {
     name: 'CoinDetails',
     components: {
-        
+        CoinSearch,
     },
     metaInfo() {
         return {
-            title: this.$route.params.coinId,
+            title: `${this.coinName} prices, historical data, and more!`,
             description: this.detailsPageMetaInfo.description,
             meta: [
                 { property: 'og:type', content: 'website' },
@@ -266,7 +282,7 @@ export default {
     data() {
         return {
             detailsPageMetaInfo: {
-                title: this.coinName,
+                title: `${this.coinName} prices, historical data, and more!`,
                 description: `${this.coinName} prices, historical data, and more!`,
                 image: this.coinImage,
                 url: `${this.$router.currentRoute.path}`,
@@ -399,13 +415,6 @@ export default {
         this.chart.dispose()
     },
     watch: {
-        // These functions make sure the date picker opens on year first
-        startDateMenu (val) {
-        val && setTimeout(() => (this.$refs.startDatePicker.activePicker = 'YEAR'))
-        },
-        endDateMenu (val) {
-            val && setTimeout(() => (this.$refs.endDatePicker.activePicker = 'YEAR'))
-        },
     },
     methods: {
         async createChart(dateRange) {

@@ -51,7 +51,7 @@ export default {
             coins: [],
             // listLoading: 'primary',
             listLoading: false,
-            noMatchedSearch: '',
+            noMatchedSearch: 'No match for your search',
             minSearchLength: 2
         }
     },
@@ -85,6 +85,8 @@ export default {
                     coinId: coinId
                 }
             })
+
+            this.$router.go()
         },
         filterCoinAndSymbol(item, queryText, itemText) {
             return (
@@ -98,9 +100,9 @@ export default {
         async search(val) {
             this.search = val
             if (val.length < this.minSearchLength) {
-                console.log('Do nothing!')
+                // console.log('Do nothing!')
             } else {
-                console.log('API query time!')
+                // console.log('API query time!')
                 await this.searchCoins(val)
             }
         },
