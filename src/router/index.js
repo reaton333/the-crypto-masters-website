@@ -46,15 +46,24 @@ const routes = [
     component: PriceAtMarketCap
   },
   {
-    // path: '/podcast/:episodeName',
+    path: '/podcast',
+    name: 'EpisodeList',
+    component: EpisodeList
+  },
+  {
     path: '/podcast/:episodeId',
     name: 'PodcastEpisode',
     component: PodcastEpisode
   },
   {
-    path: '/podcast',
-    name: 'EpisodeList',
-    component: EpisodeList
+    path: '/blog',
+    name: 'Blog',
+    component: BlogList
+  },
+  {
+    path: '/blog/:blogId',
+    name: 'BlogPost',
+    component: BlogPost
   },
   {
     path: '/404', 
