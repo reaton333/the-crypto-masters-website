@@ -48,7 +48,7 @@
                             font-weight-bold
                             px-4"
                     >
-                        {{ episodeData.data['episode_title'][0].text }}
+                        {{ blogData.data['blog_title'][0].text }}
                     </h1>
                 </v-row>
                 <v-row>
@@ -57,27 +57,35 @@
                         align="left"
                         class="text-justify pa-4"
                     >
-                        <b>Release Date</b> {{ episodeData.data['release_date'] }}
+                        <b>Date: </b> {{ blogData.data['release_date'] }}
                     </p>
                 </v-row>
-                <!-- <v-row 
+                <v-row 
                     justify="space-around"
                     align="center"
                     class="pa-8"
                 >
                     <v-img 
-                        v-if="episodeData.data['episode-image']['url']" 
                         align="center"
                         class="episodeImage"
                         contain
                         justify="space-around"
                         max-height="350"
                         max-width="350"
-                        :src="episodeData.data['episode-image']['url']" 
-                        :alt="episodeData.data['episode-image']['alt']"
+                        :src="blogData.data['blog_img']['url']" 
+                        :alt="blogData.data['blog_img']['alt']"
                     ></v-img>
-                </v-row> -->
-                <div 
+                </v-row>
+                <!-- Pass the HTML Serializer to your rich text component. -->
+                <prismic-rich-text
+                    v-for="(item, idx) in blogData.data.body"
+                    :key="idx"
+                    :field="item" 
+                    :htmlSerializer="htmlSerializer" 
+                >
+                </prismic-rich-text>
+
+                <!-- <div 
                     v-for="(item, index) in youtubeVideo"
                     :key="index"
                     class="px-4 py-2 text-h6"
@@ -94,9 +102,6 @@
                         </div>
                     </v-row>
                 </div>
-                <!-- depending on the type of object we get back from the CRM
-                I want to display it according it in an element that cooresponds to 
-                it's given type -->
                 <v-spacer
                 >
                 </v-spacer>
@@ -200,7 +205,7 @@
                             {{ item.text }}
                         </p>
                     </v-row>
-                </div>
+                </div> -->
             </v-card>
             </v-row>
         </div>
@@ -208,31 +213,30 @@
 </template>
 
 <script>
+// import prismicDOM from 'prismic-dom'
 
 export default {
     metaInfo() {
         return {
-            title: `${this.episodeName}`,
-            description: `${this.episodeSummary}`,
+            title: `${this.blogTitle} ${this.tcmTitle}`,
+            // description: `${this.episodeSummary}`,
             meta: [
                 { property: 'og:type', content: 'website' },
                 { property: 'og:url', content: `${this.$router.currentRoute.path}` },
-                { property: 'og:title', content: `${this.episodeName} | The Crypto Masters` },
-                { property: 'og:description', content: `${this.episodeSummary}` },
-                { property: 'og:image', content: `${this.episodeImage}` },
+                { property: 'og:title', content: `${this.blogTitle} ${this.tcmTitle}` },
+                // { property: 'og:description', content: `${this.episodeSummary}` },
+                { property: 'og:image', content: `${this.blogImg}` },
             ]
         }
     },
     data () {
         return {
             loading: false,
-            episodeData: '',
-            prismicPageType: 'episode-summary',
-            episodeSummary: '',
-            episodeId: '',
-            episodeName: '',
-            episodeImage: '',
-            youtubeVideo: '',
+            blogData: '',
+            prismicPageType: 'blog-article',
+            blogTitle: '',
+            tcmTitle: ' | The Crypto Masters Blog',
+            blogImg: '',
             breadCrumbItems: [
                 {
                     text: 'Back to Blog',
@@ -245,8 +249,9 @@ export default {
     async created () {
 
         // this.episodeName = this.$route.params.episodeName;
-        this.blogId = this.$route.params.blogId;
-        this.getContentVue(this.blogId);
+        this.blogId = this.$route.params.blogId
+        this.getContentVue(this.blogId)
+        // console.log('Blog ID: ', this.blogId)
         // console.log('ENTER Create in Podcast Episode: ' + this.episodeId);
 
     },
@@ -260,22 +265,33 @@ export default {
             // Query the API and assign the response to "response"
             const response = await this.$prismic.client.getByUID(this.prismicPageType, theBlogId)
             this.response = response  
-            // console.log('$$$$Prismic response: ', this.response)
+            console.log('$$$$Prismic response: ', this.response)
             if (this.response) {
-                this.episodeData = this.response
-                this.episodeName = this.episodeData.data['episode_title'][0].text
-                this.episodeImage = this.episodeData.data['episode-image']['url']
-                console.log(this.episodeImage)
-                this.episodeSummary = this.episodeData.data['episode-summary']
-                this.youtubeVideo = this.episodeData.data['youtube-link']
+                this.blogData = this.response
+                this.blogTitle = this.blogData.data['blog_title'][0].text
+                this.blogImg = this.blogData.data['blog_img']['url']
+
+                
+                console.log('$$$$$$ Body items: ')
+                console.log(this.blogData.data.body.__ob__.value[0].primary.text)
+                console.log(this.blogData.data)
+
             } else {
                 this.loading = false
                 this.$router.push('/NotFound')
             }
             
-
             this.loading = false
         },
+        htmlSerializer(type, element, content, children) {
+            // If element is a list item,
+            if (type === "list-item") {
+            // return some customized HTML.
+            return `<li class="example-class">${children.join("")}</li>`;
+            }
+            /// Otherwise, return null.
+            return null;
+        }
     },
 }
 </script>

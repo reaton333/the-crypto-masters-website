@@ -40,12 +40,10 @@ export default {
       }
   },
   props: {
-      blogData: null
+      blogData: ''
   },
   created() {
 
-    // console.log('Blog Data:' + this.blogData.data['blog_title'][0].text)
-    
     var tempTitle = this.blogData.data['blog_title'][0].text
 
     if (tempTitle.length > this.titleCharLimit) {
@@ -57,13 +55,13 @@ export default {
   },
   methods: {
     goToBlog(blogId){
-        // console.log(blogId)
-        this.$router.push({ 
-            name: 'PodcastBlog',
-            params: {
-                blogId: blogId
-            }
-        })
+      // console.log(blogId)
+      this.$router.push({ 
+        name: 'BlogPost',
+        params: {
+          blogId: blogId
+        }
+      })
     },
   }
 }

@@ -265,7 +265,7 @@ export default {
                 this.episodeData = this.response
                 this.episodeName = this.episodeData.data['episode_title'][0].text
                 this.episodeImage = this.episodeData.data['episode-image']['url']
-                console.log(this.episodeImage)
+                // console.log(this.episodeImage)
                 this.episodeSummary = this.episodeData.data['episode-summary']
                 this.youtubeVideo = this.episodeData.data['youtube-link']
             } else {
