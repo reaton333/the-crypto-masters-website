@@ -102,11 +102,12 @@ export default {
         { id: 1, name: 'Home', icon: 'mdi-home', route: '/'},
         { id: 2, name: 'About', icon: 'mdi-information', route: '/about'},
         { id: 3, name: 'Podcast', icon: 'mdi-microphone', route: '/podcast/'},
+        { id: 4, name: 'Blog', icon: 'mdi-newspaper', route: '/blog/'},
       ],
       cryptoNavItems: [
-        { id: 4, name: 'Crypto Prices', icon: 'mdi-bitcoin', route: '/crypto'},
-        { id: 5, name: 'Hindsight Tool', icon: 'mdi-school', route: '/profitCalculator'},
-        { id: 6, name: 'Price at Market Cap', icon: 'mdi-cash-multiple', route: '/priceAtMarketCap'},
+        { id: 5, name: 'Crypto Prices', icon: 'mdi-bitcoin', route: '/crypto'},
+        { id: 6, name: 'Hindsight Tool', icon: 'mdi-school', route: '/profitCalculator'},
+        { id: 7, name: 'Price at Market Cap', icon: 'mdi-cash-multiple', route: '/priceAtMarketCap'},
       ],
       allNavItems: [],
       navTitle: 'THE CRYPTO MASTERS'

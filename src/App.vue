@@ -31,11 +31,11 @@ export default {
   },
   mounted() {
 
-    this.allCoins = this.$session.get('allCoins')
+    // this.allCoins = this.$session.get('allCoins')
     
-    if (!this.allCoins) {
-      this.getAllCoins()
-    }
+    // if (!this.allCoins) {
+    //   this.getAllCoins()
+    // }
   },
   methods: {
     // async getAllCoins() {

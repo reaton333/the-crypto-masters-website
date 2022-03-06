@@ -8,6 +8,8 @@ import CryptoPredictor from '../components/CryptoPredictor.vue'
 import PriceAtMarketCap from '../components/PriceAtMarketCap.vue'
 import PodcastEpisode from '../components/PodcastEpisode.vue'
 import EpisodeList from '../components/EpisodeList.vue'
+import BlogList from '../components/BlogList.vue'
+import BlogPost from '../components/BlogPost.vue'
 import NotFound from '../views/NotFound.vue'
 import About from '../views/About.vue'
 
