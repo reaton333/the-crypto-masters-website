@@ -57,7 +57,7 @@
                         align="left"
                         class="text-justify pa-4"
                     >
-                        <b>Last Updated: </b> {{ blogData.data['release_date'] }}
+                        Last Updated: {{ blogReleaseDate }}
                     </p>
                 </v-row>
                 <v-row 
@@ -181,6 +181,7 @@ export default {
             blogTitle: '',
             tcmTitle: ' | The Crypto Masters Blog',
             blogImg: '',
+            blogReleaseDate: '',
             breadCrumbItems: [
                 {
                     text: 'Back to Blog Search',
@@ -209,16 +210,19 @@ export default {
             // Query the API and assign the response to "response"
             const response = await this.$prismic.client.getByUID(this.prismicPageType, theBlogId)
             this.response = response  
-            console.log('$$$$Prismic response: ', this.response)
+            // console.log('$$$$Prismic response: ', this.response)
             if (this.response) {
                 this.blogData = this.response
                 this.blogTitle = this.blogData.data['blog_title'][0].text
                 this.blogImg = this.blogData.data['blog_img']['url']
 
-                
-                console.log('$$$$$$ blogData.data.body: ')
+                const theDate = new Date(this.blogData.data.release_date);
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                this.blogReleaseDate = theDate.toLocaleDateString('en-us', options)
+                // console.log(this.blogReleaseDate)
+                // console.log('$$$$$$ blogData.data.body: ')
                 // console.log(this.blogData.data.body.__ob__.value[0].primary.text)
-                console.log(this.blogData.data.body)
+                // console.log(this.blogData.data.body)
 
             } else {
                 this.loading = false
