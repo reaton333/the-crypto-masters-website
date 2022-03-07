@@ -130,7 +130,7 @@
                                 font-weight-bold
                             "
                         >
-                            {{ item.primary.quote[0].text }}
+                            "{{ item.primary.quote[0].text }}"
                         </v-card-text>
 
                         <v-card-actions>
