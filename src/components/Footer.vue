@@ -31,8 +31,10 @@
             <v-icon color="secondary">mdi-email</v-icon>
           </v-btn>
         </v-card-text>
-
-        <v-card-text class="white--text pt-0">
+        <v-card-text 
+          class="text-center white--text pt-0"
+          style="max-width:750px; text-align:center; margin:0 auto;"
+        >
           {{ legalText }}
         </v-card-text>
 

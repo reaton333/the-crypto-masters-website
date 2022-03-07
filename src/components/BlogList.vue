@@ -160,6 +160,7 @@ export default {
 
           this.blogs = theDocument.results
           this.blogs.sort((a, b) => (a.data.release_date < b.data.release_date) ? 1 : -1)
+          
           // console.log(this.blogs)
         }
         // this.filteredBlogs = this.blogs
