@@ -81,7 +81,7 @@
                     :key="idx"
                     justify="space-around"
                     align="center"
-                    class="pa-8"
+                    class="py-8"
                     style="max-width: 750px"
                 >
                     <div
@@ -118,7 +118,7 @@
                     </v-row>
                     <v-card
                         v-if="item.slice_type == 'quote'"
-                        class="mx-auto"
+                        class="mx-auto px-auto"
                         color="#eee"
                         max-width="700"
                     >
