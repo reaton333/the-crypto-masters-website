@@ -57,13 +57,12 @@
                         align="left"
                         class="text-justify pa-4"
                     >
-                        <b>Date: </b> {{ blogData.data['release_date'] }}
+                        <b>Last Updated: </b> {{ blogData.data['release_date'] }}
                     </p>
                 </v-row>
                 <v-row 
                     justify="space-around"
                     align="center"
-                    class="pa-8"
                 >
                     <v-img 
                         align="center"
@@ -76,136 +75,68 @@
                         :alt="blogData.data['blog_img']['alt']"
                     ></v-img>
                 </v-row>
-                <!-- Pass the HTML Serializer to your rich text component. -->
-                <prismic-rich-text
+                <!-- Loop through slices from prismic CM and produce cooresponding data -->
+                <v-row
                     v-for="(item, idx) in blogData.data.body"
                     :key="idx"
-                    :field="item" 
-                    :htmlSerializer="htmlSerializer" 
+                    justify="space-around"
+                    align="center"
+                    class="pa-8"
                 >
-                </prismic-rich-text>
+                    <div
+                        v-if="item.slice_type == 'text'"
+                    >
+                        <prismic-rich-text
+                            :field="item.primary.text"
+                            align="left"
+                            max-width="640px"
+                        />
+                        <hr v-if="idx != (blogData.data.body.length - 1)">
+                    </div>
+                    <div
+                        v-if="item.slice_type == 'youtube_link'"
+                        v-html="item.primary.youtube_video_link.html"
+                    >
+                    </div>
+                    <v-row 
+                        v-if="item.slice_type == 'image'"
+                        justify="space-around"
+                        align="center"
+                        class="pa-8"
+                    >
+                        <v-img
+                            align="center"
+                            class="episodeImage"
+                            contain
+                            justify="space-around"
+                            max-height="350"
+                            max-width="350"
+                            :src="item.primary.image.url" 
+                            :alt="item.primary.image.alt"
+                        ></v-img>
+                    </v-row>
+                    <v-card
+                        v-if="item.slice_type == 'quote'"
+                        class="mx-auto"
+                        color="#eee"
+                        max-width="700"
+                    >
+                        <v-card-text class="text-h5 font-weight-bold">
+                            {{ item.primary.quote[0].text }}
+                        </v-card-text>
 
-                <!-- <div 
-                    v-for="(item, index) in youtubeVideo"
-                    :key="index"
-                    class="px-4 py-2 text-h6"
-                >
-                    <v-row 
-                        v-if="item.type == 'embed'"
-                        justify="space-around"
-                        align="center"
-                        class="py-6 ma-2"
-                    >
-                        <div
-                            v-html="item.oembed.html"
-                        >
-                        </div>
-                    </v-row>
-                </div>
-                <v-spacer
-                >
-                </v-spacer>
-                <div 
-                    v-for="(item, index) in episodeSummary"
-                    :key="index"
-                    class="px-4 py-2 text-h6"
-                >
-                    <v-row 
-                        v-if="item.type == 'embed'"
-                        justify="space-around"
-                        align="center"
-                        class="py-6 ma-2"
-                    >
-                        <div
-                            v-html="item.oembed.html"
-                        >
-                        </div>
-                    </v-row>
-                    <v-row
-                        v-if="item.type == 'paragraph'"
-                        justify="left"
-                        align="left"
-                        class="text-justify"
-                        style="max-width: 750px"
-                    >
-                        <p v-html="item.text"></p>
-                    </v-row>
-                    <v-row
-                        v-if="item.type == 'heading2'"
-                        justify="left"
-                        align="left"
-                    >
-                        <p 
-                            class="
-                                text-justify 
-                                text-h5 
-                                text-md-h4 
-                                font-weight-bold"
-                        >
-                            {{ item.text }}
-                        </p>
-                    </v-row>
-                    <v-row
-                        v-if="item.type == 'heading3'"
-                        justify="left"
-                        align="left"
-                    >
-                        <p 
-                            class="
-                                text-justify 
-                                text-h6 
-                                text-md-h5 
-                                font-weight-bold"
-                        >
-                            {{ item.text }}
-                        </p>
-                    </v-row>
-                    <v-row
-                        v-if="item.type == 'heading4'"
-                        justify="left"
-                        align="left"
-                    >
-                        <p 
-                            class="
-                                text-justify 
-                                text-subtitle-1 
-                                text-md-h6  
-                                font-weight-bold"
-                        >
-                            {{ item.text }}
-                        </p>
-                    </v-row>
-                    <v-row
-                        v-if="item.type == 'heading5'"
-                        justify="left"
-                        align="left"
-                    >
-                        <p     
-                            class="
-                                text-justify 
-                                text-subtitle-1 
-                                text-md-h6  
-                                font-weight-bold"
-                        >
-                            {{ item.text }}
-                        </p>
-                    </v-row>
-                    <v-row
-                        v-if="item.type == 'heading6'"
-                        justify="left"
-                        align="left"
-                    >
-                        <p 
-                            class="
-                                text-justify 
-                                text-subtitle-1 
-                                text-md-h6  
-                                font-weight-medium"
-                        >
-                            {{ item.text }}
-                        </p>
-                    </v-row>
-                </div> -->
+                        <v-card-actions>
+                            <v-list-item class="grow">
+
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    - {{ item.primary.quote_author[0].text }}
+                                </v-list-item-title>
+                            </v-list-item-content>
+                            </v-list-item>
+                        </v-card-actions>
+                    </v-card>
+                </v-row>                
             </v-card>
             </v-row>
         </div>
@@ -213,8 +144,6 @@
 </template>
 
 <script>
-// import prismicDOM from 'prismic-dom'
-
 export default {
     metaInfo() {
         return {
@@ -239,7 +168,7 @@ export default {
             blogImg: '',
             breadCrumbItems: [
                 {
-                    text: 'Back to Blog',
+                    text: 'Back to Blog Search',
                     disabled: false,
                     href: '/blog',
                 },
@@ -272,9 +201,9 @@ export default {
                 this.blogImg = this.blogData.data['blog_img']['url']
 
                 
-                console.log('$$$$$$ Body items: ')
-                console.log(this.blogData.data.body.__ob__.value[0].primary.text)
-                console.log(this.blogData.data)
+                console.log('$$$$$$ blogData.data.body: ')
+                // console.log(this.blogData.data.body.__ob__.value[0].primary.text)
+                console.log(this.blogData.data.body)
 
             } else {
                 this.loading = false

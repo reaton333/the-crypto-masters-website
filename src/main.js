@@ -16,7 +16,6 @@ Vue.use(VueGtag, {
 
 Vue.use(VueSessionStorage);
 
-
 const accessToken = 'MC5ZRG1sNkJFQUFDSUF4cllj.77-977-977-977-9fjXvv71RMjNcdO-_vQbvv70Z77-977-9Qi3vv73vv73vv70zNjh5Yu-_vSI7ew'
 const endpoint = 'https://the-crypto-masters-website.cdn.prismic.io/api/v2'
 
