@@ -82,6 +82,7 @@
                     justify="space-around"
                     align="center"
                     class="pa-8"
+                    style="max-width: 750px"
                 >
                     <div
                         v-if="item.slice_type == 'text'"
@@ -121,7 +122,14 @@
                         color="#eee"
                         max-width="700"
                     >
-                        <v-card-text class="text-h5 font-weight-bold">
+                        <v-card-text 
+                            class="
+                                text-h5 
+                                text-md-h4
+                                text-sm-h5
+                                font-weight-bold
+                            "
+                        >
                             {{ item.primary.quote[0].text }}
                         </v-card-text>
 
@@ -129,7 +137,14 @@
                             <v-list-item class="grow">
 
                             <v-list-item-content>
-                                <v-list-item-title>
+                                <v-list-item-title
+                                    class="
+                                        subtitle-2
+                                        text-md-subtitle-1
+                                        text-sm-subtitle-2
+                                        text-xs-body-1
+                                    "
+                                >
                                     - {{ item.primary.quote_author[0].text }}
                                 </v-list-item-title>
                             </v-list-item-content>
