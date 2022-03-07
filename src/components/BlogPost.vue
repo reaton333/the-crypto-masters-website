@@ -52,13 +52,49 @@
                     </h1>
                 </v-row>
                 <v-row>
-                    <p
-                        justify="space-around"
-                        align="left"
-                        class="text-justify pa-4"
+                    <!-- <div
+                        style="clear: both;"
                     >
-                        Last Updated: {{ blogReleaseDate }}
-                    </p>
+                        <p
+                            class="py-4"
+                            style="float: left;"
+                        >
+                            Last Updated: {{ blogReleaseDate }}
+                        </p>
+                        <p
+                            class="py-4"
+                            style="float: right;"
+                        >
+                            {{ readTime }} {{ READ_TIME_TEXT }}
+                        </p>
+                    </div> -->
+                    <v-col md="4">
+                        <v-card
+                            class="py-2"
+                            flat
+                        >
+                            <p
+                                style="float: left;"
+                            >
+                                {{ LAST_UPDATE_TEXT }} {{ blogReleaseDate }}
+                            </p>
+                        </v-card>
+                    </v-col>
+                    <v-col
+                        md="4"
+                        offset-md="4"
+                    >
+                        <v-card
+                            class="py-2"
+                            flat
+                        >
+                            <p
+                                style="float: right;"
+                            >
+                                {{ readTime }} {{ READ_TIME_TEXT }}
+                            </p>
+                        </v-card>
+                    </v-col>
                 </v-row>
                 <v-row 
                     justify="space-around"
@@ -182,6 +218,9 @@ export default {
             tcmTitle: ' | The Crypto Masters Blog',
             blogImg: '',
             blogReleaseDate: '',
+            READ_TIME_TEXT: ' MIN READ',
+            LAST_UPDATE_TEXT: 'Last Update: ',
+            readTime: 0,
             breadCrumbItems: [
                 {
                     text: 'Back to Blog Search',
@@ -224,6 +263,8 @@ export default {
                 // console.log(this.blogData.data.body.__ob__.value[0].primary.text)
                 // console.log(this.blogData.data.body)
 
+                this.setReadTime(this.blogData.data.body)
+
             } else {
                 this.loading = false
                 this.$router.push('/NotFound')
@@ -231,15 +272,24 @@ export default {
             
             this.loading = false
         },
-        htmlSerializer(type, element, content, children) {
-            // If element is a list item,
-            if (type === "list-item") {
-            // return some customized HTML.
-            return `<li class="example-class">${children.join("")}</li>`;
+        async setReadTime(blogDataBody) {
+            const blogText = blogDataBody.filter(body => body.slice_type === 'text')
+
+            // console.log(blogText)
+            let totalBlogText = ''
+            let averageWordsPerMinute = 250
+
+            for(let i = 0; i < blogText.length; i++) {
+                let currBlogText = blogText[i]
+
+                let blogTextArr = currBlogText.primary.text
+                for(let j = 0; j < blogTextArr.length; j++) {
+                    totalBlogText += blogTextArr[j].text
+                }
             }
-            /// Otherwise, return null.
-            return null;
-        }
+            // console.log(totalBlogText)
+            this.readTime =  Math.ceil(totalBlogText.split(/\s+/).length / averageWordsPerMinute)
+        },
     },
 }
 </script>
