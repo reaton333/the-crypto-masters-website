@@ -25,7 +25,54 @@
       >
         Cryptocurrency Prices by Market Cap
       </v-col>
-      
+      <v-switch
+        v-model="showStats"
+        label="Show Stats"
+        class="font-weight-bold"
+        color="primary"
+      ></v-switch>
+    </v-row>
+    <v-row
+      class="pa-0"
+      v-if="!loading && showStats"
+    >
+      <v-col
+        class="text-left pt-2 font-weight-bold pb-6
+              text-xl-h4 text-lg-h5 text-md-h6 text-sm-h6 subtitle-1"
+      >
+        <v-card
+          elevation="2"
+        >
+          <v-card-title>{{ geckoData.data.active_cryptocurrencies.toLocaleString("en-US") }}</v-card-title>
+          <v-card-subtitle># OF COINS</v-card-subtitle>
+        </v-card>
+      </v-col>
+      <v-col
+        class="text-left pt-2 font-weight-bold pb-6
+              text-xl-h4 text-lg-h5 text-md-h6 text-sm-h6 subtitle-1"
+      >
+        <v-card
+          elevation="2"
+        >
+          <v-card-title>
+            ${{ Object.values(geckoData.data.total_market_cap).reduce((acc, val) => acc + val, 0).toLocaleString("en-US") }}
+          </v-card-title>
+          <v-card-subtitle>TOTAL MARKET CAP</v-card-subtitle>
+        </v-card>
+      </v-col>
+      <v-col
+        class="text-left pt-2 font-weight-bold pb-6
+              text-xl-h4 text-lg-h5 text-md-h6 text-sm-h6 subtitle-1"
+      >
+        <v-card
+          elevation="2"
+        >
+          <v-card-title>{{ parseFloat(geckoData.data.market_cap_percentage.btc).toFixed(1)+"%" }}</v-card-title>
+          <v-card-subtitle>BITCOIN DOMINANCE</v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col>
         <div
           class="coinGeckoApi"
@@ -181,6 +228,7 @@ export default {
   data () {
     return {
         isMobile: false,
+        showStats: false,
         window: {
           width: 0,
           height: 0
@@ -213,7 +261,7 @@ export default {
   },
   created() {
 
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', this.handleResize)
     this.handleResize();
 
     this.page = 1;
@@ -224,10 +272,11 @@ export default {
       this.getAllCoins()
     } else {
       this.totalCoins = this.$session.get('totalCoins')
-      this.listLoading = false;
+      this.listLoading = false
     }
     
-    this.getCoinsList(this.page);
+    this.getCoinsList(this.page)
+    this.getGlobalData()
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize);
@@ -242,9 +291,7 @@ export default {
           // console.log(fullPath)
           const res = await axios.get(fullPath)
 
-          this.geckoData = res.data
           this.allCoins = res.data.coins;
-          // console.log(this.geckoData)
           this.totalCoins = this.allCoins.length;
       } catch (e) {
           console.log(e);
@@ -275,8 +322,27 @@ export default {
           const res = await axios.get(fullPath)
 
           this.coins = res.data;
-          console.log(this.coins)
+          // console.log(this.coins)
           this.loading = false;
+          // this.sortedCoinList = this.sortedCoins();
+      } catch (e) {
+          console.log(e);
+      }
+    },
+    async getGlobalData() {
+
+      // this.loading = true;
+
+      try {
+          const baseURL = `https://api.coingecko.com/api/v3/global`
+          const params = ``
+          const fullPath = baseURL + params
+          // console.log(fullPath)
+          const res = await axios.get(fullPath)
+
+          this.geckoData = res.data;
+          // console.log(this.geckoData)
+          // this.loading = false;
           // this.sortedCoinList = this.sortedCoins();
       } catch (e) {
           console.log(e);
