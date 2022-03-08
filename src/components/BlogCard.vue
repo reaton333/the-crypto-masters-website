@@ -24,7 +24,7 @@
           text-color="primary"
           pill
           light
-          class="mx-1 font-weight-bold"
+          class="mr-1 mb-1 font-weight-bold"
       >
           {{ tag }}
       </v-chip>
@@ -116,7 +116,6 @@ export default {
 
 <style>
 .blog_card {
-  /* overflow-y: auto;  */
-  height: 520px
+  height: 600px !important;
 }
 </style>
