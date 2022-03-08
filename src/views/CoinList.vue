@@ -55,7 +55,7 @@
           elevation="2"
         >
           <v-card-title>
-            ${{ Object.values(geckoData.data.total_market_cap).reduce((acc, val) => acc + val, 0).toLocaleString("en-US") }}
+            ${{ Number(geckoData.data.total_market_cap.usd.toFixed(0)).toLocaleString("en-US") }}
           </v-card-title>
           <v-card-subtitle>TOTAL MARKET CAP</v-card-subtitle>
         </v-card>
