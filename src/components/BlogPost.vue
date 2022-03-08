@@ -73,7 +73,7 @@
                             <p
                                 style="float: left;"
                             >
-                                {{ LAST_UPDATE_TEXT }} {{ blogReleaseDate }}
+                                {{ blogReleaseDate }}
                             </p>
                         </v-card>
                     </v-col>
@@ -216,7 +216,6 @@ export default {
             blogImg: '',
             blogReleaseDate: '',
             READ_TIME_TEXT: ' MIN READ',
-            LAST_UPDATE_TEXT: 'Last Update: ',
             readTime: 0,
             breadCrumbItems: [
                 {
