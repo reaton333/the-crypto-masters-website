@@ -18,19 +18,20 @@
       v-if="!loading"
       align="end"
       justify="end"
+      no-gutters
     >
       <v-col
         class="text-left pt-2 font-weight-bold pb-6
               text-xl-h4 text-lg-h5 text-md-h6 text-sm-h6 subtitle-1"
       >
         Cryptocurrency Prices by Market Cap
+        <v-switch
+          v-model="showStats"
+          label="Show Crypto Market Stats"
+          class="font-weight-bold text-xl-h4 text-lg-h5 text-md-h6 text-sm-h6 subtitle-1"
+          color="primary"
+        ></v-switch>
       </v-col>
-      <v-switch
-        v-model="showStats"
-        label="Show Stats"
-        class="font-weight-bold"
-        color="primary"
-      ></v-switch>
     </v-row>
     <v-row
       class="pa-0"
