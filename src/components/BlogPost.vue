@@ -48,26 +48,23 @@
                             font-weight-bold
                             px-4"
                     >
-                        {{ blogData.data['blog_title'][0].text }}
+                        {{ blogData.data.blog_title[0].text }}
                     </h1>
                 </v-row>
                 <v-row>
-                    <!-- <div
-                        style="clear: both;"
+                    <v-chip
+                        v-for="(tag, idx) in blogData.tags"
+                        :key="idx"
+                        color="secondary"
+                        text-color="primary"
+                        pill
+                        light
+                        class="mx-1 font-weight-bold"
                     >
-                        <p
-                            class="py-4"
-                            style="float: left;"
-                        >
-                            Last Updated: {{ blogReleaseDate }}
-                        </p>
-                        <p
-                            class="py-4"
-                            style="float: right;"
-                        >
-                            {{ readTime }} {{ READ_TIME_TEXT }}
-                        </p>
-                    </div> -->
+                        {{ tag }}
+                    </v-chip>
+                </v-row>
+                <v-row>
                     <v-col md="4">
                         <v-card
                             class="py-2"
@@ -261,7 +258,7 @@ export default {
                 // console.log(this.blogReleaseDate)
                 // console.log('$$$$$$ blogData.data.body: ')
                 // console.log(this.blogData.data.body.__ob__.value[0].primary.text)
-                // console.log(this.blogData.data.body)
+                console.log(this.blogData)
 
                 this.setReadTime(this.blogData.data.body)
 
