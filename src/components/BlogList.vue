@@ -154,7 +154,7 @@ export default {
           ( error, document ) => error ? this.errorString = error : theDocument = document
         )
 
-        console.log(theDocument)
+        // console.log(theDocument)
 
         if(!this.errorString) {
 

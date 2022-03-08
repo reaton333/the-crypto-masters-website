@@ -14,7 +14,20 @@
       {{ this.blogTitle }}
     </v-card-title>
     <v-card-text class="flex">
-      {{ this.blogData.data['release_date'] }}
+      {{ blogReleaseDate }}
+    </v-card-text>
+    <v-card-text>
+      <v-chip
+          v-for="(tag, idx) in blogData.tags"
+          :key="idx"
+          color="secondary"
+          text-color="primary"
+          pill
+          light
+          class="mx-1 font-weight-bold"
+      >
+          {{ tag }}
+      </v-chip>
     </v-card-text>
     <v-card-actions>
       <v-btn
@@ -37,6 +50,10 @@ export default {
         summaryCharLimit: 175,
         blogTitle: '',
         blogSummary: '',
+        blogReleaseDate: '',
+        READ_TIME_TEXT: ' MIN READ',
+        LAST_UPDATE_TEXT: 'Last Update: ',
+        readTime: 0,
       }
   },
   props: {
@@ -44,13 +61,20 @@ export default {
   },
   created() {
 
-    var tempTitle = this.blogData.data['blog_title'][0].text
+    let tempTitle = this.blogData.data['blog_title'][0].text
 
     if (tempTitle.length > this.titleCharLimit) {
       this.blogTitle = tempTitle.substring(0, this.titleCharLimit) + '...'
     } else {
       this.blogTitle = tempTitle
     }
+
+    const theDate = new Date(this.blogData.data.release_date);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    this.blogReleaseDate = theDate.toLocaleDateString('en-us', options)
+
+
+    this.setReadTime(this.blogData.body)
    
   },
   methods: {
@@ -62,6 +86,29 @@ export default {
           blogId: blogId
         }
       })
+    },
+    async setReadTime(blogDataBody) {
+
+      let blogText = ''
+      
+      if (blogDataBody) {
+        blogText = blogDataBody.filter(body => body.slice_type === 'text')
+      }
+
+      // console.log(blogText)
+      let totalBlogText = ''
+      let averageWordsPerMinute = 250
+
+      for(let i = 0; i < blogText.length; i++) {
+          let currBlogText = blogText[i]
+
+          let blogTextArr = currBlogText.primary.text
+          for(let j = 0; j < blogTextArr.length; j++) {
+              totalBlogText += blogTextArr[j].text
+          }
+      }
+      // console.log(totalBlogText)
+      this.readTime =  Math.ceil(totalBlogText.split(/\s+/).length / averageWordsPerMinute)
     },
   }
 }
