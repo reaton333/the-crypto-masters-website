@@ -128,11 +128,15 @@
           {{ formatPercentGain(item.price_change_percentage_30d_in_currency) }}
         </span>
       </template>
-      <!-- <template v-slot:item.price_change_percentage_1y_in_currency="{ item }">
-        <span :class="item.price_change_percentage_1y_in_currency >= 0 ? 'success--text' : 'error--text'">
-          {{ formatPercentGain(item.price_change_percentage_1y_in_currency) }}
-        </span>
-      </template> -->
+      <template v-slot:item.sparkline_in_7d="{ item }">
+          <v-sparkline
+            :value="item.sparkline_in_7d.price"
+            smooth="10"
+            :color="(item.sparkline_in_7d.price[0] <= item.sparkline_in_7d.price.at(-1)) ? 'success' : 'error'"
+            line-width="4"
+            type="trend"
+          ></v-sparkline>
+      </template>
       <template v-slot:item.market_cap="{ item }">
         <span>{{ formatMarketCap(item.market_cap) }}</span>
       </template>
@@ -189,7 +193,7 @@ export default {
           { index: 3, type: 'change', text: '24h', align: 'end', value: 'price_change_percentage_24h_in_currency' },
           { index: 4, type: 'change', text: '7d', align: 'end', value: 'price_change_percentage_7d_in_currency' },
           { index: 5, type: 'change', text: '30d', align: 'end', value: 'price_change_percentage_30d_in_currency' },
-          // { index: 6, type: 'change', text: '1y', align: 'end', value: 'price_change_percentage_1y_in_currency' },
+          { index: 6, type: 'detail', text: 'Last 7 Days', align: 'end', value: 'sparkline_in_7d' },
           { index: 7, type: 'detail', text: 'Market Cap', align: 'end', value: 'market_cap' },
         ],
         // Storing the headers I remove here so I can add them back later
@@ -201,6 +205,7 @@ export default {
         sortDesc: true,
         pageSize: 100,
         allCoins: [],
+        geckoData: {},
         totalCoins: 0,
         currency: 'usd',
         tableResize: 777
@@ -237,8 +242,9 @@ export default {
           // console.log(fullPath)
           const res = await axios.get(fullPath)
 
+          this.geckoData = res.data
           this.allCoins = res.data.coins;
-          // console.log(this.allCoins)
+          // console.log(this.geckoData)
           this.totalCoins = this.allCoins.length;
       } catch (e) {
           console.log(e);
@@ -263,12 +269,13 @@ export default {
 
       try {
           const baseURL = `https://api.coingecko.com/api/v3/coins/markets`
-          const params = `?vs_currency=${this.currency}&order=market_cap_desc&per_page=${this.pageSize}&page=${myPage}&sparkline=false&price_change_percentage=24h%2C7d%2C30d`
+          const params = `?vs_currency=${this.currency}&order=market_cap_desc&per_page=${this.pageSize}&page=${myPage}&sparkline=true&price_change_percentage=24h%2C7d%2C30d`
           const fullPath = baseURL + params
           // console.log(fullPath)
           const res = await axios.get(fullPath)
 
           this.coins = res.data;
+          console.log(this.coins)
           this.loading = false;
           // this.sortedCoinList = this.sortedCoins();
       } catch (e) {
