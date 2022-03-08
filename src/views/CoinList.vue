@@ -128,6 +128,9 @@
           {{ formatPercentGain(item.price_change_percentage_30d_in_currency) }}
         </span>
       </template>
+      <template v-slot:item.market_cap="{ item }">
+        <span>{{ formatMarketCap(item.market_cap) }}</span>
+      </template>
       <template v-slot:item.sparkline_in_7d="{ item }">
           <v-sparkline
             :value="item.sparkline_in_7d.price"
@@ -136,9 +139,6 @@
             line-width="4"
             type="trend"
           ></v-sparkline>
-      </template>
-      <template v-slot:item.market_cap="{ item }">
-        <span>{{ formatMarketCap(item.market_cap) }}</span>
       </template>
     </v-data-table>
     <v-pagination
@@ -193,8 +193,8 @@ export default {
           { index: 3, type: 'change', text: '24h', align: 'end', value: 'price_change_percentage_24h_in_currency' },
           { index: 4, type: 'change', text: '7d', align: 'end', value: 'price_change_percentage_7d_in_currency' },
           { index: 5, type: 'change', text: '30d', align: 'end', value: 'price_change_percentage_30d_in_currency' },
-          { index: 6, type: 'detail', text: 'Last 7 Days', align: 'end', value: 'sparkline_in_7d' },
-          { index: 7, type: 'detail', text: 'Market Cap', align: 'end', value: 'market_cap' },
+          { index: 6, type: 'detail', text: 'Market Cap', align: 'end', value: 'market_cap' },
+          { index: 7, type: 'detail', text: 'Last 7 Days', align: 'end', value: 'sparkline_in_7d' },
         ],
         // Storing the headers I remove here so I can add them back later
         // This is for mobile resizing
