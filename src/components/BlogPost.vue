@@ -46,7 +46,7 @@
                             text-md-h3
                             text-sm-h4
                             font-weight-bold
-                            px-4"
+                            px-4 pb-2"
                     >
                         {{ blogData.data.blog_title[0].text }}
                     </h1>
