@@ -14,14 +14,14 @@
       </v-col>
     </v-row>
     <v-row
-      class="pa-0"
+      class="pa-0 mb-0"
       v-if="!loading"
       align="end"
       justify="end"
       no-gutters
     >
       <v-col
-        class="text-left pt-2 font-weight-bold pb-6
+        class="text-left pt-2 font-weight-bold pb-0 mb-0
               text-xl-h4 text-lg-h5 text-md-h6 text-sm-h6 subtitle-1"
       >
         Cryptocurrency Prices by Market Cap
@@ -38,7 +38,7 @@
       v-if="!loading && showStats"
     >
       <v-col
-        class="text-left pt-2 font-weight-bold pb-6
+        class="text-left pt-2 font-weight-bold pb-0
               text-xl-h4 text-lg-h5 text-md-h6 text-sm-h6 subtitle-1"
       >
         <v-card
@@ -73,8 +73,12 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
+    <v-row
+      class="pt-0"
+    >
+      <v-col
+        class="pt-0"
+      >
         <div
           class="coinGeckoApi"
         >
