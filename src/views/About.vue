@@ -96,7 +96,7 @@
                 color="grey"
                 size="164"
               >
-                <v-img src="../assets/brian_headshot.jpeg"></v-img>
+                <v-img src="../assets/brian_headshot.png"></v-img>
               </v-avatar>
               <v-card-title
                 class="font-weight-bold text-h5"
