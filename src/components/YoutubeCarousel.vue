@@ -7,7 +7,7 @@
             class="justify-center text-h4"
             style="background: #E9C46A"
         >
-            Recent Episodes
+            Recent Videos
         </v-card-title>
         <v-carousel
             cycle

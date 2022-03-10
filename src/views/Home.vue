@@ -93,55 +93,26 @@
       align="center"
       justify="space-around"
     >
-    <v-card
-      class="pa-2 text-center primary"
-      align="center"
-      tile
-      width="100%"
-      max-width="1100"
-    >
-      <v-card-title
-        class="justify-center white--text text-h4"
-      >
-        {{ socialMessage }}
-      </v-card-title>
-      <v-divider
-        dark
-      ></v-divider>
-        <v-row
-          align="center"
-          justify="space-around"
-        >
-          <v-col
-            class="pa-10"
-            v-for="podcast in podcasts"
-            :key="podcast.id"
-          >
-            <v-btn
-              class="mx-4 white--text space-around"
-              icon
-              x-large
-              @click="linkToNewTab(podcast.url)"
-            >
-              <v-icon 
-                size="72px"
-                color="secondary"
-              >
-                {{ podcast.icon }}
-              </v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-card>
+      <PodcastListenCard />
     </v-row>
-    <v-row
+    <v-spacer
       class="pa-12"
-    ></v-row>
+    ></v-spacer>
     <v-row
       align="center"
       justify="center"
     >
-      <YoutubeCarousel />
+      <h1>Crypto Tools for Investors</h1>
+    </v-row>
+    <CryptoToolCard />
+    <v-spacer
+      class="pa-12"
+    ></v-spacer>
+    <v-row
+      align="center"
+      justify="center"
+    >
+        <YoutubeCarousel />
     </v-row>
     <v-row
       class="pa-12"
@@ -150,7 +121,9 @@
 </template>
 
 <script>
+import PodcastListenCard from '@/components/PodcastListenCard.vue'
 import YoutubeCarousel from '@/components/YoutubeCarousel.vue'
+import CryptoToolCard from '@/components/CryptoToolCard.vue'
 
 export default {
   name: 'Home',
@@ -173,21 +146,15 @@ export default {
     }
   },
   components: {
-    YoutubeCarousel
+    PodcastListenCard,
+    YoutubeCarousel,
+    CryptoToolCard
   },
   data () {
     return {
       metaLogo: require('../assets/meta_tag_logo.png'),
       catchPhrase: 'Helping You Master an Understanding of Crypto Assets',
       subPhrase: 'We provide information about crypto assets to assist the public in making their own investment decisions',
-      podcasts: [
-                { id: 0, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
-                { id: 1, icon: 'mdi-spotify', url: 'https://open.spotify.com/show/38kIh4n39NvSbUTJew7rF4?si=p5LCiy0fTKuZipgXDNpFbg' },
-                { id: 2, icon: 'mdi-podcast', url: 'https://podcasts.apple.com/us/podcast/the-crypto-masters-podcast/id1507473032' },
-                { id: 3, icon: 'mdi-google-podcast', url: 'https://podcasts.google.com/feed/aHR0cHM6Ly90aGVjcnlwdG9tYXN0ZXJzLnBvZGJlYW4uY29tL2ZlZWQueG1s' },
-                
-      ],
-      socialMessage: 'TUNE IN TO OUR SHOW'
     }
   },
   methods: {
