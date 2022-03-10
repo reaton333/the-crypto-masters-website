@@ -6,9 +6,11 @@
     dark
   >
     <v-img
+      class="mt-2"
+      contain
       :src="blogData.data['blog_img'].url"
       lazy-src="url('assets/crypo_masters_logoIcon_withBg.png)"
-      height="50%"
+      height="250px"
     ></v-img>
     <v-card-title class="font-weight-bold">
       {{ this.blogTitle }}
