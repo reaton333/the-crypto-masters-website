@@ -99,11 +99,10 @@
                 >
                     <v-img 
                         align="center"
-                        class="episodeImage"
-                        contain
+                        class="blogImage"
                         justify="space-around"
-                        max-height="350"
-                        max-width="350"
+                        contain
+                        height="400"
                         :src="blogData.data['blog_img']['url']" 
                         :alt="blogData.data['blog_img']['alt']"
                     ></v-img>
@@ -140,7 +139,7 @@
                     >
                         <v-img
                             align="center"
-                            class="episodeImage"
+                            class="blogImage"
                             contain
                             justify="space-around"
                             max-height="350"
@@ -305,12 +304,12 @@ export default {
     }  
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 900px) {
     iframe {
         width: 450px  !important; 
         height: 253px !important;
     }
-    .episodeImage {
+    .blogImage {
         width: 301px !important; 
         height: 301px !important;
     }
@@ -321,7 +320,7 @@ export default {
         width: 300px !important; 
         height: 169px !important;
     }
-    .episodeImage {
+    .blogImage {
         width: 201px !important; 
         height: 201px !important;
     }
