@@ -42,18 +42,22 @@
 
 <script>
 export default {
-    data() {
-        return {
-            podcasts: [
-                { id: 0, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
-                { id: 1, icon: 'mdi-spotify', url: 'https://open.spotify.com/show/38kIh4n39NvSbUTJew7rF4?si=p5LCiy0fTKuZipgXDNpFbg' },
-                { id: 2, icon: 'mdi-podcast', url: 'https://podcasts.apple.com/us/podcast/the-crypto-masters-podcast/id1507473032' },
-                { id: 3, icon: 'mdi-google-podcast', url: 'https://podcasts.google.com/feed/aHR0cHM6Ly90aGVjcnlwdG9tYXN0ZXJzLnBvZGJlYW4uY29tL2ZlZWQueG1s' },        
-            ],
-            socialMessage: 'TUNE IN TO OUR SHOW'
-        }
+  data() {
+    return {
+      podcasts: [
+        { id: 0, icon: 'mdi-youtube', url: 'https://www.youtube.com/channel/UCyrKtJ25wtlemNHk5MG-9tQ' },
+        { id: 1, icon: 'mdi-spotify', url: 'https://open.spotify.com/show/38kIh4n39NvSbUTJew7rF4?si=p5LCiy0fTKuZipgXDNpFbg' },
+        { id: 2, icon: 'mdi-podcast', url: 'https://podcasts.apple.com/us/podcast/the-crypto-masters-podcast/id1507473032' },
+        { id: 3, icon: 'mdi-google-podcast', url: 'https://podcasts.google.com/feed/aHR0cHM6Ly90aGVjcnlwdG9tYXN0ZXJzLnBvZGJlYW4uY29tL2ZlZWQueG1s' },        
+      ],
+      socialMessage: 'TUNE IN TO OUR SHOW'
     }
-
+  },
+  methods: {
+    linkToNewTab(theLink) {
+      window.open(theLink, "_blank")
+    },
+  }
 }
 </script>
 

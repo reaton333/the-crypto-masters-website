@@ -102,9 +102,8 @@
       align="center"
       justify="center"
     >
-      <h1>Crypto Tools for Investors</h1>
     </v-row>
-    <CryptoToolCard />
+    <CryptoToolCard align="center" justify="space-around" max-width="1100" />
     <v-spacer
       class="pa-12"
     ></v-spacer>
@@ -158,9 +157,6 @@ export default {
     }
   },
   methods: {
-    linkToNewTab(theLink) {
-      window.open(theLink, "_blank")
-    }
   }
 }
 </script>

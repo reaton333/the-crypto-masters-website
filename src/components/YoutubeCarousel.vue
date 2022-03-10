@@ -4,8 +4,8 @@
         max-width="900"
     >
         <v-card-title
-            class="justify-center text-h4"
-            style="background: #E9C46A"
+            class="justify-center white--text text-h4"
+            style="background: #264653"
         >
             Recent Videos
         </v-card-title>

@@ -1,50 +1,67 @@
 <template>
-    <v-row
-        align="center"
+    <v-card
+        class="secondary pa-2"
+        width="100%"
     >
-        <v-col
-            v-for="(tool, idx) in Tools"
-            :key="idx"
+        <v-card-title
+            class="justify-center black--text text-h4"
         >
-            <v-card
-                class="mx-auto"
-                max-width="344"
-                height="380"
+            {{ componentTitle }}
+        </v-card-title>
+        <v-divider
+            class="pb-4"
+        ></v-divider>
+        <v-row
+            align="center"
+            width="100%"
+            justify="space-around"
+        >
+            <v-col
+                v-for="(tool, idx) in Tools"
+                :key="idx"
+                class="pa-4"
             >
-                <v-img
-                    contain
-                    max-height="400px"
-                    :src="tool.image"
-                    height="200px"
-                ></v-img>
+                <v-card
+                    class="mx-auto"
+                    max-width="344"
+                    height="380"
+                >
+                    <v-img
+                        contain
+                        max-height="400px"
+                        :src="tool.image"
+                        height="200px"
+                    ></v-img>
 
-                <v-card-title>
-                    {{ tool.name }}
-                </v-card-title>
+                    <v-card-title>
+                        {{ tool.name }}
+                    </v-card-title>
 
-                <v-card-subtitle>
-                    {{ tool.description }}
-                </v-card-subtitle>
+                    <v-card-subtitle>
+                        {{ tool.description }}
+                    </v-card-subtitle>
 
-                <v-card-actions>
-                    <v-btn
-                        @click="goToTool(tool.urlName)"
-                        color="secondary"
-                        text
-                        class="font-weight-bold"
-                    >
-                        USE TOOL
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-col>
-    </v-row>
+                    <v-card-actions>
+                        <v-btn
+                            @click="goToTool(tool.urlName)"
+                            color="secondary"
+                            text
+                            class="font-weight-bold"
+                        >
+                            USE TOOL
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-card>
 </template>
 
 <script>
 export default {
     data() {
         return {
+            componentTitle: 'Crypto Tools for Investors',
             Tools: [
                 { 
                     name: 'Crypto Prices', 
