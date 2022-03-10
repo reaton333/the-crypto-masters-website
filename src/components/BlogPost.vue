@@ -59,7 +59,7 @@
                         text-color="primary"
                         pill
                         light
-                        class="mx-1 font-weight-bold"
+                        class="mx-1 mb-1 font-weight-bold"
                     >
                         {{ tag }}
                     </v-chip>
