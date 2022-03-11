@@ -195,10 +195,11 @@
                     <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
-                        color="primary"
-                        dark
-                        v-bind="attrs"
-                        v-on="on"
+                            color="primary"
+                            dark
+                            v-bind="attrs"
+                            v-on="on"
+                            name="dateRange"
                         >
                             <v-icon
                             left
@@ -225,11 +226,13 @@
             <v-btn-toggle
                 mandatory
                 color="primary"
+                name="chartDateRangeToggle"
             >
                 <v-btn
                     v-for="theRange in chartRanges"
                     :key="theRange.id"
                     @click="createChart(theRange.id)"
+                    name="chartDateRange"
                 >{{ theRange.text }}</v-btn>
             </v-btn-toggle>
         </div>

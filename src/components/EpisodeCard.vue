@@ -24,6 +24,7 @@
         color="secondary"
         text
         class="font-weight-bold"
+        name="goToEpisode"
       >
         Go to Episode
       </v-btn>

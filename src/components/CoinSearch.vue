@@ -32,6 +32,7 @@
                 :alt="data.item.name"
                 max-height="22"
                 max-width="22"
+                name="cryptoCoin"
             >
             </v-img>
             </v-list-item-avatar>

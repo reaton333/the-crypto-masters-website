@@ -38,6 +38,7 @@
         color="secondary"
         text
         class="font-weight-bold"
+        name="goToBlog"
       >
         Go to Blog
       </v-btn>

@@ -136,6 +136,7 @@
             plain
             text
             @click="goToCoinDescription(item.id)"
+            name="goToCoinDescription"
           >
             {{ item.name }} - {{ item.symbol.toUpperCase() }}
           </v-btn>
@@ -157,6 +158,7 @@
             text
             x-small
             @click="goToCoinDescription(item.id)"
+            name="goToCoinDescription"
           >
             {{ item.symbol.toUpperCase() }}
           </v-btn>

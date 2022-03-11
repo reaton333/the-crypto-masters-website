@@ -51,6 +51,7 @@
             :alt="baseCoinName"
             height="38"
             class="pr-2"
+            name="marketCapCalculate"
           >
           {{ this.priceAtNewMarketCap }} 
           <span

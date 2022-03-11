@@ -48,6 +48,7 @@
                             color="secondary"
                             text
                             class="font-weight-bold"
+                            name="toolNavigation"
                         >
                             USE TOOL
                         </v-btn>

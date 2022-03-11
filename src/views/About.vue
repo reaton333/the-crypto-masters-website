@@ -110,10 +110,18 @@
                 class="primary"
               >
                 <v-spacer></v-spacer>
-                <v-btn icon @click="linkToNewTab(brianObject.twitter)">
+                <v-btn 
+                  icon 
+                  @click="linkToNewTab(brianObject.twitter)"
+                  name="twitterSocial"
+                >
                   <v-icon color="secondary">mdi-twitter</v-icon>
                 </v-btn>
-                <v-btn icon :href="'mailto:' + brianObject.email">
+                <v-btn 
+                  icon 
+                  :href="'mailto:' + brianObject.email"
+                  name="sendEmail"
+                >
                   <v-icon color="secondary">mdi-email</v-icon>
                 </v-btn>
               </v-card-actions>
@@ -145,10 +153,18 @@
                 class="primary"
               >
                 <v-spacer></v-spacer>
-                <v-btn icon @click="linkToNewTab(rossObject.twitter)">
+                <v-btn 
+                  icon 
+                  @click="linkToNewTab(rossObject.twitter)"
+                  name="twitterSocial"
+                >
                   <v-icon color="secondary">mdi-twitter</v-icon>
                 </v-btn>
-                <v-btn icon :href="'mailto:' + rossObject.email">
+                <v-btn 
+                  icon 
+                  :href="'mailto:' + rossObject.email"
+                  name="email"
+                >
                   <v-icon color="secondary">mdi-email</v-icon>
                 </v-btn>
               </v-card-actions>

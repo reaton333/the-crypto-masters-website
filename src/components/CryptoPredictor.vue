@@ -181,6 +181,7 @@
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-xs-body-2"
                 dark
                 @click="validate"
+                name="calculate"
             >
                 <v-icon
                     left

@@ -18,6 +18,7 @@
             color="secondary"
             icon
             @click="linkToNewTab(social.url)"
+            name="socialLink"
           >
             <v-icon size="24px">
               {{ social.icon }}
@@ -27,6 +28,7 @@
             icon 
             class="mx-4"
             :href="'mailto:' + cryptoMastersEmail"
+            name="emailLink"
           >
             <v-icon color="secondary">mdi-email</v-icon>
           </v-btn>

@@ -39,6 +39,7 @@
                 class="text-left font-weight-medium
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-body-2"
                 @click="$router.push('/podcast/')"
+                name="listenNow"
               >
                 Listen Now
                 <v-icon
@@ -55,6 +56,7 @@
                 class="text-left black--text font-weight-medium
                 text-xl-body-1 text-lg-body-1 text-md-body-1 text-sm-body-2 text-body-2"
                 @click="$router.push('/crypto')"
+                name="cryptoPrices"
               >
                 Crypto Prices
                 <v-icon

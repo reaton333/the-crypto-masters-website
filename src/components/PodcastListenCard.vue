@@ -27,6 +27,7 @@
               icon
               x-large
               @click="linkToNewTab(podcast.url)"
+              name="podcast"
             >
               <v-icon 
                 size="72px"

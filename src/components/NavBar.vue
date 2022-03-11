@@ -58,6 +58,7 @@
         <v-btn 
           text
           :to="navItem.route"
+          name="navigationItem"
         >
           {{ navItem.name }}
         </v-btn>
@@ -72,6 +73,7 @@
             dark
             v-on="on"
             elevation="0"
+            name="navigationItem"
           >
             Crypto Tools
           </v-btn>
