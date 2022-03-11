@@ -19,6 +19,12 @@ import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'App',
+  metaInfo: {
+    // if no subcomponents specify a metaInfo.title, this title will be used
+    title: 'The Crypto Masters - Your Crypto One-Stop-Shop',
+    // all titles will be injected into this template
+    titleTemplate: '%s | The Crypto Masters'
+  },
   components: {
     Home,
     NavBar,

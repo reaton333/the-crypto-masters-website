@@ -130,17 +130,18 @@ export default {
   name: 'Home',
   metaInfo() {
     return {
-      title: 'Podcasts, Articles, Prices, and More!',
+      title: this.metaTitle,
+      titleTemplate: null,
       meta: [
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: `${this.$router.currentRoute.path}` },
-        { property: 'og:title', content: 'Podcasts, Articles, Prices, and More! | The Crypto Masters' },
+        { property: 'og:title', content: this.metaTitle },
         { property: 'og:description', content: 'Helping You Master an Understanding of Crypto Assets' },
         { property: 'og:image', content: require('../assets/meta_tag_logo.png') },
 
         { property: 'twitter:card', content: 'summary_large_image' },
         { property: 'twitter:url', content: `${this.$router.currentRoute.path}` },
-        { property: 'twitter:title', content: 'Podcasts, Articles, Prices, and More! | The Crypto Masters' },
+        { property: 'twitter:title', content: this.metaTitle },
         { property: 'twitter:description', content: 'Helping You Master an Understanding of Crypto Assets' },
         { property: 'twitter:image', content: require('../assets/meta_tag_logo.png') },
       ]
@@ -153,6 +154,7 @@ export default {
   },
   data () {
     return {
+      metaTitle: 'The Crypto Masters - Your Crypto One-Stop-Shop',
       metaLogo: require('../assets/meta_tag_logo.png'),
       catchPhrase: 'Helping You Master an Understanding of Crypto Assets',
       subPhrase: 'We provide information about crypto assets to assist the public in making their own investment decisions',

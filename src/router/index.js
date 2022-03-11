@@ -92,7 +92,7 @@ const routes = [
   // }
 ]
 
-const router = new VueRouter({
+const router = new Router({
   routes,
   mode: 'history',
   scrollBehavior: (to, from, savedPosition) => {
