@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import VueMeta from 'vue-meta'
+import Router from 'vue-router'
+import Meta from 'vue-meta'
 import Home from '../views/Home.vue'
 import Coin from '../views/Coin.vue'
 import CoinList from '../views/CoinList.vue'
@@ -13,8 +13,14 @@ import BlogPost from '../components/BlogPost.vue'
 import NotFound from '../views/NotFound.vue'
 import About from '../views/About.vue'
 
-Vue.use(VueRouter)
-Vue.use(VueMeta)
+Vue.use(Router)
+Vue.use(Meta, {
+  keyName: 'metaInfo',
+  attribute: 'data-vue-meta',
+  ssrAttribute: 'data-vue-meta-server-rendered',
+  tagIDKeyName: 'vmid',
+  refreshOnceOnNavigation: true
+})
 
 const routes = [
   {
