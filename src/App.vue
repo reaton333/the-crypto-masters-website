@@ -15,7 +15,7 @@ import Home from '@/views/Home.vue'
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 
-import axios from 'axios';
+// import axios from 'axios';
 
 export default {
   name: 'App',

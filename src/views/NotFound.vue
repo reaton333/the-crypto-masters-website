@@ -20,28 +20,6 @@
             {{ randomJoke[1] }}
           </div>
         </kinesis-element>
-        <!-- background-circles-props -->
-        <!-- <kinesis-element :strength="50" axis="y">
-          <img class="circle bitcoin-circle" src="../assets/crypto_imgs/bitcoin-btc-logo.png" alt="logrocket logo">
-        </kinesis-element>
-        <kinesis-element :strength="80" axis="y">
-          <img class="circle ethereum-circle" src="../assets/crypto_imgs/ethereum-eth-logo.png" alt="logrocket logo">
-        </kinesis-element>
-        <kinesis-element :strength="80" axis="y">
-          <img class="circle cardano-circle" src="../assets/crypto_imgs/cardano-ada-logo.png" alt="logrocket logo">
-        </kinesis-element>
-        <kinesis-element :strength="80" axis="y">
-          <img class="circle chainlink-circle" src="../assets/crypto_imgs/chainlink-link-logo.png" alt="logrocket logo">
-        </kinesis-element>
-        <kinesis-element :strength="80" axis="y">
-          <img class="circle monero-circle" src="../assets/crypto_imgs/monero-xmr-logo.png" alt="logrocket logo">
-        </kinesis-element>
-        <kinesis-element :strength="80" axis="y">
-          <img class="circle polkadot-circle" src="../assets/crypto_imgs/polkadot-new-dot-logo.png" alt="logrocket logo">
-        </kinesis-element>
-        <kinesis-element :strength="80" axis="y">
-          <img class="circle litecoin-circle" src="../assets/crypto_imgs/litecoin-ltc-logo.png" alt="logrocket logo">
-        </kinesis-element> -->
       </kinesis-container>
     </div>
 </template>

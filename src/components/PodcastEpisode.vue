@@ -60,23 +60,6 @@
                         <b>Release Date</b> {{ episodeData.data['release_date'] }}
                     </p>
                 </v-row>
-                <!-- <v-row 
-                    justify="space-around"
-                    align="center"
-                    class="pa-8"
-                >
-                    <v-img 
-                        v-if="episodeData.data['episode-image']['url']" 
-                        align="center"
-                        class="episodeImage"
-                        contain
-                        justify="space-around"
-                        max-height="350"
-                        max-width="350"
-                        :src="episodeData.data['episode-image']['url']" 
-                        :alt="episodeData.data['episode-image']['alt']"
-                    ></v-img>
-                </v-row> -->
                 <div 
                     v-for="(item, index) in youtubeVideo"
                     :key="index"

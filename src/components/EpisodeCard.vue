@@ -7,6 +7,7 @@
     <v-img
       class="mt-2"
       :src="episodeData.data['episode-image'].url"
+      :alt="this.episodeTitle"
       lazy-src="url('assets/crypo_masters_logoIcon_withBg.png)"
       height="200px"
       contain

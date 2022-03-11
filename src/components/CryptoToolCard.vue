@@ -30,6 +30,7 @@
                         contain
                         max-height="400px"
                         :src="tool.image"
+                        :alt="tool.name"
                         height="200px"
                     ></v-img>
 

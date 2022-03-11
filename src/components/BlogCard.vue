@@ -9,6 +9,7 @@
       class="mt-2"
       contain
       :src="blogData.data['blog_img'].url"
+      :alt="this.blogTitle"
       lazy-src="url('assets/crypo_masters_logoIcon_withBg.png)"
       height="250px"
     ></v-img>

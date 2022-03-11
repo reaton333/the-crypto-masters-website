@@ -12,7 +12,12 @@
                 justify="center"
             >
                 <v-col class="shrink">
-                        <v-img src="../../src/assets/professor_hindsight.png" max-width="300" class="ml-3"></v-img>
+                    <v-img 
+                        src="../../src/assets/professor_hindsight.png"
+                        alt="Professor Hindsight Image"
+                        max-width="300" 
+                        class="ml-3"
+                    ></v-img>
                 </v-col>
             </v-row>
             <v-row
@@ -35,7 +40,10 @@
                     left 
                     size="35"
                 >
-                    <img :src="coinImage" >
+                    <img 
+                        :src="coinImage" 
+                        :alt="coinName"
+                    />
                 </v-avatar>
                 <span
                     v-if="coinName"
@@ -78,6 +86,7 @@
                             <v-list-item-avatar>
                                 <v-img 
                                     :src="data.item.thumb"
+                                    :alt="data.item.name"
                                     max-height="22"
                                     max-width="22"
                                 >

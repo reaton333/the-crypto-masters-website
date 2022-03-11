@@ -145,8 +145,8 @@
         >
           <v-img 
             class="coinLogo" 
-            v-bind:src="item.image" 
-            v-bind:alt="item.name"
+            :src="item.image" 
+            :alt="item.name"
             contain
             max-width="16"
             max-height="16"

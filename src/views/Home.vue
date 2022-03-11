@@ -80,7 +80,7 @@
             contain
             aspect-ratio="1"
             eager
-            alt="The Crypto Masters"
+            alt="The Crypto Masters Logo"
             :src="require('../assets/crypto_masters_logo_withText_rounded.svg')" 
           ></v-img>
         </v-card>

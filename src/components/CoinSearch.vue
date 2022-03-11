@@ -29,6 +29,7 @@
             <v-list-item-avatar>
             <v-img 
                 :src="data.item.thumb"
+                :alt="data.item.name"
                 max-height="22"
                 max-width="22"
             >
