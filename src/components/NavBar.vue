@@ -7,6 +7,7 @@
       dark
       class="primary"
       app
+      name="hamburgerMenu"
     >
       <v-list dense>
         <v-list-item
